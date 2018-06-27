@@ -79,21 +79,21 @@
 
 
 
-<meta name="description" content="目录： [TOC] Map1public interface Map&amp;lt;K,V&amp;gt; 框架：  AbstractMap1public abstract class AbstractMap&amp;lt;K,V&amp;gt; implements Map&amp;lt;K,V&amp;gt;  唯一抽象方法  1public abstract Set&amp;lt;Entry&amp;lt;K,V&amp;gt;&amp;gt; entrySet();">
+<meta name="description" content="Map1public interface Map&amp;lt;K,V&amp;gt; 框架：  AbstractMap1public abstract class AbstractMap&amp;lt;K,V&amp;gt; implements Map&amp;lt;K,V&amp;gt;  唯一抽象方法  1public abstract Set&amp;lt;Entry&amp;lt;K,V&amp;gt;&amp;gt; entrySet();  不可变，需要重写p">
 <meta name="keywords" content="Java集合">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java Map">
-<meta property="og:url" content="http://yoursite.com/2018/06/20/Java Map/index.html">
+<meta property="og:title" content="Java集合之Map汇总">
+<meta property="og:url" content="http://yoursite.com/2018/06/20/Java集合之Map概述/index.html">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="目录： [TOC] Map1public interface Map&amp;lt;K,V&amp;gt; 框架：  AbstractMap1public abstract class AbstractMap&amp;lt;K,V&amp;gt; implements Map&amp;lt;K,V&amp;gt;  唯一抽象方法  1public abstract Set&amp;lt;Entry&amp;lt;K,V&amp;gt;&amp;gt; entrySet();">
+<meta property="og:description" content="Map1public interface Map&amp;lt;K,V&amp;gt; 框架：  AbstractMap1public abstract class AbstractMap&amp;lt;K,V&amp;gt; implements Map&amp;lt;K,V&amp;gt;  唯一抽象方法  1public abstract Set&amp;lt;Entry&amp;lt;K,V&amp;gt;&amp;gt; entrySet();  不可变，需要重写p">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://img-blog.csdn.net/20170317181610752?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvanVzdGxvdmV5b3Vf/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 <meta property="og:image" content="https://images0.cnblogs.com/i/497634/201403/251733282013849.jpg">
 <meta property="og:image" content="https://images0.cnblogs.com/i/497634/201403/251735527958942.jpg">
-<meta property="og:updated_time" content="2018-06-26T16:02:54.622Z">
+<meta property="og:updated_time" content="2018-06-27T13:07:55.086Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Java Map">
-<meta name="twitter:description" content="目录： [TOC] Map1public interface Map&amp;lt;K,V&amp;gt; 框架：  AbstractMap1public abstract class AbstractMap&amp;lt;K,V&amp;gt; implements Map&amp;lt;K,V&amp;gt;  唯一抽象方法  1public abstract Set&amp;lt;Entry&amp;lt;K,V&amp;gt;&amp;gt; entrySet();">
+<meta name="twitter:title" content="Java集合之Map汇总">
+<meta name="twitter:description" content="Map1public interface Map&amp;lt;K,V&amp;gt; 框架：  AbstractMap1public abstract class AbstractMap&amp;lt;K,V&amp;gt; implements Map&amp;lt;K,V&amp;gt;  唯一抽象方法  1public abstract Set&amp;lt;Entry&amp;lt;K,V&amp;gt;&amp;gt; entrySet();  不可变，需要重写p">
 <meta name="twitter:image" content="https://img-blog.csdn.net/20170317181610752?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvanVzdGxvdmV5b3Vf/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 
 
@@ -124,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/06/20/Java Map/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/06/20/Java集合之Map概述/"/>
 
 
 
 
 
-  <title>Java Map | Blog</title>
+  <title>Java集合之Map汇总 | Blog</title>
   
 
 
@@ -268,7 +268,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/20/Java Map/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/20/Java集合之Map概述/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="JumpsZ">
@@ -285,7 +285,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Java Map</h1>
+          <h1 class="post-title" itemprop="name headline">Java集合之Map汇总</h1>
         
 
         <div class="post-meta">
@@ -335,9 +335,7 @@
       
 
       
-        <p>目录：</p>
-<p>[TOC]</p>
-<h1 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Map</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt;</span></span><br></pre></td></tr></table></figure>
+        <h1 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Map</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>框架：</p>
 <p><img src="https://img-blog.csdn.net/20170317181610752?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvanVzdGxvdmV5b3Vf/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""></p>
 <h1 id="AbstractMap"><a href="#AbstractMap" class="headerlink" title="AbstractMap"></a>AbstractMap</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">AbstractMap</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt; <span class="keyword">implements</span> <span class="title">Map</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt;</span></span><br></pre></td></tr></table></figure>
@@ -485,35 +483,13 @@
 <li>左旋</li>
 </ul>
 <p><img src="https://images0.cnblogs.com/i/497634/201403/251733282013849.jpg" alt=""></p>
-<pre><code>LEFT-ROTATE(T, x)  
- y ← right[x]            // 前提：这里假设x的右孩子为y。下面开始正式操作
- right[x] ← left[y]      // 将 “y的左孩子” 设为 “x的右孩子”，即 将β设为x的右孩子
- p[left[y]] ← x          // 将 “x” 设为 “y的左孩子的父亲”，即 将β的父亲设为x
- p[y] ← p[x]             // 将 “x的父亲” 设为 “y的父亲”
- if p[x] = nil[T]       
- then root[T] ← y                 // 情况1：如果 “x的父亲” 是空节点，则将y设为根节点
- else if x = left[p[x]]  
-           then left[p[x]] ← y    // 情况2：如果 x是它父节点的左孩子，则将y设为“x的父节点的左孩子”
-           else right[p[x]] ← y   // 情况3：(x是它父节点的右孩子) 将y设为“x的父节点的右孩子”
- left[y] ← x             // 将 “x” 设为 “y的左孩子”
- p[x] ← y                // 将 “x的父节点” 设为 “y”
-</code></pre><ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">LEFT-ROTATE(T, x)  </span><br><span class="line"> y ← right[x]            <span class="comment">// 前提：这里假设x的右孩子为y。下面开始正式操作</span></span><br><span class="line"> right[x] ← left[y]      <span class="comment">// 将 “y的左孩子” 设为 “x的右孩子”，即 将β设为x的右孩子</span></span><br><span class="line"> p[left[y]] ← x          <span class="comment">// 将 “x” 设为 “y的左孩子的父亲”，即 将β的父亲设为x</span></span><br><span class="line"> p[y] ← p[x]             <span class="comment">// 将 “x的父亲” 设为 “y的父亲”</span></span><br><span class="line"> <span class="keyword">if</span> p[x] = nil[T]       </span><br><span class="line"> then root[T] ← y                 <span class="comment">// 情况1：如果 “x的父亲” 是空节点，则将y设为根节点</span></span><br><span class="line"> <span class="keyword">else</span> <span class="keyword">if</span> x = left[p[x]]  </span><br><span class="line">           then left[p[x]] ← y    <span class="comment">// 情况2：如果 x是它父节点的左孩子，则将y设为“x的父节点的左孩子”</span></span><br><span class="line">           <span class="keyword">else</span> right[p[x]] ← y   <span class="comment">// 情况3：(x是它父节点的右孩子) 将y设为“x的父节点的右孩子”</span></span><br><span class="line"> left[y] ← x             <span class="comment">// 将 “x” 设为 “y的左孩子”</span></span><br><span class="line"> p[x] ← y                <span class="comment">// 将 “x的父节点” 设为 “y”</span></span><br></pre></td></tr></table></figure>
+<ul>
 <li>右旋</li>
 </ul>
 <p><img src="https://images0.cnblogs.com/i/497634/201403/251735527958942.jpg" alt=""></p>
-<pre><code>RIGHT-ROTATE(T, y)  
- x ← left[y]             // 前提：这里假设y的左孩子为x。下面开始正式操作
- left[y] ← right[x]      // 将 “x的右孩子” 设为 “y的左孩子”，即 将β设为y的左孩子
- p[right[x]] ← y         // 将 “y” 设为 “x的右孩子的父亲”，即 将β的父亲设为y
- p[x] ← p[y]             // 将 “y的父亲” 设为 “x的父亲”
- if p[y] = nil[T]       
- then root[T] ← x                 // 情况1：如果 “y的父亲” 是空节点，则将x设为根节点
- else if y = right[p[y]]  
-           then right[p[y]] ← x   // 情况2：如果 y是它父节点的右孩子，则将x设为“y的父节点的左孩子”
-           else left[p[y]] ← x    // 情况3：(y是它父节点的左孩子) 将x设为“y的父节点的左孩子”
- right[x] ← y            // 将 “y” 设为 “x的右孩子”
- p[y] ← x                // 将 “y的父节点” 设为 “x”
-</code></pre><h2 id="TreeMap-1"><a href="#TreeMap-1" class="headerlink" title="TreeMap"></a>TreeMap</h2><h3 id="数据结构-3"><a href="#数据结构-3" class="headerlink" title="数据结构"></a>数据结构</h3><ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">RIGHT-ROTATE(T, y)  </span><br><span class="line"> x ← left[y]             <span class="comment">// 前提：这里假设y的左孩子为x。下面开始正式操作</span></span><br><span class="line"> left[y] ← right[x]      <span class="comment">// 将 “x的右孩子” 设为 “y的左孩子”，即 将β设为y的左孩子</span></span><br><span class="line"> p[right[x]] ← y         <span class="comment">// 将 “y” 设为 “x的右孩子的父亲”，即 将β的父亲设为y</span></span><br><span class="line"> p[x] ← p[y]             <span class="comment">// 将 “y的父亲” 设为 “x的父亲”</span></span><br><span class="line"> <span class="keyword">if</span> p[y] = nil[T]       </span><br><span class="line"> then root[T] ← x                 <span class="comment">// 情况1：如果 “y的父亲” 是空节点，则将x设为根节点</span></span><br><span class="line"> <span class="keyword">else</span> <span class="keyword">if</span> y = right[p[y]]  </span><br><span class="line">           then right[p[y]] ← x   <span class="comment">// 情况2：如果 y是它父节点的右孩子，则将x设为“y的父节点的左孩子”</span></span><br><span class="line">           <span class="keyword">else</span> left[p[y]] ← x    <span class="comment">// 情况3：(y是它父节点的左孩子) 将x设为“y的父节点的左孩子”</span></span><br><span class="line"> right[x] ← y            <span class="comment">// 将 “y” 设为 “x的右孩子”</span></span><br><span class="line"> p[y] ← x                <span class="comment">// 将 “y的父节点” 设为 “x”</span></span><br></pre></td></tr></table></figure>
+<h2 id="TreeMap-1"><a href="#TreeMap-1" class="headerlink" title="TreeMap"></a>TreeMap</h2><h3 id="数据结构-3"><a href="#数据结构-3" class="headerlink" title="数据结构"></a>数据结构</h3><ul>
 <li>TreeMap 是一个有序的key-value集合，它是通过红黑树实现的。</li>
 <li>TreeMap 继承于AbstractMap，所以它是一个Map，即一个key-value集合。</li>
 <li>TreeMap 实现了NavigableMap接口，意味着它支持一系列的导航方法。比如返回有序的key集合。</li>
@@ -571,8 +547,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/06/15/Java Collection/" rel="next" title="Java Collection">
-                <i class="fa fa-chevron-left"></i> Java Collection
+              <a href="/2018/06/15/Java集合之Collection概述/" rel="next" title="Java集合之Collection概述">
+                <i class="fa fa-chevron-left"></i> Java集合之Collection概述
               </a>
             
           </div>
@@ -581,7 +557,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/06/24/Java List/" rel="prev" title="Java ArrayList 和 LinkedList源码分析">
+              <a href="/2018/06/24/Java集合之List概述/" rel="prev" title="Java ArrayList 和 LinkedList源码分析">
                 Java ArrayList 和 LinkedList源码分析 <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -664,7 +640,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

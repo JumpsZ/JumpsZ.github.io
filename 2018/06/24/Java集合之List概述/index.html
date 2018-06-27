@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="目录： [TOC] ArrayList12public class ArrayList&amp;lt;E&amp;gt; extends AbstractList&amp;lt;E&amp;gt;        implements List&amp;lt;E&amp;gt;, RandomAccess, Cloneable, java.io.Serializable  ArrayList 是一个数组队列，相当于 动态数组。与Java中的数组相">
+<meta name="description" content="ArrayList12public class ArrayList&amp;lt;E&amp;gt; extends AbstractList&amp;lt;E&amp;gt;        implements List&amp;lt;E&amp;gt;, RandomAccess, Cloneable, java.io.Serializable  ArrayList 是一个数组队列，相当于 动态数组。与Java中的数组相比，它的容量能动态增">
 <meta name="keywords" content="Java集合">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java ArrayList 和 LinkedList源码分析">
-<meta property="og:url" content="http://yoursite.com/2018/06/24/Java List/index.html">
+<meta property="og:url" content="http://yoursite.com/2018/06/24/Java集合之List概述/index.html">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="目录： [TOC] ArrayList12public class ArrayList&amp;lt;E&amp;gt; extends AbstractList&amp;lt;E&amp;gt;        implements List&amp;lt;E&amp;gt;, RandomAccess, Cloneable, java.io.Serializable  ArrayList 是一个数组队列，相当于 动态数组。与Java中的数组相">
+<meta property="og:description" content="ArrayList12public class ArrayList&amp;lt;E&amp;gt; extends AbstractList&amp;lt;E&amp;gt;        implements List&amp;lt;E&amp;gt;, RandomAccess, Cloneable, java.io.Serializable  ArrayList 是一个数组队列，相当于 动态数组。与Java中的数组相比，它的容量能动态增">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-06-26T15:59:52.617Z">
+<meta property="og:updated_time" content="2018-06-27T12:18:04.581Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java ArrayList 和 LinkedList源码分析">
-<meta name="twitter:description" content="目录： [TOC] ArrayList12public class ArrayList&amp;lt;E&amp;gt; extends AbstractList&amp;lt;E&amp;gt;        implements List&amp;lt;E&amp;gt;, RandomAccess, Cloneable, java.io.Serializable  ArrayList 是一个数组队列，相当于 动态数组。与Java中的数组相">
+<meta name="twitter:description" content="ArrayList12public class ArrayList&amp;lt;E&amp;gt; extends AbstractList&amp;lt;E&amp;gt;        implements List&amp;lt;E&amp;gt;, RandomAccess, Cloneable, java.io.Serializable  ArrayList 是一个数组队列，相当于 动态数组。与Java中的数组相比，它的容量能动态增">
 
 
 
@@ -120,7 +120,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/06/24/Java List/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/06/24/Java集合之List概述/"/>
 
 
 
@@ -264,7 +264,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/24/Java List/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/24/Java集合之List概述/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="JumpsZ">
@@ -331,9 +331,7 @@
       
 
       
-        <p>目录：</p>
-<p>[TOC]</p>
-<h1 id="ArrayList"><a href="#ArrayList" class="headerlink" title="ArrayList"></a>ArrayList</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ArrayList</span>&lt;<span class="title">E</span>&gt; <span class="keyword">extends</span> <span class="title">AbstractList</span>&lt;<span class="title">E</span>&gt;</span></span><br><span class="line"><span class="class">        <span class="keyword">implements</span> <span class="title">List</span>&lt;<span class="title">E</span>&gt;, <span class="title">RandomAccess</span>, <span class="title">Cloneable</span>, <span class="title">java</span>.<span class="title">io</span>.<span class="title">Serializable</span></span></span><br></pre></td></tr></table></figure>
+        <h1 id="ArrayList"><a href="#ArrayList" class="headerlink" title="ArrayList"></a>ArrayList</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ArrayList</span>&lt;<span class="title">E</span>&gt; <span class="keyword">extends</span> <span class="title">AbstractList</span>&lt;<span class="title">E</span>&gt;</span></span><br><span class="line"><span class="class">        <span class="keyword">implements</span> <span class="title">List</span>&lt;<span class="title">E</span>&gt;, <span class="title">RandomAccess</span>, <span class="title">Cloneable</span>, <span class="title">java</span>.<span class="title">io</span>.<span class="title">Serializable</span></span></span><br></pre></td></tr></table></figure>
 <ul>
 <li>ArrayList 是一个数组队列，相当于 动态数组。与Java中的数组相比，它的容量能动态增长</li>
 <li>允许null</li>
@@ -342,7 +340,7 @@
 <li>初始容量DEFAULT_CAPACITY = 10</li>
 <li>遍历ArrayList时，使用随机访问(即，通过索引序号访问)效率最高，而使用迭代器的效率最低！for循环遍历居中</li>
 </ul>
-<h3 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h3><p>ArrayList包含了两个重要的对象：elementData 和 size。</p>
+<h2 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h2><p>ArrayList包含了两个重要的对象：elementData 和 size。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">transient</span> Object[] elementData;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">int</span> size;</span><br></pre></td></tr></table></figure>
 <ul>
 <li>elementData 是”Object[]类型的数组”，它保存了添加到ArrayList中的元素。elementData是个动态数组，大小会根据ArrayList容量的增长而动态的增长，具体的增长方式，由ensureCapacity()函数控制。</li>
@@ -351,7 +349,7 @@
 <ul>
 <li>size 则是动态数组的实际大小。</li>
 </ul>
-<h3 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h3><ul>
+<h2 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h2><ul>
 <li>add函数</li>
 </ul>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">add</span><span class="params">(E e)</span> </span>&#123; <span class="comment">// 添加元素</span></span><br><span class="line">    ensureCapacityInternal(size + <span class="number">1</span>);  <span class="comment">// Increments modCount!!</span></span><br><span class="line">    elementData[size++] = e;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -400,8 +398,8 @@
 <li>LinkedList 实现了Cloneable接口，即覆盖了函数clone()，能克隆。</li>
 <li>允许空元素，非同步，Collections.synchronizedList包装</li>
 </ul>
-<h3 id="数据结构-1"><a href="#数据结构-1" class="headerlink" title="数据结构"></a>数据结构</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// jdk1.8</span></span><br><span class="line"><span class="keyword">transient</span> <span class="keyword">int</span> size = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">transient</span> Node&lt;E&gt; first;  <span class="comment">// Pointer to first node</span></span><br><span class="line"><span class="keyword">transient</span> Node&lt;E&gt; last;  <span class="comment">// Pointer to last node</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Node</span>&lt;<span class="title">E</span>&gt; </span>&#123;</span><br><span class="line">    E item;</span><br><span class="line">    Node&lt;E&gt; next;</span><br><span class="line">    Node&lt;E&gt; prev;</span><br><span class="line">	</span><br><span class="line">	Node(Node&lt;E&gt; prev, E element, Node&lt;E&gt; next) &#123;</span><br><span class="line">        <span class="keyword">this</span>.item = element;</span><br><span class="line">        <span class="keyword">this</span>.next = next;</span><br><span class="line">        <span class="keyword">this</span>.prev = prev;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// jdk 1.6</span></span><br><span class="line"><span class="comment">// 链表的表头，表头不包含任何数据。Entry是个链表类数据结构。</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">transient</span> Entry&lt;E&gt; header = <span class="keyword">new</span> Entry&lt;E&gt;(<span class="keyword">null</span>, <span class="keyword">null</span>, <span class="keyword">null</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Entry</span>&lt;<span class="title">E</span>&gt; </span>&#123;</span><br><span class="line">	<span class="comment">// 当前节点所包含的值</span></span><br><span class="line">	E element;</span><br><span class="line">	<span class="comment">// 下一个节点</span></span><br><span class="line">	Entry&lt;E&gt; next;</span><br><span class="line">	<span class="comment">// 上一个节点</span></span><br><span class="line">	Entry&lt;E&gt; previous;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="源码-1"><a href="#源码-1" class="headerlink" title="源码"></a>源码</h3><ul>
+<h2 id="数据结构-1"><a href="#数据结构-1" class="headerlink" title="数据结构"></a>数据结构</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// jdk1.8</span></span><br><span class="line"><span class="keyword">transient</span> <span class="keyword">int</span> size = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">transient</span> Node&lt;E&gt; first;  <span class="comment">// Pointer to first node</span></span><br><span class="line"><span class="keyword">transient</span> Node&lt;E&gt; last;  <span class="comment">// Pointer to last node</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Node</span>&lt;<span class="title">E</span>&gt; </span>&#123;</span><br><span class="line">    E item;</span><br><span class="line">    Node&lt;E&gt; next;</span><br><span class="line">    Node&lt;E&gt; prev;</span><br><span class="line">	</span><br><span class="line">	Node(Node&lt;E&gt; prev, E element, Node&lt;E&gt; next) &#123;</span><br><span class="line">        <span class="keyword">this</span>.item = element;</span><br><span class="line">        <span class="keyword">this</span>.next = next;</span><br><span class="line">        <span class="keyword">this</span>.prev = prev;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// jdk 1.6</span></span><br><span class="line"><span class="comment">// 链表的表头，表头不包含任何数据。Entry是个链表类数据结构。</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">transient</span> Entry&lt;E&gt; header = <span class="keyword">new</span> Entry&lt;E&gt;(<span class="keyword">null</span>, <span class="keyword">null</span>, <span class="keyword">null</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Entry</span>&lt;<span class="title">E</span>&gt; </span>&#123;</span><br><span class="line">	<span class="comment">// 当前节点所包含的值</span></span><br><span class="line">	E element;</span><br><span class="line">	<span class="comment">// 下一个节点</span></span><br><span class="line">	Entry&lt;E&gt; next;</span><br><span class="line">	<span class="comment">// 上一个节点</span></span><br><span class="line">	Entry&lt;E&gt; previous;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="源码-1"><a href="#源码-1" class="headerlink" title="源码"></a>源码</h2><ul>
 <li>双向链表和索引值的联系</li>
 </ul>
 <p>实际原理非常简单，它就是通过一个计数索引值来实现的。</p>
@@ -426,6 +424,10 @@
 </ul>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 将LinkedList的“容量，所有的元素值”都写入到输出流中</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">writeObject</span><span class="params">(java.io.ObjectOutputStream s)</span></span></span><br><span class="line"><span class="function">      <span class="keyword">throws</span> java.io.IOException </span>&#123;</span><br><span class="line">    <span class="comment">// Write out any hidden serialization magic</span></span><br><span class="line">    s.defaultWriteObject();</span><br><span class="line">    <span class="comment">// Write out size</span></span><br><span class="line">  	s.writeInt(size);</span><br><span class="line">  </span><br><span class="line">  	<span class="comment">// Write out all elements in the proper order.</span></span><br><span class="line">  	<span class="keyword">for</span> (Node&lt;E&gt; x = first; x != <span class="keyword">null</span>; x = x.next)</span><br><span class="line">     	 s.writeObject(x.item);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 先将LinkedList的“容量”读出，然后将“所有的元素值”读出</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">readObject</span><span class="params">(java.io.ObjectInputStream s)</span></span></span><br><span class="line"><span class="function">      <span class="keyword">throws</span> java.io.IOException, ClassNotFoundException </span>&#123;</span><br><span class="line">    <span class="comment">// Read in any hidden serialization magic</span></span><br><span class="line">  	s.defaultReadObject();  </span><br><span class="line">  	<span class="comment">// Read in size</span></span><br><span class="line">  	<span class="keyword">int</span> size = s.readInt();</span><br><span class="line">  </span><br><span class="line">  	<span class="comment">// Read in all elements in the proper order.</span></span><br><span class="line">  	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; size; i++)</span><br><span class="line">    	  linkLast((E)s.readObject());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ul>
+<li><code>ArrayList</code> 是一个<strong>数组队列，相当于动态数组</strong>。它由数组实现，随机访问效率高，随机插入、随机删除效率低。 　　</li>
+<li><code>LinkedList</code> 是一个<strong>双向链表</strong>。它也可以被当作堆栈、队列或双端队列进行操作。<code>LinkedList</code>随机访问效率低，但随机插入、随机删除效率低。 </li>
+</ul>
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="http://www.cnblogs.com/skywang12345/p/3308556.html" target="_blank" rel="noopener">http://www.cnblogs.com/skywang12345/p/3308556.html</a></p>
 <p><a href="http://www.cnblogs.com/skywang12345/p/3308807.html" target="_blank" rel="noopener">http://www.cnblogs.com/skywang12345/p/3308807.html</a></p>
 
@@ -458,8 +460,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/06/20/Java Map/" rel="next" title="Java Map">
-                <i class="fa fa-chevron-left"></i> Java Map
+              <a href="/2018/06/20/Java集合之Map概述/" rel="next" title="Java集合之Map汇总">
+                <i class="fa fa-chevron-left"></i> Java集合之Map汇总
               </a>
             
           </div>
@@ -467,6 +469,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/06/27/Java集合之Vector/" rel="prev" title="Java Vector源码解析">
+                Java Vector源码解析 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -547,7 +553,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -593,7 +599,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ArrayList"><span class="nav-number">1.</span> <span class="nav-text">ArrayList</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据结构"><span class="nav-number">1.0.1.</span> <span class="nav-text">数据结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#源码"><span class="nav-number">1.0.2.</span> <span class="nav-text">源码</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#fail-fast-机制"><span class="nav-number">2.</span> <span class="nav-text">fail-fast 机制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#LinkedList"><span class="nav-number">3.</span> <span class="nav-text">LinkedList</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据结构-1"><span class="nav-number">3.0.1.</span> <span class="nav-text">数据结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#源码-1"><span class="nav-number">3.0.2.</span> <span class="nav-text">源码</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ArrayList"><span class="nav-number">1.</span> <span class="nav-text">ArrayList</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据结构"><span class="nav-number">1.1.</span> <span class="nav-text">数据结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#源码"><span class="nav-number">1.2.</span> <span class="nav-text">源码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#fail-fast-机制"><span class="nav-number">2.</span> <span class="nav-text">fail-fast 机制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#LinkedList"><span class="nav-number">3.</span> <span class="nav-text">LinkedList</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据结构-1"><span class="nav-number">3.1.</span> <span class="nav-text">数据结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#源码-1"><span class="nav-number">3.2.</span> <span class="nav-text">源码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
             
 
           </div>

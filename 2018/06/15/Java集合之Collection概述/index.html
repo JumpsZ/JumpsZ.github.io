@@ -79,19 +79,19 @@
 
 
 
-<meta name="description" content="目录： [TOC] Collection接口1public interface Collection&amp;lt;E&amp;gt; extends Iterable&amp;lt;E&amp;gt; &amp;#123;&amp;#125; 框架：  它是一个接口，是高度抽象出来的集合，它包含了集合的基本操作：添加、删除、清空、遍历(读取)、是否为空、获取大小、是否保护某元素等等。 List接口1public interface List&amp;">
+<meta name="description" content="Collection接口1public interface Collection&amp;lt;E&amp;gt; extends Iterable&amp;lt;E&amp;gt; &amp;#123;&amp;#125; 框架：  它是一个接口，是高度抽象出来的集合，它包含了集合的基本操作：添加、删除、清空、遍历(读取)、是否为空、获取大小、是否保护某元素等等。 List接口1public interface List&amp;lt;E&amp;gt; e">
 <meta name="keywords" content="Java集合">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java Collection">
-<meta property="og:url" content="http://yoursite.com/2018/06/15/Java Collection/index.html">
+<meta property="og:title" content="Java集合之Collection概述">
+<meta property="og:url" content="http://yoursite.com/2018/06/15/Java集合之Collection概述/index.html">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="目录： [TOC] Collection接口1public interface Collection&amp;lt;E&amp;gt; extends Iterable&amp;lt;E&amp;gt; &amp;#123;&amp;#125; 框架：  它是一个接口，是高度抽象出来的集合，它包含了集合的基本操作：添加、删除、清空、遍历(读取)、是否为空、获取大小、是否保护某元素等等。 List接口1public interface List&amp;">
+<meta property="og:description" content="Collection接口1public interface Collection&amp;lt;E&amp;gt; extends Iterable&amp;lt;E&amp;gt; &amp;#123;&amp;#125; 框架：  它是一个接口，是高度抽象出来的集合，它包含了集合的基本操作：添加、删除、清空、遍历(读取)、是否为空、获取大小、是否保护某元素等等。 List接口1public interface List&amp;lt;E&amp;gt; e">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://images0.cnblogs.com/blog/490648/201308/18174126-653273ab5abe491bb9724353360ed252.png">
-<meta property="og:updated_time" content="2018-06-26T15:52:49.764Z">
+<meta property="og:updated_time" content="2018-06-27T12:17:54.286Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Java Collection">
-<meta name="twitter:description" content="目录： [TOC] Collection接口1public interface Collection&amp;lt;E&amp;gt; extends Iterable&amp;lt;E&amp;gt; &amp;#123;&amp;#125; 框架：  它是一个接口，是高度抽象出来的集合，它包含了集合的基本操作：添加、删除、清空、遍历(读取)、是否为空、获取大小、是否保护某元素等等。 List接口1public interface List&amp;">
+<meta name="twitter:title" content="Java集合之Collection概述">
+<meta name="twitter:description" content="Collection接口1public interface Collection&amp;lt;E&amp;gt; extends Iterable&amp;lt;E&amp;gt; &amp;#123;&amp;#125; 框架：  它是一个接口，是高度抽象出来的集合，它包含了集合的基本操作：添加、删除、清空、遍历(读取)、是否为空、获取大小、是否保护某元素等等。 List接口1public interface List&amp;lt;E&amp;gt; e">
 <meta name="twitter:image" content="https://images0.cnblogs.com/blog/490648/201308/18174126-653273ab5abe491bb9724353360ed252.png">
 
 
@@ -122,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/06/15/Java Collection/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/06/15/Java集合之Collection概述/"/>
 
 
 
 
 
-  <title>Java Collection | Blog</title>
+  <title>Java集合之Collection概述 | Blog</title>
   
 
 
@@ -266,7 +266,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/15/Java Collection/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/15/Java集合之Collection概述/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="JumpsZ">
@@ -283,7 +283,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Java Collection</h1>
+          <h1 class="post-title" itemprop="name headline">Java集合之Collection概述</h1>
         
 
         <div class="post-meta">
@@ -333,9 +333,7 @@
       
 
       
-        <p>目录：</p>
-<p>[TOC]</p>
-<h1 id="Collection接口"><a href="#Collection接口" class="headerlink" title="Collection接口"></a>Collection接口</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Collection</span>&lt;<span class="title">E</span>&gt; <span class="keyword">extends</span> <span class="title">Iterable</span>&lt;<span class="title">E</span>&gt; </span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+        <h1 id="Collection接口"><a href="#Collection接口" class="headerlink" title="Collection接口"></a>Collection接口</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Collection</span>&lt;<span class="title">E</span>&gt; <span class="keyword">extends</span> <span class="title">Iterable</span>&lt;<span class="title">E</span>&gt; </span>&#123;&#125;</span><br></pre></td></tr></table></figure>
 <p>框架：</p>
 <p><img src="https://images0.cnblogs.com/blog/490648/201308/18174126-653273ab5abe491bb9724353360ed252.png" alt=""></p>
 <p>它是一个接口，是高度抽象出来的集合，它包含了集合的基本操作：添加、删除、清空、遍历(读取)、是否为空、获取大小、是否保护某元素等等。</p>
@@ -428,8 +426,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/06/20/Java Map/" rel="prev" title="Java Map">
-                Java Map <i class="fa fa-chevron-right"></i>
+              <a href="/2018/06/20/Java集合之Map概述/" rel="prev" title="Java集合之Map汇总">
+                Java集合之Map汇总 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -511,7 +509,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
