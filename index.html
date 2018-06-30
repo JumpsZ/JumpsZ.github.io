@@ -260,6 +260,335 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/28/【Java集合】Queue/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JumpsZ">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/timg.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/28/【Java集合】Queue/" itemprop="url">【Java集合】Queue源码解析</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-28T09:29:00+08:00">
+                2018-06-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Queue"><a href="#Queue" class="headerlink" title="Queue"></a>Queue</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Queue</span>&lt;<span class="title">E</span>&gt; <span class="keyword">extends</span> <span class="title">Collection</span>&lt;<span class="title">E</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>作为队列，不一定是<code>FIFO</code>，也可作为优先级队列、<code>LIFO</code>堆栈</li>
+<li>没有定义阻塞队列方法，由<code>BlockingQueue</code>接口定义</li>
+<li>通常不允许<code>null</code>元素，尽管一些实现如<code>LinkedList</code>不禁止，<code>null</code>会作为<code>poll()</code>的返回值</li>
+<li><p>不实现<code>equals</code>和<code>hashCode</code> 方法，相同元素排序属性可能不同</p>
+</li>
+<li><p>失败操作：</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th style="text-align:center">抛出异常</th>
+<th style="text-align:center">返回特定值（  <code>null</code>或<code>false</code>  ）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Insert</td>
+<td style="text-align:center"><code>add(e)</code></td>
+<td style="text-align:center"><code>offer(e)</code></td>
+</tr>
+<tr>
+<td style="text-align:center">Remove</td>
+<td style="text-align:center"><code>remove()</code></td>
+<td style="text-align:center"><code>poll()</code></td>
+</tr>
+<tr>
+<td style="text-align:center">Examine</td>
+<td style="text-align:center"><code>element()</code></td>
+<td style="text-align:center"><code>peek()</code></td>
+</tr>
+</tbody>
+</table>
+<h1 id="Deque"><a href="#Deque" class="headerlink" title="Deque"></a>Deque</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Deque</span>&lt;<span class="title">E</span>&gt; <span class="keyword">extends</span> <span class="title">Queue</span>&lt;<span class="title">E</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>双端队列</li>
+<li>不支持索引访问</li>
+<li>定义了访问<code>deque</code>两端元素的方法。 提供了插入，移除和检查元素的方法，总结如下：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>First Element (Head)</strong></th>
+<th></th>
+<th><strong>Last Element (Tail)</strong></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td><em>Throws exception</em></td>
+<td><em>Special value</em></td>
+<td><em>Throws exception</em></td>
+<td><em>Special value</em></td>
+</tr>
+<tr>
+<td><strong>Insert</strong></td>
+<td><code>addFirst(e)</code></td>
+<td><code>offerFirst(e)</code></td>
+<td><code>addLast(e)</code></td>
+<td><code>offerLast(e)</code></td>
+</tr>
+<tr>
+<td><strong>Remove</strong></td>
+<td><code>removeFirst()</code></td>
+<td><code>pollFirst()</code></td>
+<td><code>removeLast()</code></td>
+<td><code>pollLast()</code></td>
+</tr>
+<tr>
+<td><strong>Examine</strong></td>
+<td><code>getFirst()</code></td>
+<td><code>peekFirst()</code></td>
+<td><code>getLast()</code></td>
+<td><code>peekLast()</code></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>作为FIFO队列，和queue方法对比：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th><strong>Queue Method</strong></th>
+<th><strong>Equivalent Deque Method</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>add(e)</code></td>
+<td><code>addLast(e)</code></td>
+</tr>
+<tr>
+<td><code>offer(e)</code></td>
+<td><code>offerLast(e)</code></td>
+</tr>
+<tr>
+<td><code>remove()</code></td>
+<td><code>removeFirst()</code></td>
+</tr>
+<tr>
+<td><code>poll()</code></td>
+<td><code>pollFirst()</code></td>
+</tr>
+<tr>
+<td><code>element()</code></td>
+<td><code>getFirst()</code></td>
+</tr>
+<tr>
+<td><code>peek()</code></td>
+<td><code>peekFirst()</code></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>作为LIFO，和Stack方法对比</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th><strong>Stack Method</strong></th>
+<th><strong>Equivalent Deque Method</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>push(e)</code></td>
+<td><code>addFirst(e)</code></td>
+</tr>
+<tr>
+<td><code>pop()</code></td>
+<td><code>removeFirst()</code></td>
+</tr>
+<tr>
+<td><code>peek()</code></td>
+<td><code>peekFirst()</code></td>
+</tr>
+</tbody>
+</table>
+<h1 id="ArrayDeque"><a href="#ArrayDeque" class="headerlink" title="ArrayDeque"></a>ArrayDeque</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ArrayDeque</span>&lt;<span class="title">E</span>&gt; <span class="keyword">extends</span> <span class="title">AbstractCollection</span>&lt;<span class="title">E</span>&gt;</span></span><br><span class="line"><span class="class">                           <span class="keyword">implements</span> <span class="title">Deque</span>&lt;<span class="title">E</span>&gt;, <span class="title">Cloneable</span>, <span class="title">Serializable</span></span></span><br></pre></td></tr></table></figure>
+<h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><ul>
+<li>可调整大小的数组实现，非线程安全</li>
+<li>不允许空元素</li>
+<li>作为栈，速度比<code>Stack</code>快；作为队列，速度比<code>LinkedList</code>快</li>
+<li>迭代器是fast-fail的</li>
+<li>头指针head从内部数组的末尾开始，尾指针tail从0开始，在头部插入数据时，head减一，在尾部插入数据时，tail加一。当head==tail时说明数组的容量满足不了当前的情况，此时需要扩大容量为原来的二倍。 </li>
+<li>核心思想图：</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/heheLT/picture/master/ArrayDeque.png" alt="核心思想图"></p>
+<h2 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h2><h3 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//未指定容量时，默认为16</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">ArrayDeque</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    elements = <span class="keyword">new</span> Object[<span class="number">16</span>];</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//指定初始容量</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">ArrayDeque</span><span class="params">(<span class="keyword">int</span> numElements)</span> </span>&#123;</span><br><span class="line">    allocateElements(numElements);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//指定初始值</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">ArrayDeque</span><span class="params">(Collection&lt;? extends E&gt; c)</span> </span>&#123;</span><br><span class="line">    allocateElements(c.size());</span><br><span class="line">    addAll(c);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//指定容量小于8时，返回8</span></span><br><span class="line"><span class="comment">//否则，返回initialCapacity=2^n，2^n越界时，则取2^30</span></span><br><span class="line"><span class="comment">//容量必须为2^n，否则指针移动	head &amp;（elements.length - 1）将出现空位</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">allocateElements</span><span class="params">(<span class="keyword">int</span> numElements)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> initialCapacity = MIN_INITIAL_CAPACITY;</span><br><span class="line">    <span class="keyword">if</span> (numElements &gt;= initialCapacity) &#123;</span><br><span class="line">        initialCapacity = numElements;</span><br><span class="line">        initialCapacity |= (initialCapacity &gt;&gt;&gt;  <span class="number">1</span>);</span><br><span class="line">        initialCapacity |= (initialCapacity &gt;&gt;&gt;  <span class="number">2</span>);</span><br><span class="line">        initialCapacity |= (initialCapacity &gt;&gt;&gt;  <span class="number">4</span>);</span><br><span class="line">        initialCapacity |= (initialCapacity &gt;&gt;&gt;  <span class="number">8</span>);</span><br><span class="line">        initialCapacity |= (initialCapacity &gt;&gt;&gt; <span class="number">16</span>);</span><br><span class="line">        initialCapacity++;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (initialCapacity &lt; <span class="number">0</span>)   <span class="comment">// Too many elements, must back off</span></span><br><span class="line">            initialCapacity &gt;&gt;&gt;= <span class="number">1</span>;<span class="comment">// Good luck allocating 2 ^ 30 elements</span></span><br><span class="line">    &#125;</span><br><span class="line">    elements = <span class="keyword">new</span> Object[initialCapacity];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="成员变量"><a href="#成员变量" class="headerlink" title="成员变量"></a>成员变量</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//实际存放元素的数组</span></span><br><span class="line"> <span class="keyword">transient</span> Object[] elements; </span><br><span class="line"> <span class="comment">//头指针</span></span><br><span class="line"> <span class="keyword">transient</span> <span class="keyword">int</span> head;</span><br><span class="line"> <span class="comment">//尾指针</span></span><br><span class="line"> <span class="keyword">transient</span> <span class="keyword">int</span> tail;</span><br><span class="line"> <span class="comment">//默认最小容量</span></span><br><span class="line"> <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> MIN_INITIAL_CAPACITY = <span class="number">8</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="核心方法"><a href="#核心方法" class="headerlink" title="核心方法"></a>核心方法</h3><ul>
+<li>扩容</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">doubleCapacity</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">assert</span> head == tail;</span><br><span class="line">    <span class="keyword">int</span> p = head;</span><br><span class="line">    <span class="keyword">int</span> n = elements.length;</span><br><span class="line">    <span class="keyword">int</span> r = n - p; <span class="comment">// number of elements to the right of p</span></span><br><span class="line">    <span class="keyword">int</span> newCapacity = n &lt;&lt; <span class="number">1</span>;	<span class="comment">//数组长度翻倍</span></span><br><span class="line">    <span class="keyword">if</span> (newCapacity &lt; <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(<span class="string">"Sorry, deque too big"</span>);</span><br><span class="line">    Object[] a = <span class="keyword">new</span> Object[newCapacity];</span><br><span class="line">    System.arraycopy(elements, p, a, <span class="number">0</span>, r);	<span class="comment">//复制head指针右边的数据</span></span><br><span class="line">    System.arraycopy(elements, <span class="number">0</span>, a, r, p);	<span class="comment">//复制head指针左边的数据</span></span><br><span class="line">    elements = a;</span><br><span class="line">    head = <span class="number">0</span>;	<span class="comment">//重新初始化head,tail</span></span><br><span class="line">    tail = n;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>插入</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//在头部插入数据</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addFirst</span><span class="params">(E e)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (e == <span class="keyword">null</span>)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException();</span><br><span class="line">    elements[head = (head - <span class="number">1</span>) &amp; (elements.length - <span class="number">1</span>)] = e;	<span class="comment">//head指针从右向左移</span></span><br><span class="line">    <span class="keyword">if</span> (head == tail)</span><br><span class="line">        doubleCapacity();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//在尾部插入数据</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addLast</span><span class="params">(E e)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (e == <span class="keyword">null</span>)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException();</span><br><span class="line">    elements[tail] = e;</span><br><span class="line">    <span class="keyword">if</span> ( (tail = (tail + <span class="number">1</span>) &amp; (elements.length - <span class="number">1</span>)) == head)	<span class="comment">//head指针从左向右移动</span></span><br><span class="line">        doubleCapacity();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>删除</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//删除头部数据</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> E <span class="title">pollFirst</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> h = head;</span><br><span class="line">    <span class="meta">@SuppressWarnings</span>(<span class="string">"unchecked"</span>)</span><br><span class="line">    E result = (E) elements[h];</span><br><span class="line">    <span class="comment">// Element is null if deque empty</span></span><br><span class="line">    <span class="keyword">if</span> (result == <span class="keyword">null</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    elements[h] = <span class="keyword">null</span>;     <span class="comment">// Must null out slot</span></span><br><span class="line">    head = (h + <span class="number">1</span>) &amp; (elements.length - <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//删除尾部数据</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> E <span class="title">pollLast</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> t = (tail - <span class="number">1</span>) &amp; (elements.length - <span class="number">1</span>);</span><br><span class="line">    <span class="meta">@SuppressWarnings</span>(<span class="string">"unchecked"</span>)</span><br><span class="line">    E result = (E) elements[t];</span><br><span class="line">    <span class="keyword">if</span> (result == <span class="keyword">null</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    elements[t] = <span class="keyword">null</span>;</span><br><span class="line">    tail = t;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>遍历</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Iterator&lt;E&gt; <span class="title">iterator</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> DeqIterator();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">DeqIterator</span> <span class="keyword">implements</span> <span class="title">Iterator</span>&lt;<span class="title">E</span>&gt; </span>&#123;</span><br><span class="line">    <span class="comment">//游标，从head开始遍历</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> cursor = head;</span><br><span class="line">	<span class="comment">//记录tail指针，判断是否结构改变</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> fence = tail;</span><br><span class="line">	<span class="comment">//next()返回的索引</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> lastRet = -<span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">hasNext</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> cursor != fence;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> E <span class="title">next</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (cursor == fence)</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> NoSuchElementException();</span><br><span class="line">        <span class="meta">@SuppressWarnings</span>(<span class="string">"unchecked"</span>)</span><br><span class="line">        E result = (E) elements[cursor];</span><br><span class="line">        <span class="comment">// This check doesn't catch all possible comodifications,</span></span><br><span class="line">        <span class="comment">// but does catch the ones that corrupt traversal</span></span><br><span class="line">        <span class="keyword">if</span> (tail != fence || result == <span class="keyword">null</span>)</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> ConcurrentModificationException();</span><br><span class="line">        lastRet = cursor;</span><br><span class="line">        cursor = (cursor + <span class="number">1</span>) &amp; (elements.length - <span class="number">1</span>);</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="PriorityQueue"><a href="#PriorityQueue" class="headerlink" title="PriorityQueue"></a>PriorityQueue</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PriorityQueue</span>&lt;<span class="title">E</span>&gt; <span class="keyword">extends</span> <span class="title">AbstractQueue</span>&lt;<span class="title">E</span>&gt;</span></span><br><span class="line"><span class="class">    <span class="keyword">implements</span> <span class="title">java</span>.<span class="title">io</span>.<span class="title">Serializable</span></span></span><br></pre></td></tr></table></figure>
+<h2 id="特点-1"><a href="#特点-1" class="headerlink" title="特点"></a>特点</h2><ul>
+<li><p>无界队列，最小二叉堆的实现</p>
+</li>
+<li><p>不允许空元素</p>
+</li>
+<li><p>迭代器<code>iterator()</code> 不能保证以特定顺序遍历优先级队列，需要有序用<code>Arrays.sort(pq.toArray())</code></p>
+</li>
+<li><p>入列、出列方法，<code>offer()</code>、<code>add()</code>、<code>poll()</code>、<code>remove()</code>的时间复杂度为<code>O(log(n))</code>；</p>
+<p>检索方法，<code>peek()</code>、<code>element()</code>和<code>size()</code>方法的时间复杂度为<code>O(1)</code>；</p>
+<p><code>remove(Object)</code>和<code>contains(Object)</code>方法时间复杂度为线性，<code>O(n)</code>； </p>
+</li>
+<li><p>非线程安全，需要线程安全使用<code>PriorityBlockingQueue</code></p>
+</li>
+<li><p>不指定容量，则 <code>DEFAULT_INITIAL_CAPACITY = 11</code></p>
+</li>
+</ul>
+<h2 id="源码分析-1"><a href="#源码分析-1" class="headerlink" title="源码分析"></a>源码分析</h2><h3 id="成员变量-1"><a href="#成员变量-1" class="headerlink" title="成员变量"></a>成员变量</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//queue[n] 子节点为 queue[2*n+1] ， queue[2*(n+1)]</span></span><br><span class="line"><span class="comment">//queue[n] &lt;= queue[2*n+1]， queue[n] &lt;= queue[2*(n+1)]</span></span><br><span class="line"><span class="keyword">transient</span> Object[] queue;</span><br><span class="line"><span class="comment">//实际元素个数</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">int</span> size = <span class="number">0</span>;</span><br><span class="line"><span class="comment">//比较器，自然序为null</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> Comparator&lt;? <span class="keyword">super</span> E&gt; comparator;</span><br><span class="line"><span class="comment">//fast-fail机制</span></span><br><span class="line"><span class="keyword">transient</span> <span class="keyword">int</span> modCount = <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="核心方法-1"><a href="#核心方法-1" class="headerlink" title="核心方法"></a>核心方法</h3><ul>
+<li>构建堆操作</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//构建堆</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">heapify</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = (size &gt;&gt;&gt; <span class="number">1</span>) - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) <span class="comment">//从数组 （size &gt;&gt;&gt; 1) - 1 开始	</span></span><br><span class="line">        siftDown(i, (E) queue[i]);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">siftDown</span><span class="params">(<span class="keyword">int</span> k, E x)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (comparator != <span class="keyword">null</span>)</span><br><span class="line">        siftDownUsingComparator(k, x);	<span class="comment">//比较器的区别</span></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        siftDownComparable(k, x);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//从父节点向下调整堆</span></span><br><span class="line"><span class="comment">//是一个递归操作，一旦发生了父节点和子节点的交换，交换下去的新的子节点可能和该子节点的子节点不满足堆特性，需要调整</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">siftDownUsingComparator</span><span class="params">(<span class="keyword">int</span> k, E x)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> half = size &gt;&gt;&gt; <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span> (k &lt; half) &#123;</span><br><span class="line">        <span class="keyword">int</span> child = (k &lt;&lt; <span class="number">1</span>) + <span class="number">1</span>;	<span class="comment">//取左节点，左节点一定存在</span></span><br><span class="line">        Object c = queue[child];	</span><br><span class="line">        <span class="keyword">int</span> right = child + <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span> (right &lt; size &amp;&amp;</span><br><span class="line">            comparator.compare((E) c, (E) queue[right]) &gt; <span class="number">0</span>)	</span><br><span class="line">            c = queue[child = right];	<span class="comment">//取左右节点的最小值</span></span><br><span class="line">        <span class="keyword">if</span> (comparator.compare(x, (E) c) &lt;= <span class="number">0</span>)	<span class="comment">//比较父节点和子节点最小值</span></span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        queue[k] = c;	        <span class="comment">// 将k位置赋值成较小值</span></span><br><span class="line">        k = child;		<span class="comment">//指定k为child，进入下一次循环。因为出现了交换，为了保证交换下去的节点也能满足小顶堆，需要继续调整堆</span></span><br><span class="line">    &#125;</span><br><span class="line">    queue[k] = x;	<span class="comment">//重新赋值k</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>offer()</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">offer</span><span class="params">(E e)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (e == <span class="keyword">null</span>)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException();</span><br><span class="line">    modCount++;</span><br><span class="line">    <span class="keyword">int</span> i = size;</span><br><span class="line">    <span class="keyword">if</span> (i &gt;= queue.length)</span><br><span class="line">        grow(i + <span class="number">1</span>);	<span class="comment">//进行扩容  Double size if small; else grow by 50%</span></span><br><span class="line">    <span class="comment">//newCapacity = oldCapacity + ((oldCapacity &lt; 64) ? (oldCapacity + 2) : (oldCapacity &gt;&gt; 1));</span></span><br><span class="line">    size = i + <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span> (i == <span class="number">0</span>)</span><br><span class="line">        queue[<span class="number">0</span>] = e;	<span class="comment">//首元素</span></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        siftUp(i, e);	<span class="comment">//向上</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">siftUp</span><span class="params">(<span class="keyword">int</span> k, E x)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (comparator != <span class="keyword">null</span>)</span><br><span class="line">        siftUpUsingComparator(k, x);</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        siftUpComparable(k, x);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//递归和父节点比较，最小元素上浮</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">siftUpUsingComparator</span><span class="params">(<span class="keyword">int</span> k, E x)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">while</span> (k &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">int</span> parent = (k - <span class="number">1</span>) &gt;&gt;&gt; <span class="number">1</span>;</span><br><span class="line">        Object e = queue[parent];</span><br><span class="line">        <span class="keyword">if</span> (comparator.compare(x, (E) e) &gt;= <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        queue[k] = e;</span><br><span class="line">        k = parent;</span><br><span class="line">    &#125;</span><br><span class="line">    queue[k] = x;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>poll()</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> E <span class="title">poll</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (size == <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">int</span> s = --size;</span><br><span class="line">    modCount++;</span><br><span class="line">    E result = (E) queue[<span class="number">0</span>];</span><br><span class="line">    E x = (E) queue[s];</span><br><span class="line">    queue[s] = <span class="keyword">null</span>; <span class="comment">//最后的元素丢到堆顶</span></span><br><span class="line">    <span class="keyword">if</span> (s != <span class="number">0</span>)</span><br><span class="line">        siftDown(<span class="number">0</span>, x); <span class="comment">//调整堆顶元素</span></span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>iterator()</li>
+</ul>
+<p>iterator只会将元素顺次输出一遍，元素第一位一定是最小元素，并且整体满足堆特性，但是整体并不是严格的从小到大排列。堆只是整体有序，并不是完全有序。 </p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://blog.csdn.net/lh513828570/article/details/59560771" target="_blank" rel="noopener">https://blog.csdn.net/lh513828570/article/details/59560771</a></p>
+<p><a href="https://blog.csdn.net/a15501628162/article/details/52291258" target="_blank" rel="noopener">https://blog.csdn.net/a15501628162/article/details/52291258</a></p>
+<p><a href="https://blog.csdn.net/u011531425/article/details/80697705" target="_blank" rel="noopener">https://blog.csdn.net/u011531425/article/details/80697705</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/27/【Java集合】Set源码解析/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1712,7 +2041,7 @@ for (var i = 0; i &lt; 5; i++) {
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
