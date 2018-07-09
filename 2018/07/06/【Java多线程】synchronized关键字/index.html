@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java多线程," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="[TOC] synchronized 关键字特点 在java中，每一个对象有且仅有一个同步锁。这也意味着，同步锁是依赖于对象而存在。 当我们调用某对象的synchronized方法时，就获取了该对象的同步锁 不同线程对同步锁的访问是互斥的  规则当一个线程访问“某对象”的“synchronized方法”或者“synchronized代码块”时，其他线程  对“该对象”的该“synchronized">
+<meta name="keywords" content="Java多线程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【Java多线程】synchronized 关键字">
+<meta property="og:url" content="http://yoursite.com/2018/07/06/【Java多线程】synchronized关键字/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="[TOC] synchronized 关键字特点 在java中，每一个对象有且仅有一个同步锁。这也意味着，同步锁是依赖于对象而存在。 当我们调用某对象的synchronized方法时，就获取了该对象的同步锁 不同线程对同步锁的访问是互斥的  规则当一个线程访问“某对象”的“synchronized方法”或者“synchronized代码块”时，其他线程  对“该对象”的该“synchronized">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.imgur.com/0y6DaIl.png">
+<meta property="og:image" content="https://i.imgur.com/XsqdD2g.png">
+<meta property="og:image" content="https://i.imgur.com/BSUMe6M.png">
+<meta property="og:updated_time" content="2018-07-09T12:59:57.164Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【Java多线程】synchronized 关键字">
+<meta name="twitter:description" content="[TOC] synchronized 关键字特点 在java中，每一个对象有且仅有一个同步锁。这也意味着，同步锁是依赖于对象而存在。 当我们调用某对象的synchronized方法时，就获取了该对象的同步锁 不同线程对同步锁的访问是互斥的  规则当一个线程访问“某对象”的“synchronized方法”或者“synchronized代码块”时，其他线程  对“该对象”的该“synchronized">
+<meta name="twitter:image" content="https://i.imgur.com/0y6DaIl.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Jumping'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/07/06/【Java多线程】synchronized关键字/"/>
+
+
+
+
+
+  <title>【Java多线程】synchronized 关键字 | Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+	
+	<a href="https://github.com/JumpsZ/JumpsZ.github.io"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_darkblue_121621.png" alt="Fork me on GitHub"></a>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/06/【Java多线程】synchronized关键字/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JumpsZ">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/timg.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【Java多线程】synchronized 关键字</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-06T15:52:00+08:00">
+                2018-07-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>[TOC]</p>
+<h1 id="synchronized-关键字"><a href="#synchronized-关键字" class="headerlink" title="synchronized 关键字"></a>synchronized 关键字</h1><h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><ul>
+<li>在java中，每一个对象有且仅有一个同步锁。这也意味着，同步锁是依赖于对象而存在。</li>
+<li>当我们调用某对象的synchronized方法时，就获取了该对象的同步锁</li>
+<li>不同线程对同步锁的访问是互斥的</li>
+</ul>
+<h2 id="规则"><a href="#规则" class="headerlink" title="规则"></a>规则</h2><p>当一个线程访问“某对象”的“synchronized方法”或者“synchronized代码块”时，其他线程</p>
+<ul>
+<li>对<strong>“该对象”的该“synchronized方法”或者“synchronized代码块”的访问</strong>将被阻塞。 </li>
+<li>仍然<strong>可以访问“该对象”的非同步代码块</strong> </li>
+<li>对<strong>“该对象”的其他的“synchronized方法”或者“synchronized代码块”的访问</strong>将被阻塞 </li>
+</ul>
+<h2 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h2><h3 id="修饰代码块"><a href="#修饰代码块" class="headerlink" title="修饰代码块"></a>修饰代码块</h3><p>同步语句块，其作用的范围是大括号{}括起来的代码，作用的对象是调用这个代码块的对象。（实例锁）</p>
+<p>synchronized代码块可以更精确的控制冲突限制访问区域</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="comment">// 锁定当前对象</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">synchronized</span>(<span class="keyword">this</span>) </span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// todo</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//锁定指定对象obj</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method2</span><span class="params">(Object obj)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">synchronized</span>(obj)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// todo</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">byte</span>[] lock = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">0</span>];  <span class="comment">// 特殊的instance变量</span></span><br><span class="line">    <span class="comment">//当没有明确的对象作为锁，只是想让一段代码同步时，可以创建一个特殊的对象来充当锁</span></span><br><span class="line">    <span class="comment">//说明：零长度的byte数组对象创建起来将比任何对象都经济――查看编译后的字节码：生成零长度的byte[]对象只需3条操作码，而Object lock = new Object()则需要7行操作码</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method3</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">       <span class="keyword">synchronized</span>(lock) &#123;</span><br><span class="line">          <span class="comment">// todo 同步代码块</span></span><br><span class="line">       &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="修饰方法"><a href="#修饰方法" class="headerlink" title="修饰方法"></a>修饰方法</h3><ul>
+<li>synchronized修饰方法，作用范围为整个函数</li>
+<li>synchronized关键字不能被继承，子类重写父类synchronized方法，想要同步需要添加synchronized关键字，或者调用父类同步方法</li>
+<li>定义接口方法时不能使用synchronized关键字</li>
+<li>构造方法不能使用synchronized关键字，可以用synchronized代码块来进行同步</li>
+</ul>
+<p>用法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">method</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   <span class="comment">// todo</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//等同于</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   <span class="keyword">synchronized</span>(<span class="keyword">this</span>) &#123;</span><br><span class="line">      <span class="comment">// todo</span></span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="修饰静态方法"><a href="#修饰静态方法" class="headerlink" title="修饰静态方法"></a>修饰静态方法</h3><p>synchronized修饰的静态方法锁定的是这个类的所有对象（全局锁）</p>
+<p>用法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">method</span><span class="params">()</span> </span>&#123;</span><br><span class="line">   <span class="comment">// todo</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><strong>实例锁</strong> </p>
+<p>锁在某一个实例对象上。如果该类是单例，那么该锁也具有全局锁的概念。                </p>
+<p>实例锁对应的就是synchronized关键字。 </p>
+</li>
+<li><p><strong>全局锁</strong> </p>
+<p>该锁针对的是对象对应的Class实例，而Class实例存于永久，无论实例多少个对象，那么线程都共享该锁。</p>
+<p>全局锁对应的就是static synchronized（或者是锁在该类的class或者classloader对象上） </p>
+</li>
+</ul>
+<p>示例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">pulbic <span class="class"><span class="keyword">class</span> <span class="title">Something</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">isSyncA</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">isSyncB</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">cSyncA</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">cSyncB</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>假设，Something有两个实例x和y。分析下面4组表达式获取的锁的情况。 </p>
+<ul>
+<li>x.isSyncA()与x.isSyncB() </li>
+</ul>
+<p><strong>不能同时被访问</strong>。isSyncA() 和 isSyncB() 都是访问同一个对象(对象x)的同步锁 </p>
+<ul>
+<li>x.isSyncA()与y.isSyncA()</li>
+</ul>
+<p><strong>可以同时被访问。</strong>因为访问的不是同一个对象的同步锁，x.isSyncA()访问的是x的同步锁，而y.isSyncA()访问的是y的同步锁。 </p>
+<ul>
+<li><p>x.cSyncA()与y.cSyncB()</p>
+<p><strong>不能被同时访问。</strong>因为cSyncA()和cSyncB()都是static类型，x.cSyncA()相当于Something.isSyncA()，y.cSyncB()相当于Something.isSyncB()，因此它们共用一个同步锁，不能被同时反问。 </p>
+</li>
+<li><p>x.isSyncA()与Something.cSyncA()</p>
+<p><strong>可以被同时访问。</strong>因为isSyncA()是实例方法，x.isSyncA()使用的是对象x的锁；而cSyncA()是静态方法，Something.cSyncA()可以理解对使用的是“类的锁”。因此，它们是可以被同时访问的。 </p>
+</li>
+</ul>
+<h3 id="修饰类"><a href="#修饰类" class="headerlink" title="修饰类"></a>修饰类</h3><p>synchronized作用于类时，是给这个类加锁，类中所有对象用的是同一把锁</p>
+<p>用法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ClassName</span> </span>&#123;</span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      <span class="keyword">synchronized</span>(ClassName.class) &#123;</span><br><span class="line">         <span class="comment">// todo</span></span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="底层原理"><a href="#底层原理" class="headerlink" title="底层原理"></a>底层原理</h2><h3 id="字节码"><a href="#字节码" class="headerlink" title="字节码"></a>字节码</h3><h4 id="synchronized-语句"><a href="#synchronized-语句" class="headerlink" title="synchronized 语句"></a>synchronized 语句</h4><p>对于<code>synchronized</code>语句当Java源代码被<code>javac</code>编译成<code>bytecode</code>的时候，会在同步块的入口位置和退出位置分别插入<code>monitorenter</code>和<code>monitorexit</code>字节码指令，这两个指令通过一个reference类型的参数来指明要锁定和解锁的对象</p>
+<ul>
+<li><code>monitorenter</code>监视器准入指令</li>
+</ul>
+<p>每个对象有一个监视器锁（<code>monitor</code>）。当<code>monitor</code>被占用时就会处于锁定状态，线程执行<code>monitorenter</code>指令时尝试获取monitor的所有权，过程如下：</p>
+<ol>
+<li>如果<code>monitor</code>的进入数为0，则该线程进入<code>monitor</code>，然后将进入数设置为1，该线程即为<code>monitor</code>的所有者。</li>
+<li>如果线程已经占有该<code>monitor</code>，只是重新进入，则进入<code>monitor</code>的进入数加1.</li>
+<li>如果其他线程已经占用了<code>monitor</code>，则该线程进入阻塞状态，直到<code>monitor</code>的进入数为0，再重新尝试获取<code>monitor</code>的所有权。</li>
+</ol>
+<ul>
+<li><code>monitorexit</code>监视器释放指令</li>
+</ul>
+<ol>
+<li>执行<code>monitorexit</code>的线程必须是<code>object</code>所对应的<code>monitor</code>的所有者。</li>
+<li>指令执行时，<code>monitor</code>的进入数减1，如果减1后进入数为0，那线程退出<code>monitor</code>，不再是这个<code>monitor</code>的所有者。其他被这个<code>monitor</code>阻塞的线程可以尝试去获取这个 <code>monitor</code> 的所有权。</li>
+</ol>
+<p><code>monitorenter</code>和<code>monitorexit</code>依赖于底层操作系统的Mutex Lock，而使用互斥锁需要将当前线程挂起，并从用户态切换到内核态来执行，代价高昂</p>
+<h4 id="synchronized-方法"><a href="#synchronized-方法" class="headerlink" title="synchronized 方法"></a>synchronized 方法</h4><p><code>synchronized</code>方法被翻译成普通的方法调用和返回指令如:<code>invokevirtual</code>、<code>areturn</code>指令，在<code>VM</code>字节码层面并没有任何特别的指令来实现被<code>synchronized</code>修饰的方法，而是在Class文件的方法表中将该方法的<code>access_flags</code>字段中的<code>synchronized</code>标志位置1，表示该方法是同步方法并使调用该方法的对象或该方法所属的Class在JVM的内部对象表示Klass做为锁对象 </p>
+<h3 id="对象头"><a href="#对象头" class="headerlink" title="对象头"></a>对象头</h3><p><code>HotSpot</code>虚拟机中，对象在内存中存储的布局可以分为三块区域：对象头（Header）、实例数据（Instance Data）和对齐填充（Padding）。 </p>
+<p><code>HotSpot</code>虚拟机的对象头(Object  Header)包括两部分信息:</p>
+<p>第一部分”<code>Mark Word</code>“:用于存储对象自身的运行时数据，  如哈希码（<code>HashCode</code>）、<code>GC</code>分代年龄、锁状态标志、线程持有的锁、偏向线程ID、偏向时间戳等等.</p>
+<p>第二部分”<code>Klass Pointer</code>“：对象指向它的类的元数据的指针，虚拟机通过这个指针来确定这个对象是哪个类的实例。(数组，对象头中还必须有一块用于记录数组长度的数据，因为虚拟机可以通过普通Java对象的元数据信息确定Java对象的大小，但是从数组的元数据中无法确定数组的大小。 ) </p>
+<p>32位<code>HotSpot</code>虚拟机对象头（<code>Mark Word</code>）：</p>
+<p><img src="https://i.imgur.com/0y6DaIl.png" alt="1530861009468"></p>
+<h3 id="锁优化"><a href="#锁优化" class="headerlink" title="锁优化"></a>锁优化</h3><h4 id="适应性自旋"><a href="#适应性自旋" class="headerlink" title="适应性自旋"></a>适应性自旋</h4><p>使用互斥同步，挂起线程和恢复线程的操作需要转入内核态完成，对系统的并发性能影响较大。可以使请求锁的线程等待，不放弃处理器的执行时间，执行忙循环（自旋），看持有锁的线程是否很快释放锁；当尝试一定的次数后如果仍然没有成功则调用与该monitor关联的semaphore（即互斥锁）进入到阻塞状态 </p>
+<p>如果锁被占用的时间很长，自旋的线程将白白消耗处理器资源，带来性能上的浪费，自旋有一定的限定次数</p>
+<p>自适应自旋锁： 自旋时间不固定，由前一次在同一个锁上的自旋时间和锁的拥有者的状态来决定</p>
+<h4 id="锁粗化"><a href="#锁粗化" class="headerlink" title="锁粗化"></a>锁粗化</h4><p>减少不必要的紧连在一起的unlock，lock操作，将多个连续的锁扩展成一个范围更大的锁 </p>
+<h4 id="锁消除"><a href="#锁消除" class="headerlink" title="锁消除"></a>锁消除</h4><p>锁消除指虚拟机<code>JIT</code>编译器在运行时，对一些代码上要求同步，但检测到不可能存在共享数据竞争的锁进行消除</p>
+<p>依据于运行时<code>JIT</code>编译器的逃逸分析技术</p>
+<h4 id="轻量级锁"><a href="#轻量级锁" class="headerlink" title="轻量级锁"></a>轻量级锁</h4><p>在进入同步块的时候，如果对象没有被锁定，在当前线程的栈帧中建立一个锁记录的空间（Monitor Record列表），用于存储对象的Mark Word（称为Displaced Mark Word）。虚拟机使用CAS操作将对象的Mark Word更新为指向Monitor Record的指针，更新成功则线程拥有该对象的锁；更新失败，如果对象Mark Word不是指向当前线程的栈帧，则膨胀为重量级锁，Mark Word存储的就是指向重量级锁的指针</p>
+<p>Monitor Record 结构：</p>
+<ul>
+<li><code>Owner</code>：初始时为NULL表示当前没有任何线程拥有该monitor record，当线程成功拥有该锁后保存线程唯一标识，当锁被释放时又设置为NULL；</li>
+<li><code>EntryQ</code>: 关联一个系统互斥锁（semaphore），阻塞所有试图锁住monitor record失败的线程。</li>
+<li><code>RcThis</code>: 表示blocked或waiting在该monitor record上的所有线程的个数。</li>
+<li><code>Nest</code>: 用来实现重入锁的计数。</li>
+<li><code>HashCode</code>: 保存从对象头拷贝过来的HashCode值（可能还包含GC age）。</li>
+<li><code>Candidate</code>: 用来避免不必要的阻塞或等待线程唤醒，因为每一次只有一个线程能够成功拥有锁，如果每次前一个释放锁的线程唤醒所有正在阻塞或等待的线程，会引起不必要的上下文切换（从阻塞到就绪然后因为竞争锁失败又被阻塞）从而导致性能严重下降。Candidate只有两种可能的值0表示没有需要唤醒的线程1表示要唤醒一个继任线程来竞争锁。</li>
+</ul>
+<h4 id="偏向锁"><a href="#偏向锁" class="headerlink" title="偏向锁"></a>偏向锁</h4><p>为了在无锁竞争的情况下避免在锁获取过程中执行不必要的CAS原子指令，因为CAS原子指令虽然相对于重量级锁来说开销比较小但还是存在非常可观的本地延迟 </p>
+<p>偏向锁，轻量级锁的状态转换关系：</p>
+<p><img src="https://i.imgur.com/XsqdD2g.png" alt="偏向锁，轻量级锁的状态转换关系"></p>
+<p>不同锁的比较：</p>
+<p><img src="https://i.imgur.com/BSUMe6M.png" alt=""> </p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p>《深入理解Java虚拟机》</p>
+<p><a href="http://www.importnew.com/21866.html" target="_blank" rel="noopener">http://www.importnew.com/21866.html</a></p>
+<p><a href="http://www.cnblogs.com/skywang12345/p/3479202.html" target="_blank" rel="noopener">http://www.cnblogs.com/skywang12345/p/3479202.html</a></p>
+<p><a href="http://www.open-open.com/lib/view/open1352431526366.html" target="_blank" rel="noopener">http://www.open-open.com/lib/view/open1352431526366.html</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java多线程/" rel="tag"># Java多线程</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/05/【JVM】java内存区域/" rel="next" title="">
+                <i class="fa fa-chevron-left"></i> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/07/08/【Java多线程】UnSafe/" rel="prev" title="【Java多线程】Unsafe">
+                【Java多线程】Unsafe <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/timg.jpg"
+                alt="JumpsZ" />
+            
+              <p class="site-author-name" itemprop="name">JumpsZ</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#synchronized-关键字"><span class="nav-number">1.</span> <span class="nav-text">synchronized 关键字</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#特点"><span class="nav-number">1.1.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#规则"><span class="nav-number">1.2.</span> <span class="nav-text">规则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用法"><span class="nav-number">1.3.</span> <span class="nav-text">用法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#修饰代码块"><span class="nav-number">1.3.1.</span> <span class="nav-text">修饰代码块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修饰方法"><span class="nav-number">1.3.2.</span> <span class="nav-text">修饰方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修饰静态方法"><span class="nav-number">1.3.3.</span> <span class="nav-text">修饰静态方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修饰类"><span class="nav-number">1.3.4.</span> <span class="nav-text">修饰类</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#底层原理"><span class="nav-number">1.4.</span> <span class="nav-text">底层原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#字节码"><span class="nav-number">1.4.1.</span> <span class="nav-text">字节码</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#synchronized-语句"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">synchronized 语句</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#synchronized-方法"><span class="nav-number">1.4.1.2.</span> <span class="nav-text">synchronized 方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对象头"><span class="nav-number">1.4.2.</span> <span class="nav-text">对象头</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#锁优化"><span class="nav-number">1.4.3.</span> <span class="nav-text">锁优化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#适应性自旋"><span class="nav-number">1.4.3.1.</span> <span class="nav-text">适应性自旋</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#锁粗化"><span class="nav-number">1.4.3.2.</span> <span class="nav-text">锁粗化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#锁消除"><span class="nav-number">1.4.3.3.</span> <span class="nav-text">锁消除</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#轻量级锁"><span class="nav-number">1.4.3.4.</span> <span class="nav-text">轻量级锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#偏向锁"><span class="nav-number">1.4.3.5.</span> <span class="nav-text">偏向锁</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">2.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JumpsZ</span>
+
+  
+</div>
+
+
+
+  <div class="powered-by">All rights reserved</div>
+
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
+<script type="text/javascript" src="/js/src/love.js"></script>
