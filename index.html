@@ -260,7 +260,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/09/【Java多线程】ReentrantLock/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/25/【Java多线程】JUC锁 04. ReentrantLock/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="JumpsZ">
@@ -279,7 +279,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/07/09/【Java多线程】ReentrantLock/" itemprop="url">未命名</a></h1>
+                <a class="post-title-link" href="/2018/07/25/【Java多线程】JUC锁 04. ReentrantLock/" itemprop="url">【Java多线程】JUC锁 05. ReentrantLock</a></h1>
         
 
         <div class="post-meta">
@@ -291,8 +291,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-09T20:59:58+08:00">
-                2018-07-09
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-25T20:10:00+08:00">
+                2018-07-25
               </time>
             
 
@@ -331,7 +331,8 @@
       
         
           
-            <h1 id="ReentrantLock"><a href="#ReentrantLock" class="headerlink" title="ReentrantLock"></a>ReentrantLock</h1><p>## </p>
+            <p>[TOC]</p>
+<h1 id="ReentrantLock"><a href="#ReentrantLock" class="headerlink" title="ReentrantLock"></a>ReentrantLock</h1><p>## </p>
 <p><code>ReentrantLock</code> 和 <code>synchronized</code> 区别：</p>
 <ul>
 <li><code>ReentrantLock</code> 非阻塞，<code>synchronized</code> 阻塞</li>
@@ -396,7 +397,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/09/【Java多线程】LockSupport/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/14/【Java多线程】JUC锁 04. AQS/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="JumpsZ">
@@ -415,7 +416,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/07/09/【Java多线程】LockSupport/" itemprop="url">【Java多线程】LockSupport解析</a></h1>
+                <a class="post-title-link" href="/2018/07/14/【Java多线程】JUC锁 04. AQS/" itemprop="url">【Java多线程】JUC锁 04. AQS</a></h1>
         
 
         <div class="post-meta">
@@ -427,8 +428,127 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-09T10:56:00+08:00">
-                2018-07-09
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-14T10:00:00+08:00">
+                2018-07-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/08/【Java多线程】JUC锁 03. LockSupport/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JumpsZ">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/timg.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/08/【Java多线程】JUC锁 03. LockSupport/" itemprop="url">【Java多线程】JUC锁 03. LockSupport</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-08T10:56:00+08:00">
+                2018-07-08
               </time>
             
 
@@ -472,6 +592,24 @@
 <li>基本线程阻塞原语</li>
 <li><code>LockSupport</code>中的park() 和 unpark() 的作用分别是阻塞线程和解除阻塞线程，而且park()和unpark()不会遇到“Thread.suspend 和 Thread.resume所可能引发的死锁”问题。 因为park() 和 unpark()有许可的存在；调用 park() 的线程和另一个试图将其 unpark() 的线程之间的竞争将保持活性。 </li>
 </ul>
+<h2 id="源码解读"><a href="#源码解读" class="headerlink" title="源码解读"></a>源码解读</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="title">LockSupport</span><span class="params">()</span> </span>&#123;&#125;	 <span class="comment">//私有构造函数，无法被实例化</span></span><br></pre></td></tr></table></figure>
+<h3 id="成员变量"><a href="#成员变量" class="headerlink" title="成员变量"></a>成员变量</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> sun.misc.Unsafe UNSAFE;	<span class="comment">//UnSafe对象</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> parkBlockerOffset;	<span class="comment">//获取内存偏移地址，记录线程被谁阻塞</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> SEED;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> PROBE;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> SECONDARY;</span><br><span class="line"><span class="keyword">static</span> &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        UNSAFE = sun.misc.Unsafe.getUnsafe();</span><br><span class="line">        Class&lt;?&gt; tk = Thread.class;</span><br><span class="line">        parkBlockerOffset = UNSAFE.objectFieldOffset</span><br><span class="line">            (tk.getDeclaredField(<span class="string">"parkBlocker"</span>));</span><br><span class="line">        SEED = UNSAFE.objectFieldOffset</span><br><span class="line">            (tk.getDeclaredField(<span class="string">"threadLocalRandomSeed"</span>));</span><br><span class="line">        PROBE = UNSAFE.objectFieldOffset</span><br><span class="line">            (tk.getDeclaredField(<span class="string">"threadLocalRandomProbe"</span>));</span><br><span class="line">        SECONDARY = UNSAFE.objectFieldOffset</span><br><span class="line">            (tk.getDeclaredField(<span class="string">"threadLocalRandomSecondarySeed"</span>));</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception ex) &#123; <span class="keyword">throw</span> <span class="keyword">new</span> Error(ex); &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="核心方法"><a href="#核心方法" class="headerlink" title="核心方法"></a>核心方法</h3><h4 id="park"><a href="#park" class="headerlink" title="park()"></a>park()</h4><p>三种形式的park()还各支持一个blocker对象参数，即有没有设置线程的parkBlocker字段</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//阻塞当前线程，在阻塞当前线程的时候做了记录当前线程等待的对象操作</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">park</span><span class="params">(Object blocker)</span> </span>&#123;</span><br><span class="line">    Thread t = Thread.currentThread();</span><br><span class="line">    setBlocker(t, blocker);</span><br><span class="line">    UNSAFE.park(<span class="keyword">false</span>, <span class="number">0L</span>);</span><br><span class="line">    setBlocker(t, <span class="keyword">null</span>);	<span class="comment">//可运行后清除blocker</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//阻塞当前线程，最长等待时间不超过nanos毫秒，在阻塞当前线程的时候做了记录当前线程等待的对象操作</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">parkNanos</span><span class="params">(Object blocker, <span class="keyword">long</span> nanos)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (nanos &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        Thread t = Thread.currentThread();</span><br><span class="line">        setBlocker(t, blocker);</span><br><span class="line">        UNSAFE.park(<span class="keyword">false</span>, nanos);</span><br><span class="line">        setBlocker(t, <span class="keyword">null</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//阻塞当前线程直到deadline时间，也做了阻塞前记录当前线程等待对象的操作</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">parkUntil</span><span class="params">(Object blocker, <span class="keyword">long</span> deadline)</span> </span>&#123;</span><br><span class="line">    Thread t = Thread.currentThread();</span><br><span class="line">    setBlocker(t, blocker);</span><br><span class="line">    UNSAFE.park(<span class="keyword">true</span>, deadline);</span><br><span class="line">    setBlocker(t, <span class="keyword">null</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>线程可重新运行的情况：</p>
+<ul>
+<li>其他某个线程将当前线程作为目标调用 <code>unpark</code> </li>
+<li>其他某个线程中断当前线程 <code>interrupt()</code></li>
+<li>该调用不合逻辑地（即毫无理由地）返回 </li>
+</ul>
+<p><code>wait()</code> 和 <code>park()</code> 的<strong>区别</strong>在于： </p>
+<ul>
+<li><code>wait()</code> 阻塞线程前，必须通过<code>synchronized</code>获取同步锁 </li>
+<li>更加灵活。使用<code>park/unpark</code>，不会造成由<code>wait/notify</code>调用顺序不当所引起的阻塞 </li>
+</ul>
+<h4 id="unpark-Thread-thread"><a href="#unpark-Thread-thread" class="headerlink" title="unpark(Thread thread)"></a>unpark(Thread thread)</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//解除阻塞线程</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">unpark</span><span class="params">(Thread thread)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (thread != <span class="keyword">null</span>)</span><br><span class="line">        UNSAFE.unpark(thread);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://www.cnblogs.com/leesf456/p/5347293.html" target="_blank" rel="noopener">【JUC】JDK1.8源码分析之LockSupport（一）</a></p>
+<p><a href="https://www.cnblogs.com/skywang12345/p/3505784.html" target="_blank" rel="noopener">Java多线程系列–“JUC锁”07之 LockSupport</a></p>
 
           
         
@@ -520,7 +658,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/08/【Java多线程】UnSafe/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/07/【Java多线程】JUC锁 02. UnSafe/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="JumpsZ">
@@ -539,7 +677,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/07/08/【Java多线程】UnSafe/" itemprop="url">【Java多线程】Unsafe</a></h1>
+                <a class="post-title-link" href="/2018/07/07/【Java多线程】JUC锁 02. UnSafe/" itemprop="url">【Java多线程】JUC锁 02. UnSafe</a></h1>
         
 
         <div class="post-meta">
@@ -551,8 +689,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-08T14:48:00+08:00">
-                2018-07-08
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-07T14:48:00+08:00">
+                2018-07-07
               </time>
             
 
@@ -591,9 +729,8 @@
       
         
           
-            <p>[TOC]</p>
-<h1 id="Unsafe"><a href="#Unsafe" class="headerlink" title="Unsafe"></a>Unsafe</h1><p>java不能直接访问操作系统底层，而是通过本地方法来访问。Unsafe类提供了硬件级别的原子操作</p>
-<h2 id="Unsafe调用"><a href="#Unsafe调用" class="headerlink" title="Unsafe调用"></a>Unsafe调用</h2><p>Unsafe类是一个单例，调用的方法为<code>getUnsafe</code>。</p>
+            <h1 id="Unsafe"><a href="#Unsafe" class="headerlink" title="Unsafe"></a>Unsafe</h1><p>java不能直接访问操作系统底层，而是通过本地方法来访问。Unsafe类提供了硬件级别的原子操作</p>
+<h2 id="1-Unsafe调用"><a href="#1-Unsafe调用" class="headerlink" title="1. Unsafe调用"></a>1. Unsafe调用</h2><p>Unsafe类是一个单例，调用的方法为<code>getUnsafe</code>。</p>
 <p><code>getUnsafe()</code>内部会检查该<code>CallerClass</code>是不是由系统类加载器<code>BootstrapClassLoader</code>加载。</p>
 <p>由系统类加载器加载的类调用<code>getClassLoader()</code>会返回null，所以要检查类是否为bootstrap加载器加载只需要检查该方法是不是返回null。 </p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">Unsafe</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Unsafe theUnsafe;	</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Unsafe</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@CallerSensitive</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Unsafe <span class="title">getUnsafe</span><span class="params">()</span> </span>&#123;	<span class="comment">//Unsafe类是个单例</span></span><br><span class="line">        Class var0 = Reflection.getCallerClass();</span><br><span class="line">        <span class="keyword">if</span> (!VM.isSystemDomainLoader(var0.getClassLoader())) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> SecurityException(<span class="string">"Unsafe"</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> theUnsafe;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -605,16 +742,16 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Field f = Unsafe.class.getDeclaredField(<span class="string">"theUnsafe"</span>);</span><br><span class="line">f.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">Unsafe unsafe = (Unsafe) f.get(<span class="keyword">null</span>);</span><br></pre></td></tr></table></figure>
 <p>可以通过<code>allocateInstance</code>方法在未调用构造方法的情况下生成对象</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span> Object <span class="title">allocateInstance</span><span class="params">(Class&lt;?&gt; var1)</span> <span class="keyword">throws</span> InstantiationException</span>;</span><br></pre></td></tr></table></figure>
-<h2 id="内存操作"><a href="#内存操作" class="headerlink" title="内存操作"></a>内存操作</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span> <span class="keyword">long</span> <span class="title">allocateMemory</span><span class="params">(<span class="keyword">long</span> l)</span></span>;	<span class="comment">//分配内存</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span> <span class="keyword">long</span> <span class="title">reallocateMemory</span><span class="params">(<span class="keyword">long</span> l, <span class="keyword">long</span> l1)</span></span>;	<span class="comment">//扩充内存</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span> <span class="keyword">void</span> <span class="title">freeMemory</span><span class="params">(<span class="keyword">long</span> l)</span></span>;	<span class="comment">//释放内存</span></span><br></pre></td></tr></table></figure>
-<h2 id="对象某字段内存值操作"><a href="#对象某字段内存值操作" class="headerlink" title="对象某字段内存值操作"></a>对象某字段内存值操作</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span> <span class="keyword">long</span> <span class="title">staticFieldOffset</span><span class="params">(Field var1)</span></span>;	<span class="comment">//对给定Field的定位，返回Field的内存地址偏移量</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span> <span class="keyword">long</span> <span class="title">getLong</span><span class="params">(<span class="keyword">long</span> var1)</span></span>;	<span class="comment">//获取指定offset偏移地址对应的long型Field的值</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span> <span class="keyword">int</span> <span class="title">getIntVolatile</span><span class="params">(Object var1, <span class="keyword">long</span> var2)</span></span>;	<span class="comment">//获取对象中offset偏移地址对应的整型field的值,支持volatile load语义。</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span> <span class="keyword">int</span> <span class="title">arrayBaseOffset</span><span class="params">(Class&lt;?&gt; var1)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span> <span class="keyword">int</span> <span class="title">arrayIndexScale</span><span class="params">(Class&lt;?&gt; var1)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> </span><br><span class="line">&#123;</span><br><span class="line">    ARRAY_INT_BASE_OFFSET = theUnsafe.arrayBaseOffset(<span class="keyword">int</span>[].class);</span><br><span class="line">    ARRAY_INT_INDEX_SCALE = theUnsafe.arrayIndexScale(<span class="keyword">int</span>[].class);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="2-内存操作"><a href="#2-内存操作" class="headerlink" title="2. 内存操作"></a>2. 内存操作</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span> <span class="keyword">long</span> <span class="title">allocateMemory</span><span class="params">(<span class="keyword">long</span> l)</span></span>;	<span class="comment">//分配内存</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span> <span class="keyword">long</span> <span class="title">reallocateMemory</span><span class="params">(<span class="keyword">long</span> l, <span class="keyword">long</span> l1)</span></span>;	<span class="comment">//扩充内存</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span> <span class="keyword">void</span> <span class="title">freeMemory</span><span class="params">(<span class="keyword">long</span> l)</span></span>;	<span class="comment">//释放内存</span></span><br></pre></td></tr></table></figure>
+<h2 id="3-对象某字段内存值操作"><a href="#3-对象某字段内存值操作" class="headerlink" title="3. 对象某字段内存值操作"></a>3. 对象某字段内存值操作</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span> <span class="keyword">long</span> <span class="title">staticFieldOffset</span><span class="params">(Field var1)</span></span>;	<span class="comment">//对给定Field的定位，返回Field的内存地址偏移量</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span> <span class="keyword">long</span> <span class="title">getLong</span><span class="params">(<span class="keyword">long</span> var1)</span></span>;	<span class="comment">//获取指定offset偏移地址对应的long型Field的值</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span> <span class="keyword">int</span> <span class="title">getIntVolatile</span><span class="params">(Object var1, <span class="keyword">long</span> var2)</span></span>;	<span class="comment">//获取对象中offset偏移地址对应的整型field的值,支持volatile load语义。</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span> <span class="keyword">int</span> <span class="title">arrayBaseOffset</span><span class="params">(Class&lt;?&gt; var1)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span> <span class="keyword">int</span> <span class="title">arrayIndexScale</span><span class="params">(Class&lt;?&gt; var1)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> </span><br><span class="line">&#123;</span><br><span class="line">    ARRAY_INT_BASE_OFFSET = theUnsafe.arrayBaseOffset(<span class="keyword">int</span>[].class);</span><br><span class="line">    ARRAY_INT_INDEX_SCALE = theUnsafe.arrayIndexScale(<span class="keyword">int</span>[].class);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><code>*_BASE_OFFSET</code>常量： 通过<code>arrayBaseOffset</code>本地方法实现，返回数组中第一个元素的偏移地址</p>
 <p><code>*_INDEX_SCALE</code>常量： 通过<code>arrayIndexScale</code> 本地方法实现，获取数组的转换因子，也就是数组中元素的增量地址</p>
 <p>通过二者结合，可定位数组中每个元素在内存中的位置</p>
-<h2 id="线程挂起和恢复"><a href="#线程挂起和恢复" class="headerlink" title="线程挂起和恢复"></a>线程挂起和恢复</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span> <span class="keyword">void</span> <span class="title">unpark</span><span class="params">(Object var1)</span></span>;		<span class="comment">//终止一个挂起的线程，使其恢复正常</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span> <span class="keyword">void</span> <span class="title">park</span><span class="params">(<span class="keyword">boolean</span> var1, <span class="keyword">long</span> var2)</span></span>;	<span class="comment">//线程挂起</span></span><br></pre></td></tr></table></figure>
+<h2 id="4-线程挂起和恢复"><a href="#4-线程挂起和恢复" class="headerlink" title="4. 线程挂起和恢复"></a>4. 线程挂起和恢复</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span> <span class="keyword">void</span> <span class="title">unpark</span><span class="params">(Object var1)</span></span>;		<span class="comment">//终止一个挂起的线程，使其恢复正常</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span> <span class="keyword">void</span> <span class="title">park</span><span class="params">(<span class="keyword">boolean</span> var1, <span class="keyword">long</span> var2)</span></span>;	<span class="comment">//线程挂起</span></span><br></pre></td></tr></table></figure>
 <p>封装在LockSupport 类中</p>
-<h2 id="CAS操作"><a href="#CAS操作" class="headerlink" title="CAS操作"></a>CAS操作</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 比较obj的offset处内存位置中的值和期望的值，如果相同则更新。此更新是不可中断的。</span></span><br><span class="line"><span class="comment">* </span></span><br><span class="line"><span class="comment">* <span class="doctag">@param</span> obj 需要更新的对象</span></span><br><span class="line"><span class="comment">* <span class="doctag">@param</span> offset obj中整型field的偏移量</span></span><br><span class="line"><span class="comment">* <span class="doctag">@param</span> expect 希望field中存在的值</span></span><br><span class="line"><span class="comment">* <span class="doctag">@param</span> update 如果期望值expect与field的当前值相同，设置filed的值为这个新值</span></span><br><span class="line"><span class="comment">* <span class="doctag">@return</span> 如果field的值被更改返回true</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span> <span class="keyword">boolean</span> <span class="title">compareAndSwapInt</span><span class="params">(Object obj, <span class="keyword">long</span> offset, <span class="keyword">int</span> expect, <span class="keyword">int</span> update)</span></span>;</span><br></pre></td></tr></table></figure>
+<h2 id="5-CAS操作"><a href="#5-CAS操作" class="headerlink" title="5. CAS操作"></a>5. CAS操作</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 比较obj的offset处内存位置中的值和期望的值，如果相同则更新。此更新是不可中断的。</span></span><br><span class="line"><span class="comment">* </span></span><br><span class="line"><span class="comment">* <span class="doctag">@param</span> obj 需要更新的对象</span></span><br><span class="line"><span class="comment">* <span class="doctag">@param</span> offset obj中整型field的偏移量</span></span><br><span class="line"><span class="comment">* <span class="doctag">@param</span> expect 希望field中存在的值</span></span><br><span class="line"><span class="comment">* <span class="doctag">@param</span> update 如果期望值expect与field的当前值相同，设置filed的值为这个新值</span></span><br><span class="line"><span class="comment">* <span class="doctag">@return</span> 如果field的值被更改返回true</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span> <span class="keyword">boolean</span> <span class="title">compareAndSwapInt</span><span class="params">(Object obj, <span class="keyword">long</span> offset, <span class="keyword">int</span> expect, <span class="keyword">int</span> update)</span></span>;</span><br></pre></td></tr></table></figure>
 <p>CAS 操作包含三个操作数 —— 内存位置（V）、预期原值（A）和新值(B)。如果内存位置的值与预期原值相匹配，那么处理器会自动将该位置值更新为新值。否则，处理器不做任何操作。无论哪种情况，它都会在 CAS 指令之前返回该位置的值。 </p>
-<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p><a href="https://blog.csdn.net/aesop_wubo/article/details/7537278" target="_blank" rel="noopener">JAVA并发编程学习笔记之Unsafe类</a></p>
+<h2 id="6-参考资料"><a href="#6-参考资料" class="headerlink" title="6. 参考资料"></a>6. 参考资料</h2><p><a href="https://blog.csdn.net/aesop_wubo/article/details/7537278" target="_blank" rel="noopener">JAVA并发编程学习笔记之Unsafe类</a></p>
 
           
         
@@ -734,8 +871,7 @@
       
         
           
-            <p>[TOC]</p>
-<h1 id="synchronized-关键字"><a href="#synchronized-关键字" class="headerlink" title="synchronized 关键字"></a>synchronized 关键字</h1><h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><ul>
+            <h1 id="synchronized-关键字"><a href="#synchronized-关键字" class="headerlink" title="synchronized 关键字"></a>synchronized 关键字</h1><h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><ul>
 <li>在java中，每一个对象有且仅有一个同步锁。这也意味着，同步锁是依赖于对象而存在。</li>
 <li>当我们调用某对象的synchronized方法时，就获取了该对象的同步锁</li>
 <li>不同线程对同步锁的访问是互斥的</li>
@@ -909,7 +1045,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/07/05/【JVM】java内存区域/" itemprop="url">未命名</a></h1>
+                <a class="post-title-link" href="/2018/07/05/【JVM】java内存区域/" itemprop="url">【JVM】java内存区域</a></h1>
         
 
         <div class="post-meta">
@@ -961,7 +1097,204 @@
       
         
           
+            <p>[TOC]</p>
+<h1 id="Java内存区域"><a href="#Java内存区域" class="headerlink" title="Java内存区域"></a>Java内存区域</h1><h2 id="程序计数器"><a href="#程序计数器" class="headerlink" title="程序计数器"></a>程序计数器</h2><ul>
+<li>当前线程所执行字节码的行号指示器</li>
+<li>线程私有，保证线程切换能恢复到正确的执行位置</li>
+<li>线程正在执行Java方法，则记录的是正在执行的虚拟机字节码指令的地址； Native方法，则为空（undefined）</li>
+<li>此内存区域是唯一一个没有规定OutOfMemoryError的区域 </li>
+</ul>
+<h2 id="Java虚拟机栈"><a href="#Java虚拟机栈" class="headerlink" title="Java虚拟机栈"></a>Java虚拟机栈</h2><ul>
+<li><p>线程私有，生命周期同线程一样</p>
+</li>
+<li><p>描述Java方法执行的内存模型：每个方法在执行的同时都会创建一个栈帧来存储局部变量表，操作数栈、动态链接、方法出口等信息</p>
+</li>
+<li><p><strong>局部变量表</strong>存放编译期可知的各种基本数据类型、对象引用类型（reference类型）和returnAddress类型（指向一条字节码指令的地址）</p>
+</li>
+<li><p>栈上分配技术，对线程私有的对象可以分配在栈上，不需要GC介入，提高性能</p>
+</li>
+<li><p>通过 -Xss参数设置栈大小</p>
+</li>
+<li><p>如果线程所请求的栈深度大于虚拟机所允许的最大深度，将抛出StackOverflowError异常</p>
+<p>如果虚拟机栈可以动态扩展、扩展时候无法申请到足够的内存，将抛出OutOfMemoryError异常</p>
+</li>
+</ul>
+<h2 id="本地方法栈"><a href="#本地方法栈" class="headerlink" title="本地方法栈"></a>本地方法栈</h2><p>为虚拟机使用到的native方法服务 </p>
+<h2 id="Java堆"><a href="#Java堆" class="headerlink" title="Java堆"></a>Java堆</h2><ul>
+<li>Java内存管理中最大的一块，虚拟机启动时创建</li>
+<li>主要存储对象实例和数组</li>
+<li>从内存回收角度可分为新生代和老年代，新生代可分为Eden区，From Survivor区， To Survivor 区</li>
+<li>通过 -Xmx 和 - Xms设置堆空间</li>
+<li>如果堆中没有内存完成实例分配，且堆也无法再扩展。将抛出OutOfMemoryError</li>
+</ul>
+<h2 id="方法区（永久代）"><a href="#方法区（永久代）" class="headerlink" title="方法区（永久代）"></a>方法区（永久代）</h2><ul>
+<li>存储已被虚拟机加载的类信息、常量、静态变量、即时编译器编译后的代码等数据 </li>
+<li>永久代是HotSpot虚拟机特有的概念，是对方法区的实现，别的JVM没有永久代的概念</li>
+<li>通过 -XX: permSize 和 -XX:MaxPermSize设置大小</li>
+<li>在JDK8中，JDK8的HotSpot VM已经是以前的HotSpot VM与JRockit VM的合并版，永久代替换为元空间（避免永久代OOM: PermGen问题，同时整合JRockit）</li>
+<li>当方法区无法满足内存分配需求时，将抛出OutOfMemoryError</li>
+</ul>
+<h2 id="元空间"><a href="#元空间" class="headerlink" title="元空间"></a>元空间</h2><ul>
+<li><p>元空间是一块与堆不相连的本地内存</p>
+</li>
+<li><p>永久代中原来存储的字符串常量（池）、符号引用（这两个在jdk7普遍就已经将其放在堆上了）和类的静态变量现在存储在java堆中，其余的数据（类信息，JIT编译后的代码）作为元数据存储在元空间中 </p>
+</li>
+<li><p>默认情况下，类元数据只受可用的本地内存限制，新参数（MaxMetaspaceSize）用于限制本地内存分配给类元数据的大小 </p>
+</li>
+<li><p>元数据： 描述数据的数据</p>
+<p>元数据可以为数据说明其元素或属性（名称、大小、数据类型、等），或其结构（长度、字段、数据列），或其相关数据（位于何处、如何联系、拥有者） </p>
+</li>
+</ul>
+<h2 id="运行时常量池"><a href="#运行时常量池" class="headerlink" title="运行时常量池"></a>运行时常量池</h2><ul>
+<li>方法区的一部分，用于存放编译期生成的各种字面量和符号引用（保存Class文件中描述的符号引用、翻译出来的直接引用）</li>
+<li>动态性，运行期间也可将新的常量放入池中</li>
+<li>常量池无法再申请到内存将抛出OutOfMemoryError </li>
+</ul>
+<h2 id="直接内存"><a href="#直接内存" class="headerlink" title="直接内存"></a>直接内存</h2><ul>
+<li>不是虚拟机规范中定义的内存区域</li>
+<li>NIO中，使用Native函数库分配堆外内存，通过存储在Java堆中的directByBuffer对象作为这块内存的引用进行操作 </li>
+<li>动态扩展时，各内存区域超过物理内存限制，导致OOM</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/05/【Java多线程】JUC锁 01. 概述/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JumpsZ">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/timg.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/05/【Java多线程】JUC锁 01. 概述/" itemprop="url">【Java多线程】JUC锁 01. 概述</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
             
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-05T19:07:00+08:00">
+                2018-07-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>[TOC]</p>
+<h1 id="JUC-lock概述"><a href="#JUC-lock概述" class="headerlink" title="JUC lock概述"></a>JUC lock概述</h1><h2 id="1-前言"><a href="#1-前言" class="headerlink" title="1. 前言"></a>1. 前言</h2><p>JUC包中的锁，包括：Lock接口，Condition条件，ReadWriteLock接口，LockSupport阻塞原语，AbstractOwnableSynchronizer/AbstractQueuedSynchronizer/AbstractQueuedLongSynchronizer三个抽象类，ReentrantLock独占锁，读写锁ReentrantReadWriteLock，jdk1.8新增StampedLock。CountDownLatch，CyclicBarrier和Semaphore也是通过AQS来实现的，也将它们归纳到锁的框架中进行介绍。 </p>
+<p>框架图如下：</p>
+<p><img src="https://images2018.cnblogs.com/blog/1256203/201805/1256203-20180506110949802-793090402.png" alt=""></p>
+<h2 id="2-源码解析"><a href="#2-源码解析" class="headerlink" title="2. 源码解析"></a>2. 源码解析</h2><h3 id="2-1-Lock接口"><a href="#2-1-Lock接口" class="headerlink" title="2.1 Lock接口"></a>2.1 Lock接口</h3><ul>
+<li>提供比synchronized更广泛的锁操作：更灵活的结构，可能有多种属性，支持多个相关联的条件</li>
+<li>Lock允许获取和释放锁在不同范围，允许任意顺序获取和释放多个锁</li>
+<li>Lock 提供非阻塞方法获取锁<code>tryLock()</code>，尝试获取可中断的锁 <code>lockInterruptibly()</code> ，以及可设置获取锁超时<code>tryLock(long, TimeUnit)</code> </li>
+<li>Lock  接口支持那些语义不同(重入、公平等)的锁规则。所谓语义不同，是指锁可是有”公平机制的锁”、”非公平机制的锁”、”可重入的锁”等等。”公平机制”是指”不同线程获取锁的机制是公平的”，而”非公平机制”则是指”不同线程获取锁的机制是非公平的”，”可重入的锁”是指同一个锁能够被一个线程多次获取。 </li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Lock</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 获得锁资源</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">lock</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="comment">// 尝试获得锁，如果当前线程被调用了interrupted则中断，并抛出异常，否则就获得锁</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">lockInterruptibly</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException</span>;</span><br><span class="line">    <span class="comment">// 判断能否获得锁，如果能获得，则获得锁，并返回true(此时已经获得了锁);否则返回false</span></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">tryLock</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="comment">// 保持给定的等待时间，如果期间能拿到锁，则获得锁，同样如果期间被中断，则抛异常</span></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">tryLock</span><span class="params">(<span class="keyword">long</span> time, TimeUnit unit)</span> <span class="keyword">throws</span> InterruptedException</span>;</span><br><span class="line">    <span class="comment">// 释放锁</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">unlock</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="comment">// 返回与此Lock对象绑定Condition实例</span></span><br><span class="line">    <span class="function">Condition <span class="title">newCondition</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2-2-Condition接口"><a href="#2-2-Condition接口" class="headerlink" title="2.2 Condition接口"></a>2.2 Condition接口</h3><p>Condition需要和Lock联合使用，它的作用是代替Object监视器方法，可以通过<code>await()</code>,<code>signal()</code>来休眠/唤醒线程。  Condition 接口描述了可能会与锁有关联的条件变量。这些变量在用法上与使用 Object.wait  访问的隐式监视器类似，但提供了更强大的功能。需要特别指出的是，单个 Lock 可能与多个 Condition  对象关联。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Condition</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 让当前线程等待，直到被通知或者被中断</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">await</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException</span>;</span><br><span class="line">    <span class="comment">// 与前者的区别是，当等待过程中被中断时，仍会继续等待，直到被唤醒，才会设置中断状态</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">awaitUninterruptibly</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="comment">// 让当前线程等待，直到它被告知或中断，或指定的等待时间已经过。</span></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">await</span><span class="params">(<span class="keyword">long</span> time, TimeUnit unit)</span> <span class="keyword">throws</span> InterruptedException</span>;</span><br><span class="line">    <span class="comment">// 与上面的类似，让当前线程等待，不过时间单位是纳秒</span></span><br><span class="line">    <span class="function"><span class="keyword">long</span> <span class="title">awaitNanos</span><span class="params">(<span class="keyword">long</span> nanosTimeout)</span> <span class="keyword">throws</span> InterruptedException</span>;</span><br><span class="line">    <span class="comment">// 让当前线程等待到确切的指定时间，而不是时长</span></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">awaitUntil</span><span class="params">(Date deadline)</span> <span class="keyword">throws</span> InterruptedException</span>;</span><br><span class="line">    <span class="comment">// 唤醒一个等待当前condition的线程，有多个则随机选一个</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">signal</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="comment">// 唤醒所有等待当前condition的线程</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">signalAll</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2-3-ReadWriteLock接口"><a href="#2-3-ReadWriteLock接口" class="headerlink" title="2.3 ReadWriteLock接口"></a>2.3 ReadWriteLock接口</h3><p>读写锁与一般的互斥锁不同，它分为读锁和写锁，在同一时间里，可以有多个线程获取读锁来进行共享资源的访问。如果此时有线程获取了写锁，那么读锁的线程将等待，直到写锁释放掉，才能进行共享资源访问。简单来说就是读锁与写锁互斥。</p>
+<p>读写锁比互斥锁允许对于共享数据更大程度的并发。每次只能有一个写线程，但是同时可以有多个线程并发地读数据。ReadWriteLock适用于读多写少的并发情况。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ReadWriteLock</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 写锁</span></span><br><span class="line">    <span class="function">Lock <span class="title">writeLock</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="comment">// 读锁</span></span><br><span class="line">    <span class="function">Lock <span class="title">readLock</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2-3-LockSupport"><a href="#2-3-LockSupport" class="headerlink" title="2.3 LockSupport"></a>2.3 LockSupport</h3><p>LockSupport提供“创建锁”和“其他同步类的基本线程阻塞原语”。  </p>
+<h3 id="2-5-AbstractOwnableSynchronizer"><a href="#2-5-AbstractOwnableSynchronizer" class="headerlink" title="2.5 AbstractOwnableSynchronizer"></a>2.5 AbstractOwnableSynchronizer</h3><p>帮助记录当前保持独占同步的线程的简单</p>
+<h2 id="3-参考"><a href="#3-参考" class="headerlink" title="3. 参考"></a>3. 参考</h2><p><a href="http://www.cnblogs.com/skywang12345/p/3496098.html" target="_blank" rel="noopener">http://www.cnblogs.com/skywang12345/p/3496098.html</a></p>
+<p><a href="https://www.cnblogs.com/joemsu/p/8543449.html" target="_blank" rel="noopener">https://www.cnblogs.com/joemsu/p/8543449.html</a></p>
+
           
         
       
@@ -1156,7 +1489,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/07/03/【Java多线程】Thread/" itemprop="url">【Java多线程】Thread</a></h1>
+                <a class="post-title-link" href="/2018/07/03/【Java多线程】Thread/" itemprop="url">【Java多线程】Thread进程解析</a></h1>
         
 
         <div class="post-meta">
@@ -1208,8 +1541,7 @@
       
         
           
-            <p>[TOC]</p>
-<h1 id="Thread"><a href="#Thread" class="headerlink" title="Thread"></a>Thread</h1><h2 id="进程和线程"><a href="#进程和线程" class="headerlink" title="进程和线程"></a>进程和线程</h2><h3 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h3><ul>
+            <h1 id="Thread"><a href="#Thread" class="headerlink" title="Thread"></a>Thread</h1><h2 id="进程和线程"><a href="#进程和线程" class="headerlink" title="进程和线程"></a>进程和线程</h2><h3 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h3><ul>
 <li>进程是一个具有一定独立功能的程序在一个数据集上的一次动态执行的过程，是操作系统进行资源分配和调度的一个独立单位，是应用程序运行的载体 </li>
 <li>进程一般由程序、数据集合和进程控制块三部分组成。程序用于描述进程要完成的功能，是控制进程执行的指令集；数据集合是程序在执行时所需要的数据和工作区；程序控制块(Program Control Block，简称PCB)，包含进程的描述信息和控制信息，是进程存在的唯一标志 </li>
 <li>特征<ul>
@@ -1687,304 +2019,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/27/【Java集合】Set源码解析/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="JumpsZ">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/timg.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/06/27/【Java集合】Set源码解析/" itemprop="url">【Java集合】Set源码解析</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-27T16:21:00+08:00">
-                2018-06-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="HashSet"><a href="#HashSet" class="headerlink" title="HashSet"></a>HashSet</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HashSet</span>&lt;<span class="title">E</span>&gt;</span></span><br><span class="line"><span class="class">    <span class="keyword">extends</span> <span class="title">AbstractSet</span>&lt;<span class="title">E</span>&gt;</span></span><br><span class="line"><span class="class">    <span class="keyword">implements</span> <span class="title">Set</span>&lt;<span class="title">E</span>&gt;, <span class="title">Cloneable</span>, <span class="title">java</span>.<span class="title">io</span>.<span class="title">Serializable</span></span></span><br></pre></td></tr></table></figure>
-<h2 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 默认构造函数</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">HashSet</span><span class="params">()</span> </span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="comment">// 带集合的构造函数</span></span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">HashSet</span><span class="params">(Collection&lt;? extends E&gt; c)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//hashMap 负载因子0.75，c.size()/.75f) + 1 计算出来的为总的空间大小，不需要扩容</span></span><br><span class="line">    map = <span class="keyword">new</span> HashMap&lt;&gt;(Math.max((<span class="keyword">int</span>) (c.size()/.<span class="number">75f</span>) + <span class="number">1</span>, <span class="number">16</span>));</span><br><span class="line">    addAll(c);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 指定HashSet初始容量和加载因子的构造函数</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">HashSet</span><span class="params">(<span class="keyword">int</span> initialCapacity, <span class="keyword">float</span> loadFactor)</span> </span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="comment">// 指定HashSet初始容量的构造函数</span></span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">HashSet</span><span class="params">(<span class="keyword">int</span> initialCapacity)</span> </span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="comment">// 指定HashSet初始容量和加载因子的构造函数,dummy没有任何作用</span></span></span><br><span class="line"><span class="function"><span class="title">HashSet</span><span class="params">(<span class="keyword">int</span> initialCapacity, <span class="keyword">float</span> loadFactor, <span class="keyword">boolean</span> dummy)</span> </span>&#123;</span><br><span class="line">    map = <span class="keyword">new</span> LinkedHashMap&lt;&gt;(initialCapacity, loadFactor);		<span class="comment">//LinkedHashSet使用</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h2><ul>
-<li><code>HashSet</code> 是一个<strong>没有重复元素的集合</strong> </li>
-<li>由<code>HashMap</code>实现的，<strong>不保证元素的顺序</strong> </li>
-<li><strong>允许使用 null 元素</strong> </li>
-<li>非线程安全， 用<code>Collections.synchronizedSet</code>分装</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Set s = Collections.synchronizedSet(<span class="keyword">new</span> HashSet(...));</span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>HashSet</code>通过<code>iterator()</code>返回的<strong>迭代器是<code>fail-fast</code>的。</strong> </li>
-<li>成员变量</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">transient</span> HashMap&lt;E,Object&gt; map;	<span class="comment">//基于map实现</span></span><br><span class="line"><span class="comment">// PRESENT是向map中插入key-value对应的value</span></span><br><span class="line"><span class="comment">// 因为HashSet中只需要用到key，而HashMap是key-value键值对；</span></span><br><span class="line"><span class="comment">// 所以，向map中添加键值对时，键值对的值固定是PRESENT</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Object PRESENT = <span class="keyword">new</span> Object();</span><br></pre></td></tr></table></figure>
-<h2 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Iterator&lt;E&gt; <span class="title">iterator</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> map.keySet().iterator();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">contains</span><span class="params">(Object o)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> map.containsKey(o);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//value为PRESENT对象</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">add</span><span class="params">(E e)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> map.put(e, PRESENT)==<span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//克隆一个HashSet，并返回Object对象</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">clone</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        HashSet&lt;E&gt; newSet = (HashSet&lt;E&gt;) <span class="keyword">super</span>.clone();</span><br><span class="line">        newSet.map = (HashMap&lt;E, Object&gt;) map.clone();</span><br><span class="line">        <span class="keyword">return</span> newSet;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (CloneNotSupportedException e) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> InternalError(e);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// java.io.Serializable的写入函数</span></span><br><span class="line"><span class="comment">// 将HashSet的“总的容量，加载因子，实际容量，所有的元素”都写入到输出流中</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">writeObject</span><span class="params">(java.io.ObjectOutputStream s)</span></span></span><br><span class="line"><span class="function">    <span class="keyword">throws</span> java.io.IOException </span>&#123;</span><br><span class="line">    <span class="comment">// Write out any hidden serialization magic</span></span><br><span class="line">    s.defaultWriteObject();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Write out HashMap capacity and load factor</span></span><br><span class="line">    s.writeInt(map.capacity());</span><br><span class="line">    s.writeFloat(map.loadFactor());</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Write out size</span></span><br><span class="line">    s.writeInt(map.size());</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Write out all elements in the proper order.</span></span><br><span class="line">    <span class="keyword">for</span> (E e : map.keySet())</span><br><span class="line">        s.writeObject(e);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// java.io.Serializable的读取函数</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">readObject</span><span class="params">(java.io.ObjectInputStream s)</span></span></span><br><span class="line"><span class="function">    <span class="keyword">throws</span> java.io.IOException, ClassNotFoundException </span>&#123;</span><br><span class="line">    <span class="comment">// Read in any hidden serialization magic</span></span><br><span class="line">    s.defaultReadObject();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Read capacity and verify non-negative.</span></span><br><span class="line">    <span class="keyword">int</span> capacity = s.readInt();</span><br><span class="line">    <span class="keyword">if</span> (capacity &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> InvalidObjectException(<span class="string">"Illegal capacity: "</span> + capacity);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Read load factor and verify positive and non NaN.</span></span><br><span class="line">    <span class="keyword">float</span> loadFactor = s.readFloat();</span><br><span class="line">    <span class="keyword">if</span> (loadFactor &lt;= <span class="number">0</span> || Float.isNaN(loadFactor)) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> InvalidObjectException(<span class="string">"Illegal load factor: "</span> + loadFactor);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Read size and verify non-negative.</span></span><br><span class="line">    <span class="keyword">int</span> size = s.readInt();</span><br><span class="line">    <span class="keyword">if</span> (size &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> InvalidObjectException(<span class="string">"Illegal size: "</span> + size);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Set the capacity according to the size and load factor ensuring that</span></span><br><span class="line">    <span class="comment">// the HashMap is at least 25% full but clamping to maximum capacity.</span></span><br><span class="line">    capacity = (<span class="keyword">int</span>) Math.min(size * Math.min(<span class="number">1</span> / loadFactor, <span class="number">4.0f</span>),</span><br><span class="line">                              HashMap.MAXIMUM_CAPACITY);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Create backing HashMap</span></span><br><span class="line">    map = (((HashSet&lt;?&gt;)<span class="keyword">this</span>) <span class="keyword">instanceof</span> LinkedHashSet ?</span><br><span class="line">           <span class="keyword">new</span> LinkedHashMap&lt;E,Object&gt;(capacity, loadFactor) :</span><br><span class="line">           <span class="keyword">new</span> HashMap&lt;E,Object&gt;(capacity, loadFactor));</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Read in all elements in the proper order.</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;size; i++) &#123;</span><br><span class="line">        <span class="meta">@SuppressWarnings</span>(<span class="string">"unchecked"</span>)</span><br><span class="line">        E e = (E) s.readObject();</span><br><span class="line">        map.put(e, PRESENT);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="TreeSet"><a href="#TreeSet" class="headerlink" title="TreeSet"></a>TreeSet</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TreeSet</span>&lt;<span class="title">E</span>&gt; <span class="keyword">extends</span> <span class="title">AbstractSet</span>&lt;<span class="title">E</span>&gt;</span></span><br><span class="line"><span class="class">    <span class="keyword">implements</span> <span class="title">NavigableSet</span>&lt;<span class="title">E</span>&gt;, <span class="title">Cloneable</span>, <span class="title">java</span>.<span class="title">io</span>.<span class="title">Serializable</span></span></span><br></pre></td></tr></table></figure>
-<h2 id="构造函数-1"><a href="#构造函数-1" class="headerlink" title="构造函数"></a>构造函数</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//将TreeMap 赋值给NavigableMap</span></span><br><span class="line">TreeSet(NavigableMap&lt;E,Object&gt; m) &#123;</span><br><span class="line">    <span class="keyword">this</span>.m = m;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//不带参数构造函数</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">TreeSet</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>(<span class="keyword">new</span> TreeMap&lt;E,Object&gt;());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//带比较器构造函数</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">TreeSet</span><span class="params">(Comparator&lt;? <span class="keyword">super</span> E&gt; comparator)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>(<span class="keyword">new</span> TreeMap&lt;&gt;(comparator));</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//创建TreeSet，并将集合c中的全部元素都添加到TreeSet中</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">TreeSet</span><span class="params">(Collection&lt;? extends E&gt; c)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>();</span><br><span class="line">    addAll(c);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">TreeSet</span><span class="params">(SortedSet&lt;E&gt; s)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>(s.comparator());</span><br><span class="line">    addAll(s);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="数据结构-1"><a href="#数据结构-1" class="headerlink" title="数据结构"></a>数据结构</h2><ul>
-<li><code>TreeSet</code> 是一个有序的，且没有重复元素集合，它的作用是提供有序的Set集合。</li>
-<li><code>TreeSet</code> 实现了<code>NavigableSet</code>接口，意味着它支持一系列的导航方法。比如查找与指定目标最匹配项。 </li>
-<li><code>TreeSet</code>是基于<code>TreeMap</code>实现的。<code>TreeSet</code>中的元素支持2种排序方式：自然排序 或者 根据创建<code>TreeSet</code> 时提供的 <code>Comparator</code> 进行排序。这取决于使用的构造方法。 </li>
-<li>非线程安全</li>
-<li>成员变量：</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">transient</span> NavigableMap&lt;E,Object&gt; m; 	<span class="comment">//NavigableMap对象，基于TreeMap实现（传入new TreeMap&lt;E,Object&gt;()）</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Object PRESENT = <span class="keyword">new</span> Object();	<span class="comment">//value所存值</span></span><br></pre></td></tr></table></figure>
-<h2 id="源码分析-1"><a href="#源码分析-1" class="headerlink" title="源码分析"></a>源码分析</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//将集合中的元素赋值给TreeSet</span></span><br><span class="line"><span class="function"><span class="keyword">public</span>  <span class="keyword">boolean</span> <span class="title">addAll</span><span class="params">(Collection&lt;? extends E&gt; c)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// Use linear-time version if applicable</span></span><br><span class="line">    <span class="keyword">if</span> (m.size()==<span class="number">0</span> &amp;&amp; c.size() &gt; <span class="number">0</span> &amp;&amp;</span><br><span class="line">        c <span class="keyword">instanceof</span> SortedSet &amp;&amp;</span><br><span class="line">        m <span class="keyword">instanceof</span> TreeMap) &#123;</span><br><span class="line">        SortedSet&lt;? extends E&gt; set = (SortedSet&lt;? extends E&gt;) c;</span><br><span class="line">        TreeMap&lt;E,Object&gt; map = (TreeMap&lt;E, Object&gt;) m;</span><br><span class="line">        Comparator&lt;?&gt; cc = set.comparator();</span><br><span class="line">        Comparator&lt;? <span class="keyword">super</span> E&gt; mc = map.comparator();</span><br><span class="line">        <span class="keyword">if</span> (cc==mc || (cc != <span class="keyword">null</span> &amp;&amp; cc.equals(mc))) &#123;</span><br><span class="line">            map.addAllForTreeSet(set, PRESENT);		<span class="comment">// 红黑树添加SortedSet节点</span></span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">super</span>.addAll(c);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//返回TreeSet的顺序排列的迭代器</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Iterator&lt;E&gt; <span class="title">iterator</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> m.navigableKeySet().iterator();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//返回TreeSet的逆序排列的迭代器</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Iterator&lt;E&gt; <span class="title">descendingIterator</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> m.descendingKeySet().iterator();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//添加e到TreeSet</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">add</span><span class="params">(E e)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> m.put(e, PRESENT)==<span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//删除TreeSet对象</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">remove</span><span class="params">(Object o)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> m.remove(o)==PRESENT;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//java.io.Serializable的写入函数</span></span><br><span class="line"><span class="comment">//将TreeSet的“比较器、容量，所有的元素值”都写入到输出流中</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">writeObject</span><span class="params">(java.io.ObjectOutputStream s)</span></span></span><br><span class="line"><span class="function">    <span class="keyword">throws</span> java.io.IOException </span>&#123;</span><br><span class="line">    <span class="comment">// Write out any hidden stuff</span></span><br><span class="line">    s.defaultWriteObject();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Write out Comparator</span></span><br><span class="line">    s.writeObject(m.comparator());</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Write out size</span></span><br><span class="line">    s.writeInt(m.size());</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Write out all elements in the proper order.</span></span><br><span class="line">    <span class="keyword">for</span> (E e : m.keySet())</span><br><span class="line">        s.writeObject(e);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//java.io.Serializable的读取函数：根据写入方式读出</span></span><br><span class="line"><span class="comment">//先将TreeSet的“比较器、容量、所有的元素值”依次读出</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">readObject</span><span class="params">(java.io.ObjectInputStream s)</span></span></span><br><span class="line"><span class="function">    <span class="keyword">throws</span> java.io.IOException, ClassNotFoundException </span>&#123;</span><br><span class="line">    <span class="comment">// Read in any hidden stuff</span></span><br><span class="line">    s.defaultReadObject();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Read in Comparator</span></span><br><span class="line">    <span class="meta">@SuppressWarnings</span>(<span class="string">"unchecked"</span>)</span><br><span class="line">    Comparator&lt;? <span class="keyword">super</span> E&gt; c = (Comparator&lt;? <span class="keyword">super</span> E&gt;) s.readObject();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Create backing TreeMap</span></span><br><span class="line">    TreeMap&lt;E,Object&gt; tm = <span class="keyword">new</span> TreeMap&lt;&gt;(c);</span><br><span class="line">    m = tm;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Read in size</span></span><br><span class="line">    <span class="keyword">int</span> size = s.readInt();</span><br><span class="line"></span><br><span class="line">    tm.readTreeSet(size, s, PRESENT);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="LinkedHashSet"><a href="#LinkedHashSet" class="headerlink" title="LinkedHashSet"></a>LinkedHashSet</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LinkedHashSet</span>&lt;<span class="title">E</span>&gt;</span></span><br><span class="line"><span class="class">    <span class="keyword">extends</span> <span class="title">HashSet</span>&lt;<span class="title">E</span>&gt;</span></span><br><span class="line"><span class="class">    <span class="keyword">implements</span> <span class="title">Set</span>&lt;<span class="title">E</span>&gt;, <span class="title">Cloneable</span>, <span class="title">java</span>.<span class="title">io</span>.<span class="title">Serializable</span></span></span><br></pre></td></tr></table></figure>
-<h2 id="数据结构-2"><a href="#数据结构-2" class="headerlink" title="数据结构"></a>数据结构</h2><ul>
-<li>LinkedHashSet继承自HashSet，内部使用LinkHashMap </li>
-<li>内部元素有序，按插入顺序或者访问顺序</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/27/【Java集合】Vector源码解析/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="JumpsZ">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/timg.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/06/27/【Java集合】Vector源码解析/" itemprop="url">【Java集合】Vector源码解析</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-27T15:21:00+08:00">
-                2018-06-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Vector"><a href="#Vector" class="headerlink" title="Vector"></a>Vector</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Vector</span>&lt;<span class="title">E</span>&gt;</span></span><br><span class="line"><span class="class">    <span class="keyword">extends</span> <span class="title">AbstractList</span>&lt;<span class="title">E</span>&gt;</span></span><br><span class="line"><span class="class">    <span class="keyword">implements</span> <span class="title">List</span>&lt;<span class="title">E</span>&gt;, <span class="title">RandomAccess</span>, <span class="title">Cloneable</span>, <span class="title">java</span>.<span class="title">io</span>.<span class="title">Serializable</span></span></span><br></pre></td></tr></table></figure>
-<h2 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h2><ul>
-<li>Vector 是<strong>矢量队列</strong>，它是<code>JDK1.0</code>版本添加的类。继承于<code>AbstractList</code>，实现了<code>List</code>, <code>RandomAccess</code>, <code>Cloneable</code>这些接口。 </li>
-<li>继承于<code>AbstractList</code>，是一个队列，支持相关的添加、删除、修改、遍历等功能</li>
-<li>实现了<code>RandmoAccess</code>接口，即<strong>提供了随机访问功能</strong>。 </li>
-<li>线程安全，不需要线程安全，则使用<code>ArrayList</code></li>
-<li>初始长度10</li>
-<li>成员变量：</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> Object[] elementData;		<span class="comment">//动态数组，增长由ensureCapacity()控制</span></span><br><span class="line"><span class="keyword">protected</span> <span class="keyword">int</span> elementCount;			<span class="comment">//数组实际大小</span></span><br><span class="line"><span class="keyword">protected</span> <span class="keyword">int</span> capacityIncrement;	<span class="comment">//动态数组的增长系数，创建时候若指定capacityIncrement，则每次扩容时候增加大小为capacityIncrement</span></span><br></pre></td></tr></table></figure>
-<h2 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h2><h3 id="ensureCapacity方法"><a href="#ensureCapacity方法" class="headerlink" title="ensureCapacity方法"></a><code>ensureCapacity</code>方法</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">ensureCapacity</span><span class="params">(<span class="keyword">int</span> minCapacity)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (minCapacity &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        modCount++;</span><br><span class="line">        ensureCapacityHelper(minCapacity);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">ensureCapacityHelper</span><span class="params">(<span class="keyword">int</span> minCapacity)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// overflow-conscious code</span></span><br><span class="line">    <span class="keyword">if</span> (minCapacity - elementData.length &gt; <span class="number">0</span>)</span><br><span class="line">        grow(minCapacity);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>由grow()方法进行扩容操作</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">grow</span><span class="params">(<span class="keyword">int</span> minCapacity)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// overflow-conscious code</span></span><br><span class="line">    <span class="keyword">int</span> oldCapacity = elementData.length;</span><br><span class="line">    <span class="comment">//设置了capacityIncrement，则增长capacityIncrement长度，否则增长一倍</span></span><br><span class="line">    <span class="keyword">int</span> newCapacity = oldCapacity + ((capacityIncrement &gt; <span class="number">0</span>) ?</span><br><span class="line">                                     capacityIncrement : oldCapacity);</span><br><span class="line">    <span class="keyword">if</span> (newCapacity - minCapacity &lt; <span class="number">0</span>)</span><br><span class="line">        newCapacity = minCapacity;</span><br><span class="line">    <span class="keyword">if</span> (newCapacity - MAX_ARRAY_SIZE &gt; <span class="number">0</span>)</span><br><span class="line">        newCapacity = hugeCapacity(minCapacity);</span><br><span class="line">    elementData = Arrays.copyOf(elementData, newCapacity);	<span class="comment">//复制到新数组中</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="删除元素"><a href="#删除元素" class="headerlink" title="删除元素"></a>删除元素</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">removeElementAt</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;</span><br><span class="line">    modCount++;</span><br><span class="line">    <span class="keyword">if</span> (index &gt;= elementCount) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> ArrayIndexOutOfBoundsException(index + <span class="string">" &gt;= "</span> +</span><br><span class="line">                                                 elementCount);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (index &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> ArrayIndexOutOfBoundsException(index);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> j = elementCount - index - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span> (j &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        System.arraycopy(elementData, index + <span class="number">1</span>, elementData, index, j);</span><br><span class="line">    &#125;</span><br><span class="line">    elementCount--;</span><br><span class="line">    elementData[elementCount] = <span class="keyword">null</span>; <span class="comment">/* to let gc do its work */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="增加元素"><a href="#增加元素" class="headerlink" title="增加元素"></a>增加元素</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">insertElementAt</span><span class="params">(E obj, <span class="keyword">int</span> index)</span> </span>&#123;</span><br><span class="line">    modCount++;</span><br><span class="line">    <span class="keyword">if</span> (index &gt; elementCount) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> ArrayIndexOutOfBoundsException(index</span><br><span class="line">                                                 + <span class="string">" &gt; "</span> + elementCount);</span><br><span class="line">    &#125;</span><br><span class="line">    ensureCapacityHelper(elementCount + <span class="number">1</span>);</span><br><span class="line">    System.arraycopy(elementData, index, elementData, index + <span class="number">1</span>, elementCount - index);</span><br><span class="line">    elementData[index] = obj;</span><br><span class="line">    elementCount++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="addAll"><a href="#addAll" class="headerlink" title="addAll()"></a><code>addAll()</code></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">boolean</span> <span class="title">addAll</span><span class="params">(<span class="keyword">int</span> index, Collection&lt;? extends E&gt; c)</span> </span>&#123;</span><br><span class="line">    modCount++;</span><br><span class="line">    <span class="keyword">if</span> (index &lt; <span class="number">0</span> || index &gt; elementCount)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> ArrayIndexOutOfBoundsException(index);</span><br><span class="line"></span><br><span class="line">    Object[] a = c.toArray();</span><br><span class="line">    <span class="keyword">int</span> numNew = a.length;</span><br><span class="line">    ensureCapacityHelper(elementCount + numNew);	</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> numMoved = elementCount - index;	<span class="comment">//移动数据长度</span></span><br><span class="line">    <span class="keyword">if</span> (numMoved &gt; <span class="number">0</span>)</span><br><span class="line">        System.arraycopy(elementData, index, elementData, index + numNew,</span><br><span class="line">                         numMoved);</span><br><span class="line"></span><br><span class="line">    System.arraycopy(a, <span class="number">0</span>, elementData, index, numNew);</span><br><span class="line">    elementCount += numNew;</span><br><span class="line">    <span class="keyword">return</span> numNew != <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="elements"><a href="#elements" class="headerlink" title="elements()"></a><code>elements()</code></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//返回Vector中全部元素对应的Enumeration, Enumeration迭代不会出现线程安全问题</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Enumeration&lt;E&gt; <span class="title">elements</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Enumeration&lt;E&gt;() &#123;</span><br><span class="line">        <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">hasMoreElements</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> count &lt; elementCount;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> E <span class="title">nextElement</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">synchronized</span> (Vector.<span class="keyword">this</span>) &#123;</span><br><span class="line">                <span class="keyword">if</span> (count &lt; elementCount) &#123;</span><br><span class="line">                    <span class="keyword">return</span> elementData(count++);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> NoSuchElementException(<span class="string">"Vector Enumeration"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="Stack"><a href="#Stack" class="headerlink" title="Stack"></a>Stack</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Stack</span>&lt;<span class="title">E</span>&gt; <span class="keyword">extends</span> <span class="title">Vector</span>&lt;<span class="title">E</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>Stack是栈。它的特性是：<strong>先进后出</strong>(FILO, First In Last Out)</li>
-<li>继承于Vector， 通过数组实现，而非链表</li>
-</ul>
-<h2 id="源码分析-1"><a href="#源码分析-1" class="headerlink" title="源码分析"></a>源码分析</h2><h3 id="push"><a href="#push" class="headerlink" title="push()"></a>push()</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//将元素存入栈顶</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> E <span class="title">push</span><span class="params">(E item)</span> </span>&#123;</span><br><span class="line">    addElement(item);	<span class="comment">//在Vector中实现</span></span><br><span class="line">    <span class="keyword">return</span> item;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">addElement</span><span class="params">(E obj)</span> </span>&#123;</span><br><span class="line">    modCount++;</span><br><span class="line">    ensureCapacityHelper(elementCount + <span class="number">1</span>);</span><br><span class="line">    elementData[elementCount++] = obj;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="pop"><a href="#pop" class="headerlink" title="pop()"></a>pop()</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//获取栈顶元素，删除</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> E <span class="title">pop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    E       obj;</span><br><span class="line">    <span class="keyword">int</span>     len = size();</span><br><span class="line"></span><br><span class="line">    obj = peek();</span><br><span class="line">    removeElementAt(len - <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> obj;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="peek"><a href="#peek" class="headerlink" title="peek()"></a>peek()</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//获取栈顶元素，不删除</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> E <span class="title">peek</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span>     len = size();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (len == <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> EmptyStackException();</span><br><span class="line">    <span class="keyword">return</span> elementAt(len - <span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结　　"></a>总结　　</h1><ul>
-<li><code>Vector</code> 是<strong>矢量队列，和<code>ArrayList</code>一样，它也是一个动态数组，由数组实现</strong>。但是<code>ArrayList</code>是非线程安全的，而<code>Vector</code>是线程安全的。 　　</li>
-<li><code>Stack</code> 是<strong>栈，它继承于<code>Vector</code></strong>。它的特性是：先进后出<code>(FILO, First In Last Out)</code>。 </li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2039,7 +2073,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">17</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2052,7 +2086,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
