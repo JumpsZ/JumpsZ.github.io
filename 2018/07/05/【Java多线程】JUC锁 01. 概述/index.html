@@ -88,7 +88,10 @@
 <meta property="og:description" content="[TOC] JUC lock概述1. 前言JUC包中的锁，包括：Lock接口，Condition条件，ReadWriteLock接口，LockSupport阻塞原语，AbstractOwnableSynchronizer/AbstractQueuedSynchronizer/AbstractQueuedLongSynchronizer三个抽象类，ReentrantLock独占锁，读写锁Reentr">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://images2018.cnblogs.com/blog/1256203/201805/1256203-20180506110949802-793090402.png">
-<meta property="og:updated_time" content="2018-07-28T03:53:28.438Z">
+<meta property="og:image" content="https://i.imgur.com/xDVELyO.png">
+<meta property="og:image" content="https://i.imgur.com/qXmumr4.png">
+<meta property="og:image" content="https://i.imgur.com/2airjBP.png">
+<meta property="og:updated_time" content="2018-07-31T15:02:58.581Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【Java多线程】JUC锁 01. 概述">
 <meta name="twitter:description" content="[TOC] JUC lock概述1. 前言JUC包中的锁，包括：Lock接口，Condition条件，ReadWriteLock接口，LockSupport阻塞原语，AbstractOwnableSynchronizer/AbstractQueuedSynchronizer/AbstractQueuedLongSynchronizer三个抽象类，ReentrantLock独占锁，读写锁Reentr">
@@ -349,9 +352,19 @@
 <h3 id="2-3-ReadWriteLock接口"><a href="#2-3-ReadWriteLock接口" class="headerlink" title="2.3 ReadWriteLock接口"></a>2.3 ReadWriteLock接口</h3><p>读写锁与一般的互斥锁不同，它分为读锁和写锁，在同一时间里，可以有多个线程获取读锁来进行共享资源的访问。如果此时有线程获取了写锁，那么读锁的线程将等待，直到写锁释放掉，才能进行共享资源访问。简单来说就是读锁与写锁互斥。</p>
 <p>读写锁比互斥锁允许对于共享数据更大程度的并发。每次只能有一个写线程，但是同时可以有多个线程并发地读数据。ReadWriteLock适用于读多写少的并发情况。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ReadWriteLock</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 写锁</span></span><br><span class="line">    <span class="function">Lock <span class="title">writeLock</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="comment">// 读锁</span></span><br><span class="line">    <span class="function">Lock <span class="title">readLock</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="2-3-LockSupport"><a href="#2-3-LockSupport" class="headerlink" title="2.3 LockSupport"></a>2.3 LockSupport</h3><p>LockSupport提供“创建锁”和“其他同步类的基本线程阻塞原语”。  </p>
-<h3 id="2-5-AbstractOwnableSynchronizer"><a href="#2-5-AbstractOwnableSynchronizer" class="headerlink" title="2.5 AbstractOwnableSynchronizer"></a>2.5 AbstractOwnableSynchronizer</h3><p>帮助记录当前保持独占同步的线程的简单</p>
-<h2 id="3-参考"><a href="#3-参考" class="headerlink" title="3. 参考"></a>3. 参考</h2><p><a href="http://www.cnblogs.com/skywang12345/p/3496098.html" target="_blank" rel="noopener">http://www.cnblogs.com/skywang12345/p/3496098.html</a></p>
+<h3 id="2-4-LockSupport"><a href="#2-4-LockSupport" class="headerlink" title="2.4 LockSupport"></a>2.4 LockSupport</h3><p><a href="https://jumpsz.github.io/2018/07/08/%E3%80%90Java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E3%80%91JUC%E9%94%81%2003.%20LockSupport/" target="_blank" rel="noopener">LockSupport</a> 基本线程阻塞原语</p>
+<p><code>LockSupport</code>中的park() 和 unpark() 分别对应<code>Thread</code>类中的<code>suspend()</code>和<code>resume()</code>，但不会引发死锁问题</p>
+<h3 id="2-5-AbstractOwnableSynchronizer"><a href="#2-5-AbstractOwnableSynchronizer" class="headerlink" title="2.5 AbstractOwnableSynchronizer"></a>2.5 AbstractOwnableSynchronizer</h3><p>帮助记录当前保持独占同步的线程的抽象类，实现类为<a href="https://jumpsz.github.io/2018/07/14/%E3%80%90Java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E3%80%91JUC%E9%94%81%2004.%20AQS/" target="_blank" rel="noopener">AbstractQueuedSynchronizer</a>(即AQS) 和 AbstractQueuedLongSynchronizer。</p>
+<p>AQS可用来定义锁以及依赖于排队阻塞线程的其他同步器；ReentrantLock，ReentrantReadWriteLock，CountDownLatch，CyclicBarrier和Semaphore等这些类都是基于AQS类实现的。</p>
+<p>AbstractQueuedLongSynchronizer 类提供相同的功能但扩展了对同步状态的 64 位的支持。 </p>
+<h3 id="2-6-ReentrantLock"><a href="#2-6-ReentrantLock" class="headerlink" title="2. 6 ReentrantLock"></a>2. 6 ReentrantLock</h3><p>ReentrantLock是独占锁，即同一个时间点只能被一个线程锁获取到的锁 。ReentrantLock分为“<strong>公平锁</strong>”和“<strong>非公平锁</strong>”。它们的区别体现在获取锁的机制上是否公平。 </p>
+<p>ReentrantLock的UML类图如下：</p>
+<p><img src="https://i.imgur.com/xDVELyO.png" alt=""> </p>
+<h3 id="2-7-ReentrantReadWriteLock"><a href="#2-7-ReentrantReadWriteLock" class="headerlink" title="2.7 ReentrantReadWriteLock"></a>2.7 ReentrantReadWriteLock</h3><p>ReentrantReadWriteLock是读写锁接口ReadWriteLock的实现类，它包括子类ReadLock和WriteLock。ReadLock是共享锁，而WriteLock是独占锁。 </p>
+<p>ReentrantReadWriteLock的UML类图如下：</p>
+<p><img src="https://i.imgur.com/qXmumr4.png" alt=""> </p>
+<h3 id="2-8-StampedLock"><a href="#2-8-StampedLock" class="headerlink" title="2.8 StampedLock"></a>2.8 StampedLock</h3><p><img src="https://i.imgur.com/2airjBP.png" alt=""> </p>
+<h3 id="2-9-CountDownLatch"><a href="#2-9-CountDownLatch" class="headerlink" title="2.9 CountDownLatch"></a>2.9 CountDownLatch</h3><h3 id="2-10-CyclicBarrier"><a href="#2-10-CyclicBarrier" class="headerlink" title="2.10 CyclicBarrier"></a>2.10 CyclicBarrier</h3><h3 id="2-11-Semaphore"><a href="#2-11-Semaphore" class="headerlink" title="2.11 Semaphore"></a>2.11 Semaphore</h3><h2 id="3-参考"><a href="#3-参考" class="headerlink" title="3. 参考"></a>3. 参考</h2><p><a href="http://www.cnblogs.com/skywang12345/p/3496098.html" target="_blank" rel="noopener">http://www.cnblogs.com/skywang12345/p/3496098.html</a></p>
 <p><a href="https://www.cnblogs.com/joemsu/p/8543449.html" target="_blank" rel="noopener">https://www.cnblogs.com/joemsu/p/8543449.html</a></p>
 
       
@@ -383,8 +396,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/07/03/【JVM】逃逸分析/" rel="next" title="【JVM】逃逸分析">
-                <i class="fa fa-chevron-left"></i> 【JVM】逃逸分析
+              <a href="/2018/07/04/【Java多线程】synchronized关键字/" rel="next" title="【Java多线程】synchronized 关键字">
+                <i class="fa fa-chevron-left"></i> 【Java多线程】synchronized 关键字
               </a>
             
           </div>
@@ -476,7 +489,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-count">27</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -522,7 +535,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#JUC-lock概述"><span class="nav-number">1.</span> <span class="nav-text">JUC lock概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-前言"><span class="nav-number">1.1.</span> <span class="nav-text">1. 前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-源码解析"><span class="nav-number">1.2.</span> <span class="nav-text">2. 源码解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-Lock接口"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 Lock接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-Condition接口"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 Condition接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-ReadWriteLock接口"><span class="nav-number">1.2.3.</span> <span class="nav-text">2.3 ReadWriteLock接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-LockSupport"><span class="nav-number">1.2.4.</span> <span class="nav-text">2.3 LockSupport</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-AbstractOwnableSynchronizer"><span class="nav-number">1.2.5.</span> <span class="nav-text">2.5 AbstractOwnableSynchronizer</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-参考"><span class="nav-number">1.3.</span> <span class="nav-text">3. 参考</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#JUC-lock概述"><span class="nav-number">1.</span> <span class="nav-text">JUC lock概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-前言"><span class="nav-number">1.1.</span> <span class="nav-text">1. 前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-源码解析"><span class="nav-number">1.2.</span> <span class="nav-text">2. 源码解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-Lock接口"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 Lock接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-Condition接口"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 Condition接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-ReadWriteLock接口"><span class="nav-number">1.2.3.</span> <span class="nav-text">2.3 ReadWriteLock接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-LockSupport"><span class="nav-number">1.2.4.</span> <span class="nav-text">2.4 LockSupport</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-AbstractOwnableSynchronizer"><span class="nav-number">1.2.5.</span> <span class="nav-text">2.5 AbstractOwnableSynchronizer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-6-ReentrantLock"><span class="nav-number">1.2.6.</span> <span class="nav-text">2. 6 ReentrantLock</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-7-ReentrantReadWriteLock"><span class="nav-number">1.2.7.</span> <span class="nav-text">2.7 ReentrantReadWriteLock</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-8-StampedLock"><span class="nav-number">1.2.8.</span> <span class="nav-text">2.8 StampedLock</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-9-CountDownLatch"><span class="nav-number">1.2.9.</span> <span class="nav-text">2.9 CountDownLatch</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-10-CyclicBarrier"><span class="nav-number">1.2.10.</span> <span class="nav-text">2.10 CyclicBarrier</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-11-Semaphore"><span class="nav-number">1.2.11.</span> <span class="nav-text">2.11 Semaphore</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-参考"><span class="nav-number">1.3.</span> <span class="nav-text">3. 参考</span></a></li></ol></li></ol></div>
             
 
           </div>
