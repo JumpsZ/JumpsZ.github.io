@@ -1164,6 +1164,7 @@
 <h1 id="JUC-lock概述"><a href="#JUC-lock概述" class="headerlink" title="JUC lock概述"></a>JUC lock概述</h1><h2 id="1-前言"><a href="#1-前言" class="headerlink" title="1. 前言"></a>1. 前言</h2><p>JUC包中的锁，包括：Lock接口，Condition条件，ReadWriteLock接口，LockSupport阻塞原语，AbstractOwnableSynchronizer/AbstractQueuedSynchronizer/AbstractQueuedLongSynchronizer三个抽象类，ReentrantLock独占锁，读写锁ReentrantReadWriteLock，jdk1.8新增StampedLock。CountDownLatch，CyclicBarrier和Semaphore也是通过AQS来实现的，也将它们归纳到锁的框架中进行介绍。 </p>
 <p>框架图如下：</p>
 <p><img src="https://images2018.cnblogs.com/blog/1256203/201805/1256203-20180506110949802-793090402.png" alt=""></p>
+<p><img src="" alt=""></p>
 <h2 id="2-源码解析"><a href="#2-源码解析" class="headerlink" title="2. 源码解析"></a>2. 源码解析</h2><h3 id="2-1-Lock接口"><a href="#2-1-Lock接口" class="headerlink" title="2.1 Lock接口"></a>2.1 Lock接口</h3><ul>
 <li>提供比synchronized更广泛的锁操作：更灵活的结构，可能有多种属性，支持多个相关联的条件</li>
 <li>Lock允许获取和释放锁在不同范围，允许任意顺序获取和释放多个锁</li>
