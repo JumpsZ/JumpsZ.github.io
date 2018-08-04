@@ -87,12 +87,12 @@
 <meta property="og:site_name" content="Blog">
 <meta property="og:description" content="Collection接口1public interface Collection&amp;lt;E&amp;gt; extends Iterable&amp;lt;E&amp;gt; &amp;#123;&amp;#125; 框架：  它是一个接口，是高度抽象出来的集合，它包含了集合的基本操作：添加、删除、清空、遍历(读取)、是否为空、获取大小、是否保护某元素等等。 List接口1public interface List&amp;lt;E&amp;gt; e">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://images0.cnblogs.com/blog/490648/201308/18174126-653273ab5abe491bb9724353360ed252.png">
-<meta property="og:updated_time" content="2018-06-27T14:44:36.063Z">
+<meta property="og:image" content="http://yoursite.com/images/Collection.png">
+<meta property="og:updated_time" content="2018-08-04T08:55:50.566Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【Java集合】Collection概述">
 <meta name="twitter:description" content="Collection接口1public interface Collection&amp;lt;E&amp;gt; extends Iterable&amp;lt;E&amp;gt; &amp;#123;&amp;#125; 框架：  它是一个接口，是高度抽象出来的集合，它包含了集合的基本操作：添加、删除、清空、遍历(读取)、是否为空、获取大小、是否保护某元素等等。 List接口1public interface List&amp;lt;E&amp;gt; e">
-<meta name="twitter:image" content="https://images0.cnblogs.com/blog/490648/201308/18174126-653273ab5abe491bb9724353360ed252.png">
+<meta name="twitter:image" content="http://yoursite.com/images/Collection.png">
 
 
 
@@ -335,7 +335,7 @@
       
         <h1 id="Collection接口"><a href="#Collection接口" class="headerlink" title="Collection接口"></a>Collection接口</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Collection</span>&lt;<span class="title">E</span>&gt; <span class="keyword">extends</span> <span class="title">Iterable</span>&lt;<span class="title">E</span>&gt; </span>&#123;&#125;</span><br></pre></td></tr></table></figure>
 <p>框架：</p>
-<p><img src="https://images0.cnblogs.com/blog/490648/201308/18174126-653273ab5abe491bb9724353360ed252.png" alt=""></p>
+<p><img src="/images/Collection.png" alt=""></p>
 <p>它是一个接口，是高度抽象出来的集合，它包含了集合的基本操作：添加、删除、清空、遍历(读取)、是否为空、获取大小、是否保护某元素等等。</p>
 <h1 id="List接口"><a href="#List接口" class="headerlink" title="List接口"></a>List接口</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">List</span>&lt;<span class="title">E</span>&gt; <span class="keyword">extends</span> <span class="title">Collection</span>&lt;<span class="title">E</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <ul>
@@ -384,7 +384,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Enumeration </span></span><br><span class="line"><span class="keyword">package</span> java.util;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Enumeration</span>&lt;<span class="title">E</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">hasMoreElements</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">E <span class="title">nextElement</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Iterator</span></span><br><span class="line"><span class="keyword">package</span> java.util;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Iterator</span>&lt;<span class="title">E</span>&gt; </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">hasNext</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">E <span class="title">next</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">remove</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>区别： </p>
 <pre><code> 1. Enumeration 是JDK 1.0添加的接口，使用到它的函数包括Vector、Hashtable等类 ；Iterator 是JDK 1.2才添加的接口，它也是为了HashMap、ArrayList等集合提供遍历接口 
- 2. 函数接口不同，Enumeration不支持删除元素操作
+    2. 函数接口不同，Enumeration不支持删除元素操作
 3. Iterator支持**fail-fast**机制，而Enumeration不支持，所以Iterator遍历速度会比Enumeration慢
 </code></pre><ul>
 <li>Iterator 和 Iterable 比较：</li>
