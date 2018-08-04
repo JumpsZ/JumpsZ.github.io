@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="[TOC] volatile1. 前言 最轻量级的同步机制 具有对所有线程具有可见性，但不具有原子性 禁止指令重排序优化  适用场景：  运算结果不依赖变量的当前值，或者能够确保只有单一的线程修改变量的值 变量不需要与其他的状态变量共同参与不变约束  2. 原理处理器为了提高运行速度，不直接与内存进行通讯，而是通过先将内存中的数据读到内部缓存再进行操作，操作完后写入内存时间不确定 对volital">
+<meta name="description" content="volatile1. 前言 最轻量级的同步机制 具有对所有线程具有可见性，但不具有原子性 禁止指令重排序优化  适用场景：  运算结果不依赖变量的当前值，或者能够确保只有单一的线程修改变量的值 变量不需要与其他的状态变量共同参与不变约束  2. 原理处理器为了提高运行速度，不直接与内存进行通讯，而是通过先将内存中的数据读到内部缓存再进行操作，操作完后写入内存时间不确定 对volitale变量写操作">
 <meta name="keywords" content="Java多线程">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【Java多线程】Volatile关键字">
 <meta property="og:url" content="http://yoursite.com/2018/08/01/【Java多线程】volatile关键字/index.html">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="[TOC] volatile1. 前言 最轻量级的同步机制 具有对所有线程具有可见性，但不具有原子性 禁止指令重排序优化  适用场景：  运算结果不依赖变量的当前值，或者能够确保只有单一的线程修改变量的值 变量不需要与其他的状态变量共同参与不变约束  2. 原理处理器为了提高运行速度，不直接与内存进行通讯，而是通过先将内存中的数据读到内部缓存再进行操作，操作完后写入内存时间不确定 对volital">
+<meta property="og:description" content="volatile1. 前言 最轻量级的同步机制 具有对所有线程具有可见性，但不具有原子性 禁止指令重排序优化  适用场景：  运算结果不依赖变量的当前值，或者能够确保只有单一的线程修改变量的值 变量不需要与其他的状态变量共同参与不变约束  2. 原理处理器为了提高运行速度，不直接与内存进行通讯，而是通过先将内存中的数据读到内部缓存再进行操作，操作完后写入内存时间不确定 对volitale变量写操作">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-01T12:22:40.693Z">
+<meta property="og:updated_time" content="2018-08-04T08:09:03.376Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【Java多线程】Volatile关键字">
-<meta name="twitter:description" content="[TOC] volatile1. 前言 最轻量级的同步机制 具有对所有线程具有可见性，但不具有原子性 禁止指令重排序优化  适用场景：  运算结果不依赖变量的当前值，或者能够确保只有单一的线程修改变量的值 变量不需要与其他的状态变量共同参与不变约束  2. 原理处理器为了提高运行速度，不直接与内存进行通讯，而是通过先将内存中的数据读到内部缓存再进行操作，操作完后写入内存时间不确定 对volital">
+<meta name="twitter:description" content="volatile1. 前言 最轻量级的同步机制 具有对所有线程具有可见性，但不具有原子性 禁止指令重排序优化  适用场景：  运算结果不依赖变量的当前值，或者能够确保只有单一的线程修改变量的值 变量不需要与其他的状态变量共同参与不变约束  2. 原理处理器为了提高运行速度，不直接与内存进行通讯，而是通过先将内存中的数据读到内部缓存再进行操作，操作完后写入内存时间不确定 对volitale变量写操作">
 
 
 
@@ -331,8 +331,7 @@
       
 
       
-        <p>[TOC]</p>
-<h1 id="volatile"><a href="#volatile" class="headerlink" title="volatile"></a>volatile</h1><h2 id="1-前言"><a href="#1-前言" class="headerlink" title="1. 前言"></a>1. 前言</h2><ul>
+        <h1 id="volatile"><a href="#volatile" class="headerlink" title="volatile"></a>volatile</h1><h2 id="1-前言"><a href="#1-前言" class="headerlink" title="1. 前言"></a>1. 前言</h2><ul>
 <li>最轻量级的同步机制</li>
 <li>具有对所有线程具有可见性，但不具有原子性</li>
 <li>禁止指令重排序优化</li>
@@ -344,7 +343,6 @@
 </ul>
 <h2 id="2-原理"><a href="#2-原理" class="headerlink" title="2. 原理"></a>2. 原理</h2><p>处理器为了提高运行速度，不直接与内存进行通讯，而是通过先将内存中的数据读到内部缓存再进行操作，操作完后写入内存时间不确定</p>
 <p>对volitale变量写操作时候，JVM会发送一条lock前缀的指令，lock前缀指令会引起处理器缓存回写到内存，将这个变量缓存行的数据重新写回到内存</p>
-<p>LOCK# 信号确保在声言该信号期间，处理器可以独占使用任何共享内存 ， 锁总线，或锁缓存</p>
 <p>为了保证各个处理器的缓存是一致的，就会实现缓存一致性协议（MESI协议等），每个处理器通过嗅探在总线上传播的数据来检查自己缓存的值是不是过期了，当处理器发现自己缓存行对应的内存地址被修改，就会将当前处理器的缓存行设置成无效状态，当处理器要对这个数据进行修改操作的时候，会强制重新从系统内存里把数据读到处理器缓存里。</p>
 <p>缓存一致性机制会阻止同时修改被两个以上处理器缓存的内存区域数据。</p>
 
@@ -386,6 +384,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/03/【Java多线程】JUC锁 08. CountDownLatch/" rel="prev" title="【Java多线程】JUC锁 08. CountDownLatch">
+                【Java多线程】JUC锁 08. CountDownLatch <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>

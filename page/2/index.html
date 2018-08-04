@@ -519,7 +519,7 @@
 </ul>
 <h2 id="2-源码解析"><a href="#2-源码解析" class="headerlink" title="2. 源码解析"></a>2. 源码解析</h2><h3 id="2-1-数据结构"><a href="#2-1-数据结构" class="headerlink" title="2.1 数据结构"></a>2.1 数据结构</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">AbstractQueuedSynchronizer</span></span></span><br><span class="line"><span class="class">    <span class="keyword">extends</span> <span class="title">AbstractOwnableSynchronizer</span></span></span><br><span class="line"><span class="class">    <span class="keyword">implements</span> <span class="title">java</span>.<span class="title">io</span>.<span class="title">Serializable</span> </span>&#123;    </span><br><span class="line">        <span class="comment">// 版本号</span></span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">7373984972572414691L</span>;    </span><br><span class="line">        <span class="comment">// 头结点</span></span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">transient</span> <span class="keyword">volatile</span> Node head;    </span><br><span class="line">        <span class="comment">// 尾结点</span></span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">transient</span> <span class="keyword">volatile</span> Node tail;    </span><br><span class="line">        <span class="comment">// 状态</span></span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">int</span> state;    </span><br><span class="line">        <span class="comment">// 自旋时间</span></span><br><span class="line">        <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> spinForTimeoutThreshold = <span class="number">1000L</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 <p>AQS基于FIFO队列，底层数据结构为双向链表，依据head，tail指针来调度锁的获取和释放。Condition queue 是单向链表，不是必须的，当使用Condition才有此单向链表；可能有多个Condition queue</p>
-<p><img src="https://images2015.cnblogs.com/blog/616953/201604/616953-20160403170136176-573839888.png" alt=""></p>
+<p><img src="https://i.imgur.com/qIxF5mU.png" alt=""> </p>
 <h3 id="2-2-内部类"><a href="#2-2-内部类" class="headerlink" title="2.2 内部类"></a>2.2 内部类</h3><ul>
 <li>Node类</li>
 </ul>
@@ -1160,11 +1160,9 @@
       
         
           
-            <p>[TOC]</p>
-<h1 id="JUC-lock概述"><a href="#JUC-lock概述" class="headerlink" title="JUC lock概述"></a>JUC lock概述</h1><h2 id="1-前言"><a href="#1-前言" class="headerlink" title="1. 前言"></a>1. 前言</h2><p>JUC包中的锁，包括：Lock接口，Condition条件，ReadWriteLock接口，LockSupport阻塞原语，AbstractOwnableSynchronizer/AbstractQueuedSynchronizer/AbstractQueuedLongSynchronizer三个抽象类，ReentrantLock独占锁，读写锁ReentrantReadWriteLock，jdk1.8新增StampedLock。CountDownLatch，CyclicBarrier和Semaphore也是通过AQS来实现的，也将它们归纳到锁的框架中进行介绍。 </p>
+            <h1 id="JUC-lock概述"><a href="#JUC-lock概述" class="headerlink" title="JUC  lock概述"></a>JUC  lock概述</h1><h2 id="1-前言"><a href="#1-前言" class="headerlink" title="1. 前言"></a>1. 前言</h2><p>JUC包中的锁，包括：Lock接口，Condition条件，ReadWriteLock接口，LockSupport阻塞原语，AbstractOwnableSynchronizer/AbstractQueuedSynchronizer/AbstractQueuedLongSynchronizer三个抽象类，ReentrantLock独占锁，读写锁ReentrantReadWriteLock，jdk1.8新增StampedLock。CountDownLatch，CyclicBarrier和Semaphore也是通过AQS来实现的，也将它们归纳到锁的框架中进行介绍。 </p>
 <p>框架图如下：</p>
-<p><img src="https://images2018.cnblogs.com/blog/1256203/201805/1256203-20180506110949802-793090402.png" alt=""></p>
-<p><img src="" alt=""></p>
+<p><img src="/images/JUC lock框架.png" alt=""></p>
 <h2 id="2-源码解析"><a href="#2-源码解析" class="headerlink" title="2. 源码解析"></a>2. 源码解析</h2><h3 id="2-1-Lock接口"><a href="#2-1-Lock接口" class="headerlink" title="2.1 Lock接口"></a>2.1 Lock接口</h3><ul>
 <li>提供比synchronized更广泛的锁操作：更灵活的结构，可能有多种属性，支持多个相关联的条件</li>
 <li>Lock允许获取和释放锁在不同范围，允许任意顺序获取和释放多个锁</li>
@@ -1188,8 +1186,19 @@
 <h3 id="2-7-ReentrantReadWriteLock"><a href="#2-7-ReentrantReadWriteLock" class="headerlink" title="2.7 ReentrantReadWriteLock"></a>2.7 ReentrantReadWriteLock</h3><p>ReentrantReadWriteLock是读写锁接口ReadWriteLock的实现类，它包括子类ReadLock和WriteLock。ReadLock是共享锁，而WriteLock是独占锁。 </p>
 <p>ReentrantReadWriteLock的UML类图如下：</p>
 <p><img src="https://i.imgur.com/qXmumr4.png" alt=""> </p>
-<h3 id="2-8-StampedLock"><a href="#2-8-StampedLock" class="headerlink" title="2.8 StampedLock"></a>2.8 StampedLock</h3><p><img src="https://i.imgur.com/2airjBP.png" alt=""> </p>
-<h3 id="2-9-CountDownLatch"><a href="#2-9-CountDownLatch" class="headerlink" title="2.9 CountDownLatch"></a>2.9 CountDownLatch</h3><h3 id="2-10-CyclicBarrier"><a href="#2-10-CyclicBarrier" class="headerlink" title="2.10 CyclicBarrier"></a>2.10 CyclicBarrier</h3><h3 id="2-11-Semaphore"><a href="#2-11-Semaphore" class="headerlink" title="2.11 Semaphore"></a>2.11 Semaphore</h3><h2 id="3-参考"><a href="#3-参考" class="headerlink" title="3. 参考"></a>3. 参考</h2><p><a href="http://www.cnblogs.com/skywang12345/p/3496098.html" target="_blank" rel="noopener">http://www.cnblogs.com/skywang12345/p/3496098.html</a></p>
+<h3 id="2-8-StampedLock"><a href="#2-8-StampedLock" class="headerlink" title="2.8 StampedLock"></a>2.8 StampedLock</h3><p>StampedLock是对读写锁的改进，在读多写少的情况下，可能造成写线程遭遇饥饿问题。StampedLock控制锁有三种模式（写，读，乐观读），一个StampedLock状态是由版本和模式两个部分组成。UML类图如下：</p>
+<p><img src="https://i.imgur.com/2airjBP.png" alt=""> </p>
+<h3 id="2-9-CountDownLatch"><a href="#2-9-CountDownLatch" class="headerlink" title="2.9 CountDownLatch"></a>2.9 CountDownLatch</h3><p>CountDownLatch是一个同步辅助类，在完成一组正在其他线程中执行的操作之前，它允许一个或多个线程一直等待。</p>
+<p>UML类图如下：</p>
+<p><img src="https://i.imgur.com/FP5KYCu.png" alt=""> </p>
+<h3 id="2-10-CyclicBarrier"><a href="#2-10-CyclicBarrier" class="headerlink" title="2.10 CyclicBarrier"></a>2.10 CyclicBarrier</h3><p>CyclicBarrier是一个同步辅助类，允许一组线程互相等待，直到到达某个公共屏障点。</p>
+<p>UML类图如下：</p>
+<p><img src="https://i.imgur.com/lVCq69q.png" alt=""> </p>
+<h3 id="2-11-Semaphore"><a href="#2-11-Semaphore" class="headerlink" title="2.11 Semaphore"></a>2.11 Semaphore</h3><p>Semaphore是一个计数信号量，它的本质是一个共享锁。</p>
+<p>线程可以通过调用acquire()来获取信号量的许可；当信号量中有可用的许可时，线程能获取该许可；否则线程必须等待，直到有可用的许可为止。 线程可以通过release()来释放它所持有的信号量许可。 </p>
+<p>UML类图如下：</p>
+<p><img src="https://i.imgur.com/Z05JEVM.png" alt=""> </p>
+<h2 id="3-参考"><a href="#3-参考" class="headerlink" title="3. 参考"></a>3. 参考</h2><p><a href="http://www.cnblogs.com/skywang12345/p/3496098.html" target="_blank" rel="noopener">http://www.cnblogs.com/skywang12345/p/3496098.html</a></p>
 <p><a href="https://www.cnblogs.com/joemsu/p/8543449.html" target="_blank" rel="noopener">https://www.cnblogs.com/joemsu/p/8543449.html</a></p>
 
           
