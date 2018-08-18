@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="IO," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="IO字符流1. 框架  2. CharArrayReader/CharArrayWriter CharArrayReader 是字符数组输入流。它和ByteArrayInputStream类似，操作的数据是以字符为单位   12345678910111213141516public class CharArrayReader extends Reader &amp;#123;    // 字符数组缓冲">
+<meta name="keywords" content="IO">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【IO】IO字符流">
+<meta property="og:url" content="http://yoursite.com/2018/08/07/【IO】IO字符流/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="IO字符流1. 框架  2. CharArrayReader/CharArrayWriter CharArrayReader 是字符数组输入流。它和ByteArrayInputStream类似，操作的数据是以字符为单位   12345678910111213141516public class CharArrayReader extends Reader &amp;#123;    // 字符数组缓冲">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.imgur.com/pLpFyfN.png">
+<meta property="og:updated_time" content="2018-08-14T13:22:09.030Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【IO】IO字符流">
+<meta name="twitter:description" content="IO字符流1. 框架  2. CharArrayReader/CharArrayWriter CharArrayReader 是字符数组输入流。它和ByteArrayInputStream类似，操作的数据是以字符为单位   12345678910111213141516public class CharArrayReader extends Reader &amp;#123;    // 字符数组缓冲">
+<meta name="twitter:image" content="https://i.imgur.com/pLpFyfN.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Jumping'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/08/07/【IO】IO字符流/"/>
+
+
+
+
+
+  <title>【IO】IO字符流 | Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+	
+	<a href="https://github.com/JumpsZ/JumpsZ.github.io"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_darkblue_121621.png" alt="Fork me on GitHub"></a>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/07/【IO】IO字符流/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JumpsZ">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/timg.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【IO】IO字符流</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-07T14:13:00+08:00">
+                2018-08-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/IO/" itemprop="url" rel="index">
+                    <span itemprop="name">IO</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="IO字符流"><a href="#IO字符流" class="headerlink" title="IO字符流"></a>IO字符流</h1><h2 id="1-框架"><a href="#1-框架" class="headerlink" title="1. 框架"></a>1. 框架</h2><p><img src="https://i.imgur.com/pLpFyfN.png" alt=""> </p>
+<h2 id="2-CharArrayReader-CharArrayWriter"><a href="#2-CharArrayReader-CharArrayWriter" class="headerlink" title="2. CharArrayReader/CharArrayWriter"></a>2. CharArrayReader/CharArrayWriter</h2><ul>
+<li>CharArrayReader 是字符数组输入流。它和ByteArrayInputStream类似，操作的数据是以字符为单位 </li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CharArrayReader</span> <span class="keyword">extends</span> <span class="title">Reader</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 字符数组缓冲</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">char</span> buf[];</span><br><span class="line">    <span class="comment">// 下一个被获取的字符的位置</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">int</span> pos;</span><br><span class="line">    <span class="comment">// 被标记的位置</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">int</span> markedPos = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">// 字符缓冲的长度</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">int</span> count;</span><br><span class="line">    <span class="comment">// 构造函数</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">CharArrayReader</span><span class="params">(<span class="keyword">char</span> buf[])</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.buf = buf;</span><br><span class="line">        <span class="keyword">this</span>.pos = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">this</span>.count = buf.length;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>CharArrayReader 是字符数组输出流，用于写入数据符。操作的数据是以字符为单位 </li>
+<li>CharArrayReader 默认数组缓冲区大小为32</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 写入字符数组c到CharArrayWriter中。off是“字符数组b中的起始写入位置”，len是写入的长度</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">write</span><span class="params">(<span class="keyword">char</span> c[], <span class="keyword">int</span> off, <span class="keyword">int</span> len)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> ((off &lt; <span class="number">0</span>) || (off &gt; c.length) || (len &lt; <span class="number">0</span>) ||</span><br><span class="line">        ((off + len) &gt; c.length) || ((off + len) &lt; <span class="number">0</span>)) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IndexOutOfBoundsException();</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (len == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">synchronized</span> (lock) &#123;</span><br><span class="line">        <span class="keyword">int</span> newcount = count + len;</span><br><span class="line">        <span class="keyword">if</span> (newcount &gt; buf.length) &#123;</span><br><span class="line">            buf = Arrays.copyOf(buf, Math.max(buf.length &lt;&lt; <span class="number">1</span>, newcount));<span class="comment">//扩容操作</span></span><br><span class="line">        &#125;</span><br><span class="line">        System.arraycopy(c, off, buf, count, len);</span><br><span class="line">        count = newcount;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="3-PipedReader-PipedWriter"><a href="#3-PipedReader-PipedWriter" class="headerlink" title="3. PipedReader/PipedWriter"></a>3. PipedReader/PipedWriter</h2><ul>
+<li>PipedWriter 是字符管道输出流，它继承于Writer。 PipedReader 是字符管道输入流，它继承于Writer。 </li>
+<li>同“PipedInputStream和PipedOutputStream”一样，可以通过管道进行线程间的通讯 </li>
+<li>PipedWriter 和PipedReader 需要成对使用，使用connect连接</li>
+<li>PipedWriter 中write方法，实际调用的PipedReader 的receive方法，将数据写入管道输入流的缓冲字符数组，通过in（下一个写入字符位置）和out（下一个读取字符位置）判断数据是否读完，线程等待状态</li>
+</ul>
+<h2 id="4-InputStreamReader-OutputStreamWriter"><a href="#4-InputStreamReader-OutputStreamWriter" class="headerlink" title="4. InputStreamReader/OutputStreamWriter"></a>4. InputStreamReader/OutputStreamWriter</h2><ul>
+<li>InputStreamReader和OutputStreamWriter 是字节流通向字符流的桥梁：它使用指定的 charset 读写字节并将其解码为字符。 </li>
+<li>InputStreamReader 的作用是将“字节输入流”转换成“字符输入流”。它继承于Reader。 </li>
+<li>OutputStreamWriter 的作用是将“字节输出流”转换成“字符输出流”。它继承于Writer。 </li>
+</ul>
+<h2 id="5-FileReader-FileWriter"><a href="#5-FileReader-FileWriter" class="headerlink" title="5. FileReader/FileWriter"></a>5. FileReader/FileWriter</h2><ul>
+<li>FileReader 是用于读取字符流的类，它继承于InputStreamReader。要读取原始字节流，请考虑使用 FileInputStream。 </li>
+<li>FileWriter 是用于写入字符流的类，它继承于OutputStreamWriter。要写入原始字节流，请考虑使用 FileOutputStream。 </li>
+<li>FileReader是基于InputStreamReader实现的，构造函数传入FileInputStream</li>
+<li>FileWriter是基于OutputStreamWriter实现的，构造函数传入FileOutputStream</li>
+</ul>
+<h2 id="6-BufferedReader-BufferedWriter"><a href="#6-BufferedReader-BufferedWriter" class="headerlink" title="6. BufferedReader/BufferedWriter"></a>6. BufferedReader/BufferedWriter</h2><h3 id="6-1-BufferedReader"><a href="#6-1-BufferedReader" class="headerlink" title="6.1 BufferedReader"></a>6.1 BufferedReader</h3><ul>
+<li>BufferedReader 是缓冲字符输入流。它继承于Reader。 </li>
+<li>BufferedReader 的作用是为其他字符输入流添加一些缓冲功能。 </li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//从BufferedReader中读取一个字符，该字符以int的方式返回</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">read</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    <span class="keyword">synchronized</span> (lock) &#123;</span><br><span class="line">        ensureOpen();</span><br><span class="line">        <span class="keyword">for</span> (;;) &#123;</span><br><span class="line">            <span class="keyword">if</span> (nextChar &gt;= nChars) &#123;<span class="comment">// 若“缓冲区的数据已经被读完”，</span></span><br><span class="line">                fill();</span><br><span class="line">                <span class="keyword">if</span> (nextChar &gt;= nChars)</span><br><span class="line">                    <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (skipLF) &#123;<span class="comment">// 若要“忽略换行符”，</span></span><br><span class="line">                skipLF = <span class="keyword">false</span>;</span><br><span class="line">                <span class="keyword">if</span> (cb[nextChar] == <span class="string">'\n'</span>) &#123;</span><br><span class="line">                    nextChar++;</span><br><span class="line">                    <span class="keyword">continue</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> cb[nextChar++];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 填充缓冲区函数。有以下两种情况被调用：</span></span><br><span class="line"><span class="comment">// (01) 缓冲区没有数据时，通过fill()可以向缓冲区填充数据。</span></span><br><span class="line"><span class="comment">// (02) 缓冲区数据被读完，需更新时，通过fill()可以更新缓冲区的数据。</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">fill</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    <span class="comment">// dst表示“cb中填充数据的起始位置”。</span></span><br><span class="line">    <span class="keyword">int</span> dst;</span><br><span class="line">    <span class="keyword">if</span> (markedChar &lt;= UNMARKED) &#123;<span class="comment">// 没有标记的情况</span></span><br><span class="line">        dst = <span class="number">0</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// delta表示“当前标记的长度”，它等于“下一个被读取字符的位置”减去“标记的位置”的差值；</span></span><br><span class="line">        <span class="keyword">int</span> delta = nextChar - markedChar;</span><br><span class="line">        <span class="keyword">if</span> (delta &gt;= readAheadLimit) &#123;</span><br><span class="line">            <span class="comment">// 若“当前标记的长度”超过了“标记上限(readAheadLimit)”，</span></span><br><span class="line">            <span class="comment">// 则丢弃标记！</span></span><br><span class="line">            markedChar = INVALIDATED;</span><br><span class="line">            readAheadLimit = <span class="number">0</span>;</span><br><span class="line">            dst = <span class="number">0</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (readAheadLimit &lt;= cb.length) &#123;</span><br><span class="line">                <span class="comment">// 若“当前标记的长度”没有超过了“标记上限(readAheadLimit)”，</span></span><br><span class="line">                <span class="comment">// 并且“标记上限(readAheadLimit)”小于/等于“缓冲的长度”；</span></span><br><span class="line">                <span class="comment">// 则先将“下一个要被读取的位置，距离我们标记的置符的距离”间的字符保存到cb中。</span></span><br><span class="line">                System.arraycopy(cb, markedChar, cb, <span class="number">0</span>, delta);</span><br><span class="line">                markedChar = <span class="number">0</span>;</span><br><span class="line">                dst = delta;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">// 若“当前标记的长度”没有超过了“标记上限(readAheadLimit)”，</span></span><br><span class="line">                <span class="comment">// 并且“标记上限(readAheadLimit)”大于“缓冲的长度”；</span></span><br><span class="line">                <span class="comment">// 则重新设置缓冲区大小，并将“下一个要被读取的位置，距离我们标记的置符的距离”间的字符保存到cb中。</span></span><br><span class="line">                <span class="keyword">char</span> ncb[] = <span class="keyword">new</span> <span class="keyword">char</span>[readAheadLimit];	<span class="comment">//当我们不停的更新缓冲区的时候，被标记的位置会被不停的放大。而内存的容量是有效的，我们不可能不限制长度的存储标记。所以用readAheadLimit来限制标记长度！</span></span><br><span class="line">                System.arraycopy(cb, markedChar, ncb, <span class="number">0</span>, delta);</span><br><span class="line">                cb = ncb;</span><br><span class="line">                markedChar = <span class="number">0</span>;</span><br><span class="line">                dst = delta;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 更新nextChar和nChars</span></span><br><span class="line">            nextChar = nChars = delta;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> n;</span><br><span class="line">    <span class="keyword">do</span> &#123;</span><br><span class="line">        <span class="comment">// 从“in”中读取数据，并存储到字符数组cb中；</span></span><br><span class="line">        <span class="comment">// 从cb的dst位置开始存储，读取的字符个数是cb.length - dst</span></span><br><span class="line">        <span class="comment">// n是实际读取的字符个数；若n==0(即一个也没读到)，则继续读取！</span></span><br><span class="line">        n = in.read(cb, dst, cb.length - dst);</span><br><span class="line">    &#125; <span class="keyword">while</span> (n == <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 如果从“in”中读到了数据，则设置nChars(cb中字符的数目)=dst+n，</span></span><br><span class="line">    <span class="comment">// 并且nextChar(下一个被读取的字符的位置)=dst。</span></span><br><span class="line">    <span class="keyword">if</span> (n &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        nChars = dst + n;</span><br><span class="line">        nextChar = dst;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="6-2-BufferedWriter"><a href="#6-2-BufferedWriter" class="headerlink" title="6.2 BufferedWriter"></a>6.2 BufferedWriter</h3><ul>
+<li>BufferedWriter 是缓冲字符输出流。它继承于Writer。 </li>
+<li>BufferedWriter 的作用是为其他字符输出流添加一些缓冲功能 </li>
+<li>BufferedWriter通过字符数组来缓冲数据，当缓冲区满或者用户调用flush()函数时，它就会将缓冲区的数据写入到输出流中。 </li>
+</ul>
+<h2 id="7-PrintWriter"><a href="#7-PrintWriter" class="headerlink" title="7. PrintWriter"></a>7. PrintWriter</h2><ul>
+<li>PrintWriter 是字符类型的打印输出流，它继承于Writer。 </li>
+<li>PrintStream 用于向文本输出流打印对象的格式化表示形式。它实现在 PrintStream 中的所有 print 方法。它不包含用于写入原始字节的方法，对于这些字节，程序应该使用未编码的字节流进行写入。 </li>
+</ul>
+<h2 id="8-参考"><a href="#8-参考" class="headerlink" title="8. 参考"></a>8. 参考</h2><p><a href="http://www.cnblogs.com/skywang12345/p/io_01.html" target="_blank" rel="noopener">http://www.cnblogs.com/skywang12345/p/io_01.html</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/IO/" rel="tag"># IO</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/06/【IO】IO字节流/" rel="next" title="【IO】IO字节流">
+                <i class="fa fa-chevron-left"></i> 【IO】IO字节流
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/13/【Java多线程】JUC集合 01.  CopyOnWriteArrayList/" rel="prev" title="【Java多线程】JUC集合 01.  CopyOnWriteArrayList">
+                【Java多线程】JUC集合 01.  CopyOnWriteArrayList <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/timg.jpg"
+                alt="JumpsZ" />
+            
+              <p class="site-author-name" itemprop="name">JumpsZ</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#IO字符流"><span class="nav-number">1.</span> <span class="nav-text">IO字符流</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-框架"><span class="nav-number">1.1.</span> <span class="nav-text">1. 框架</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-CharArrayReader-CharArrayWriter"><span class="nav-number">1.2.</span> <span class="nav-text">2. CharArrayReader/CharArrayWriter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-PipedReader-PipedWriter"><span class="nav-number">1.3.</span> <span class="nav-text">3. PipedReader/PipedWriter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-InputStreamReader-OutputStreamWriter"><span class="nav-number">1.4.</span> <span class="nav-text">4. InputStreamReader/OutputStreamWriter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-FileReader-FileWriter"><span class="nav-number">1.5.</span> <span class="nav-text">5. FileReader/FileWriter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-BufferedReader-BufferedWriter"><span class="nav-number">1.6.</span> <span class="nav-text">6. BufferedReader/BufferedWriter</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-BufferedReader"><span class="nav-number">1.6.1.</span> <span class="nav-text">6.1 BufferedReader</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-2-BufferedWriter"><span class="nav-number">1.6.2.</span> <span class="nav-text">6.2 BufferedWriter</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-PrintWriter"><span class="nav-number">1.7.</span> <span class="nav-text">7. PrintWriter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-参考"><span class="nav-number">1.8.</span> <span class="nav-text">8. 参考</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JumpsZ</span>
+
+  
+</div>
+
+
+
+  <div class="powered-by">All rights reserved</div>
+
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
+<script type="text/javascript" src="/js/src/love.js"></script>

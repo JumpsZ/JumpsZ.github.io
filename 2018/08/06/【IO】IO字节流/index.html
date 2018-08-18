@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="IO," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="IO 字节流1. 框架  2. ByteArrayInputStream/ByteArrayOutputStream2.1 ByteArrayInputStream ByteArrayInputStream 是字节数组输入流，它继承于InputStream。 ByteArrayInputStream 包含一个内部缓冲区，该缓冲区包含从流中读取的字节，本质就是通过字节数组来实现的  12345678">
+<meta name="keywords" content="IO">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【IO】IO字节流">
+<meta property="og:url" content="http://yoursite.com/2018/08/06/【IO】IO字节流/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="IO 字节流1. 框架  2. ByteArrayInputStream/ByteArrayOutputStream2.1 ByteArrayInputStream ByteArrayInputStream 是字节数组输入流，它继承于InputStream。 ByteArrayInputStream 包含一个内部缓冲区，该缓冲区包含从流中读取的字节，本质就是通过字节数组来实现的  12345678">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.imgur.com/zTxLajf.png">
+<meta property="og:updated_time" content="2018-08-14T13:21:33.934Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【IO】IO字节流">
+<meta name="twitter:description" content="IO 字节流1. 框架  2. ByteArrayInputStream/ByteArrayOutputStream2.1 ByteArrayInputStream ByteArrayInputStream 是字节数组输入流，它继承于InputStream。 ByteArrayInputStream 包含一个内部缓冲区，该缓冲区包含从流中读取的字节，本质就是通过字节数组来实现的  12345678">
+<meta name="twitter:image" content="https://i.imgur.com/zTxLajf.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Jumping'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/08/06/【IO】IO字节流/"/>
+
+
+
+
+
+  <title>【IO】IO字节流 | Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+	
+	<a href="https://github.com/JumpsZ/JumpsZ.github.io"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_darkblue_121621.png" alt="Fork me on GitHub"></a>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/06/【IO】IO字节流/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JumpsZ">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/timg.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【IO】IO字节流</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-06T19:07:00+08:00">
+                2018-08-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/IO/" itemprop="url" rel="index">
+                    <span itemprop="name">IO</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="IO-字节流"><a href="#IO-字节流" class="headerlink" title="IO 字节流"></a>IO 字节流</h1><h2 id="1-框架"><a href="#1-框架" class="headerlink" title="1. 框架"></a>1. 框架</h2><p><img src="https://i.imgur.com/zTxLajf.png" alt=""> </p>
+<h2 id="2-ByteArrayInputStream-ByteArrayOutputStream"><a href="#2-ByteArrayInputStream-ByteArrayOutputStream" class="headerlink" title="2. ByteArrayInputStream/ByteArrayOutputStream"></a>2. ByteArrayInputStream/ByteArrayOutputStream</h2><h3 id="2-1-ByteArrayInputStream"><a href="#2-1-ByteArrayInputStream" class="headerlink" title="2.1 ByteArrayInputStream"></a>2.1 ByteArrayInputStream</h3><ul>
+<li>ByteArrayInputStream 是字节数组输入流，它继承于InputStream。</li>
+<li>ByteArrayInputStream 包含一个内部缓冲区，该缓冲区包含从流中读取的字节，本质就是通过字节数组来实现的</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ByteArrayInputStream</span> <span class="keyword">extends</span> <span class="title">InputStream</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 保存字节输入流数据的字节数组</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">byte</span> buf[];</span><br><span class="line">    <span class="comment">// 下一个会被读取的字节的索引</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">int</span> pos;</span><br><span class="line">    <span class="comment">// 标记的索引</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">int</span> mark = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">// 字节流的长度</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">int</span> count;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 构造函数：创建一个内容为buf的字节流</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ByteArrayInputStream</span><span class="params">(<span class="keyword">byte</span> buf[])</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.buf = buf;</span><br><span class="line">        <span class="comment">// 初始化“下一个要被读取的字节索引号为0”</span></span><br><span class="line">        <span class="keyword">this</span>.pos = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">// 初始化“字节流的长度为buf的长度”</span></span><br><span class="line">        <span class="keyword">this</span>.count = buf.length;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 构造函数：创建一个内容为buf的字节流，并且是从offset开始读取数据，读取的长度为length</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ByteArrayInputStream</span><span class="params">(<span class="keyword">byte</span> buf[], <span class="keyword">int</span> offset, <span class="keyword">int</span> length)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.buf = buf;</span><br><span class="line">        <span class="keyword">this</span>.pos = offset;</span><br><span class="line">        <span class="keyword">this</span>.count = Math.min(offset + length, buf.length);</span><br><span class="line">        <span class="comment">// 初始化“标记的字节流读取位置”</span></span><br><span class="line">        <span class="keyword">this</span>.mark = offset;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2-2-ByteArrayOutputStream"><a href="#2-2-ByteArrayOutputStream" class="headerlink" title="2.2 ByteArrayOutputStream"></a>2.2 ByteArrayOutputStream</h3><ul>
+<li><code>ByteArrayOutputStream</code> 是字节数组输出流。它继承于<code>OutputStream</code></li>
+<li><code>ByteArrayOutputStream</code> 中的数据被写入一个 byte 数组。缓冲区会随着数据的不断写入而自动增长。可使用 <code>toByteArray()</code> 和 <code>toString()</code> 获取数据 </li>
+<li>通过<code>ByteArrayOutputStream</code>()创建的“字节数组输出流”对应的字节数组大小是32。 </li>
+</ul>
+<h2 id="3-PipedInputStream-PipedOutputStream"><a href="#3-PipedInputStream-PipedOutputStream" class="headerlink" title="3. PipedInputStream/PipedOutputStream"></a>3. PipedInputStream/PipedOutputStream</h2><ul>
+<li><code>PipedOutputStream</code>和<code>PipedInputStream</code>分别是管道输出流和管道输入流。 它们的作用是让多线程可以通过管道进行线程间的通讯 </li>
+<li><code>PipedOutputStream</code>是基于<code>PipedInputStream</code>实现，内部持有<code>PipedInputStream</code>对象</li>
+<li><code>PipedOutputStream</code>和<code>PipedInputStream</code>必须配套使用，使用<code>connect</code>连接</li>
+<li><code>PipedOutputStream</code>写入数据，实际调用的是<code>PipedInputStream</code>的<code>receive()</code>方法，<code>PipedInputStream</code>内部缓存区默认大小为1024个字节。当一次性<code>buffer</code>写入1024个byte后，会先<code>notifyAll()</code>，再<code>wait(1000)</code>，目的就是把刚才写入的内容被读出，然后再继续写入</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//PipedOutputStream写入数据</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">write</span><span class="params">(<span class="keyword">byte</span> b[], <span class="keyword">int</span> off, <span class="keyword">int</span> len)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (sink == <span class="keyword">null</span>) &#123;	<span class="comment">//PipedInputStream输入流是否存在</span></span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IOException(<span class="string">"Pipe not connected"</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (b == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException();</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> ((off &lt; <span class="number">0</span>) || (off &gt; b.length) || (len &lt; <span class="number">0</span>) ||</span><br><span class="line">               ((off + len) &gt; b.length) || ((off + len) &lt; <span class="number">0</span>)) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IndexOutOfBoundsException();</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (len == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    sink.receive(b, off, len);	<span class="comment">//调用的PipedInputStream的方法</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//PipedInputStream接收字节数组，写入缓冲区buffer</span></span><br><span class="line"><span class="comment">//in - 下一个写入字节的位置   out - 下一个读取字节的位置</span></span><br><span class="line"><span class="function"><span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">receive</span><span class="params">(<span class="keyword">byte</span> b[], <span class="keyword">int</span> off, <span class="keyword">int</span> len)</span>  <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    checkStateForReceive();	<span class="comment">//判断连接是否关闭</span></span><br><span class="line">    writeSide = Thread.currentThread();</span><br><span class="line">    <span class="keyword">int</span> bytesToTransfer = len;<span class="comment">//写入数据总长度</span></span><br><span class="line">    <span class="keyword">while</span> (bytesToTransfer &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (in == out)	<span class="comment">//若“写入管道”的数据正好全部被读取完，则等待。</span></span><br><span class="line">            awaitSpace();</span><br><span class="line">        <span class="keyword">int</span> nextTransferAmount = <span class="number">0</span>;<span class="comment">//此次写入数据长度</span></span><br><span class="line">        <span class="keyword">if</span> (out &lt; in) &#123;<span class="comment">// 如果“管道中被读取的数据，少于写入管道的数据”；</span></span><br><span class="line">            nextTransferAmount = buffer.length - in;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (in &lt; out) &#123; <span class="comment">// 如果“管道中被读取的数据，大于写入管道的数据”</span></span><br><span class="line">            <span class="keyword">if</span> (in == -<span class="number">1</span>) &#123;<span class="comment">//初始化</span></span><br><span class="line">                in = out = <span class="number">0</span>;</span><br><span class="line">                nextTransferAmount = buffer.length - in;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;	<span class="comment">//控制in不超过out，否则覆盖写入的数据</span></span><br><span class="line">                nextTransferAmount = out - in;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (nextTransferAmount &gt; bytesToTransfer)</span><br><span class="line">            nextTransferAmount = bytesToTransfer;</span><br><span class="line">        <span class="keyword">assert</span>(nextTransferAmount &gt; <span class="number">0</span>);</span><br><span class="line">        System.arraycopy(b, off, buffer, in, nextTransferAmount); <span class="comment">//将数据写入到缓冲中</span></span><br><span class="line">        bytesToTransfer -= nextTransferAmount;</span><br><span class="line">        off += nextTransferAmount;</span><br><span class="line">        in += nextTransferAmount;</span><br><span class="line">        <span class="keyword">if</span> (in &gt;= buffer.length) &#123;</span><br><span class="line">            in = <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>PipedInputStream</code>读取数据，每次<code>read()</code>前，都会判断缓存区是否有数据（依据<code>in</code>变量判断），如果没有的话就先让出当前的锁（即让写的进程先运行），然后再去读 </li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 从管道(的缓冲)中读取数据，并将其存入到数组b中</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">int</span> <span class="title">read</span><span class="params">(<span class="keyword">byte</span> b[], <span class="keyword">int</span> off, <span class="keyword">int</span> len)</span>  <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (b == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException();</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (off &lt; <span class="number">0</span> || len &lt; <span class="number">0</span> || len &gt; b.length - off) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IndexOutOfBoundsException();</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (len == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* possibly wait on the first character */</span></span><br><span class="line">    <span class="keyword">int</span> c = read();</span><br><span class="line">    <span class="keyword">if</span> (c &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    b[off] = (<span class="keyword">byte</span>) c;</span><br><span class="line">    <span class="keyword">int</span> rlen = <span class="number">1</span>;<span class="comment">//已读取一个字节</span></span><br><span class="line">    <span class="keyword">while</span> ((in &gt;= <span class="number">0</span>) &amp;&amp; (len &gt; <span class="number">1</span>)) &#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> available;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (in &gt; out) &#123;</span><br><span class="line">            available = Math.min((buffer.length - out), (in - out));</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            available = buffer.length - out;<span class="comment">//读取out后面所有字节</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// A byte is read beforehand outside the loop</span></span><br><span class="line">        <span class="keyword">if</span> (available &gt; (len - <span class="number">1</span>)) &#123;</span><br><span class="line">            available = len - <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        System.arraycopy(buffer, out, b, off + rlen, available);<span class="comment">//复制缓冲区的数据到指定byte[]</span></span><br><span class="line">        out += available;</span><br><span class="line">        rlen += available;</span><br><span class="line">        len -= available;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (out &gt;= buffer.length) &#123;</span><br><span class="line">            out = <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (in == out) &#123;</span><br><span class="line">            <span class="comment">/* now empty */</span></span><br><span class="line">            in = -<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> rlen;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//从管道(的缓冲)中读取一个字节，并将其转换成int类型</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">int</span> <span class="title">read</span><span class="params">()</span>  <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!connected) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IOException(<span class="string">"Pipe not connected"</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (closedByReader) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IOException(<span class="string">"Pipe closed"</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (writeSide != <span class="keyword">null</span> &amp;&amp; !writeSide.isAlive()</span><br><span class="line">               &amp;&amp; !closedByWriter &amp;&amp; (in &lt; <span class="number">0</span>)) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IOException(<span class="string">"Write end dead"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    readSide = Thread.currentThread();</span><br><span class="line">    <span class="keyword">int</span> trials = <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">while</span> (in &lt; <span class="number">0</span>) &#123;	<span class="comment">//缓冲区是否有数据</span></span><br><span class="line">        <span class="keyword">if</span> (closedByWriter) &#123;</span><br><span class="line">            <span class="comment">/* closed by writer, return EOF */</span></span><br><span class="line">            <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> ((writeSide != <span class="keyword">null</span>) &amp;&amp; (!writeSide.isAlive()) &amp;&amp; (--trials &lt; <span class="number">0</span>)) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IOException(<span class="string">"Pipe broken"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">/* might be a writer waiting */</span></span><br><span class="line">        notifyAll();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            wait(<span class="number">1000</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException ex) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> java.io.InterruptedIOException();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> ret = buffer[out++] &amp; <span class="number">0xFF</span>;</span><br><span class="line">    <span class="keyword">if</span> (out &gt;= buffer.length) &#123;</span><br><span class="line">        out = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (in == out) &#123;</span><br><span class="line">        <span class="comment">/* now empty */</span></span><br><span class="line">        in = -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="4-ObjectInputStream-ObjectOutputStream"><a href="#4-ObjectInputStream-ObjectOutputStream" class="headerlink" title="4. ObjectInputStream/ObjectOutputStream"></a>4. ObjectInputStream/ObjectOutputStream</h2><ul>
+<li>ObjectInputStream 和 ObjectOutputStream 的作用是，对基本数据和对象进行序列化操作支持 </li>
+<li>只能从流中读取支持java.io.Serializable或java.io.Externalizable接口的对象</li>
+</ul>
+<h2 id="5-FileInputStream-FileOutputStream"><a href="#5-FileInputStream-FileOutputStream" class="headerlink" title="5. FileInputStream/FileOutputStream"></a>5. FileInputStream/FileOutputStream</h2><ul>
+<li>FileInputStream 是文件输入流，可以从某个文件中获得输入字节</li>
+<li>FileOutputStream 是文件输出流，将数据写入 File 或 FileDescriptor 的输出流</li>
+</ul>
+<h2 id="6-FileDescriptor"><a href="#6-FileDescriptor" class="headerlink" title="6. FileDescriptor"></a>6. FileDescriptor</h2><ul>
+<li>FileDescriptor 是“文件描述符”， 可以被用来表示开放文件、开放套接字等 </li>
+<li>不能直接通过FileDescriptor对该文件进行操作；若需要通过FileDescriptor对该文件进行操作，则需要新创建FileDescriptor对应的FileOutputStream，再对文件进行操作</li>
+<li>in、out、err，标准输入输出的句柄，一般不直接使用；Java封装好了相应接口，可以使用System.in, System.out, System.err</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> FileDescriptor in = standardStream(<span class="number">0</span>);<span class="comment">//标准输入(键盘)的描述符</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> FileDescriptor out = standardStream(<span class="number">1</span>);<span class="comment">//标准输出(屏幕)的描述符</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> FileDescriptor err = standardStream(<span class="number">2</span>);<span class="comment">//标准错误输出(屏幕)的描述符</span></span><br></pre></td></tr></table></figure>
+<p>源码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">native</span> <span class="keyword">long</span> <span class="title">set</span><span class="params">(<span class="keyword">int</span> d)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> FileDescriptor <span class="title">standardStream</span><span class="params">(<span class="keyword">int</span> fd)</span> </span>&#123;</span><br><span class="line">    FileDescriptor desc = <span class="keyword">new</span> FileDescriptor();</span><br><span class="line">    desc.handle = set(fd);</span><br><span class="line">    <span class="keyword">return</span> desc;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看出in/out/err就是一个FileDescriptor对象，只是其handle不同（long类型），通过set(fd)来设置其handle。“fd=0”代表了“标准输入”，“fd=1”代表了“标准输出”，“fd=2”代表了“标准错误输出” </p>
+<h2 id="7-FilterInputStream-FilterOutputStream"><a href="#7-FilterInputStream-FilterOutputStream" class="headerlink" title="7. FilterInputStream/FilterOutputStream"></a>7. FilterInputStream/FilterOutputStream</h2><ul>
+<li>FilterInputStream/FilterOutputStream 的作用是用来“封装其它的输入输出流，并为它们提供额外的功能”。常用的子类有BufferedInputStream/BufferedOutputStream和DataInputStream/DataOutputStream，PrintStream。</li>
+<li>BufferedInputStream/BufferedOutputStream的作用就是为输入/输出流提供<strong>缓冲功能</strong>，为输入流提供mark()和reset()功能。</li>
+<li>DataInputStream/DataOutputStream  是用来装饰其它输入输出流，它“允许应用程序以<strong>与机器无关方式</strong>从底层输入流中读取基本 Java 数据类型”。应用程序可以使用DataOutputStream(数据输出流)写入由DataInputStream(数据输入流)读取的数据。</li>
+<li>PrintStream 是用来装饰其它输出流。它能为其他输出流添加了功能，使它们能够方便地打印各种数据值表示形式。</li>
+</ul>
+<h2 id="8-BufferedInputStream-BufferedOutputStream"><a href="#8-BufferedInputStream-BufferedOutputStream" class="headerlink" title="8. BufferedInputStream/BufferedOutputStream"></a>8. BufferedInputStream/BufferedOutputStream</h2><h3 id="8-1-BufferedInputStream"><a href="#8-1-BufferedInputStream" class="headerlink" title="8.1 BufferedInputStream"></a>8.1 BufferedInputStream</h3><ul>
+<li>BufferedInputStream 是缓冲输入流。它继承于<strong>FilterInputStream</strong></li>
+<li>为另一个输入流添加一些功能，例如，提供“缓冲功能”以及支持“mark()标记”和“reset()重置方法”</li>
+<li>。例如，在新建某输入流对应的BufferedInputStream后，当我们通过read()读取输入流的数据时</li>
+</ul>
+<h4 id="8-1-1-原理"><a href="#8-1-1-原理" class="headerlink" title="8.1.1 原理"></a>8.1.1 原理</h4><p>本质上是通过一个内部缓冲区数组实现的。创建BufferedInputStream时，我们会通过它的构造函数指定某个输入流为参数。BufferedInputStream会将该输入流数据分批读取，每次读取一部分到缓冲中；操作完缓冲中的这部分数据之后，再从输入流中读取下一部分的数据到缓冲区中。 为什么需要缓冲呢？原因很简单，效率问题！缓冲中的数据实际上是保存在内存中，而原始数据可能是保存在硬盘或NandFlash等存储介质中；而我们知道，从内存中读取数据的速度比从硬盘读取数据的速度至少快10倍以上。 </p>
+<h4 id="8-1-2-源码分析"><a href="#8-1-2-源码分析" class="headerlink" title="8.1.2 源码分析"></a>8.1.2 源码分析</h4><ul>
+<li>read()</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//读取下一个字节</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">int</span> <span class="title">read</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (pos &gt;= count) &#123;	<span class="comment">//判断是否读完buffer中的数据</span></span><br><span class="line">        fill();</span><br><span class="line">        <span class="keyword">if</span> (pos &gt;= count)</span><br><span class="line">            <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> getBufIfOpen()[pos++] &amp; <span class="number">0xff</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>fill()</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//从输入流中读取数据，并填充到buffer中</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">fill</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    <span class="keyword">byte</span>[] buffer = getBufIfOpen();</span><br><span class="line">    <span class="keyword">if</span> (markpos &lt; <span class="number">0</span>)	<span class="comment">//没有标志，直接读取数据到buffer中</span></span><br><span class="line">        pos = <span class="number">0</span>;            <span class="comment">/* no mark: throw away the buffer */</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (pos &gt;= buffer.length)  <span class="comment">//buffer没有多余空间</span></span><br><span class="line">        <span class="keyword">if</span> (markpos &gt; <span class="number">0</span>) &#123;  <span class="comment">/* can throw away early part of the buffer */</span></span><br><span class="line">            <span class="keyword">int</span> sz = pos - markpos;</span><br><span class="line">            System.arraycopy(buffer, markpos, buffer, <span class="number">0</span>, sz);	<span class="comment">//复制markpos - buffer.length的数据到 0 - sz中</span></span><br><span class="line">            pos = sz;</span><br><span class="line">            markpos = <span class="number">0</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (buffer.length &gt;= marklimit) &#123;</span><br><span class="line">            markpos = -<span class="number">1</span>;   <span class="comment">/* buffer got too big, invalidate mark */</span></span><br><span class="line">            pos = <span class="number">0</span>;        <span class="comment">/* drop buffer contents */</span></span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (buffer.length &gt;= MAX_BUFFER_SIZE) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> OutOfMemoryError(<span class="string">"Required array size too large"</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;            <span class="comment">/* grow buffer */</span></span><br><span class="line">            <span class="keyword">int</span> nsz = (pos &lt;= MAX_BUFFER_SIZE - pos) ?</span><br><span class="line">                    pos * <span class="number">2</span> : MAX_BUFFER_SIZE;</span><br><span class="line">            <span class="keyword">if</span> (nsz &gt; marklimit)</span><br><span class="line">                nsz = marklimit;</span><br><span class="line">            <span class="keyword">byte</span> nbuf[] = <span class="keyword">new</span> <span class="keyword">byte</span>[nsz];	<span class="comment">//扩容操作。随着读取次数的增多，buffer会越来越大；这会导致我们占据的内存越来越大。因此需要一个marklimit；当buffer&gt;=marklimit时，就不再保存markpos的值了。</span></span><br><span class="line">            System.arraycopy(buffer, <span class="number">0</span>, nbuf, <span class="number">0</span>, pos);</span><br><span class="line">            <span class="keyword">if</span> (!bufUpdater.compareAndSet(<span class="keyword">this</span>, buffer, nbuf)) &#123;</span><br><span class="line">                <span class="comment">// Can't replace buf if there was an async close.</span></span><br><span class="line">                <span class="comment">// Note: This would need to be changed if fill()</span></span><br><span class="line">                <span class="comment">// is ever made accessible to multiple threads.</span></span><br><span class="line">                <span class="comment">// But for now, the only way CAS can fail is via close.</span></span><br><span class="line">                <span class="comment">// assert buf == null;</span></span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> IOException(<span class="string">"Stream closed"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            buffer = nbuf;</span><br><span class="line">        &#125;</span><br><span class="line">    count = pos;</span><br><span class="line">    <span class="keyword">int</span> n = getInIfOpen().read(buffer, pos, buffer.length - pos); <span class="comment">//从输入流读取buffer.length - pos的数据填充到buffer中，起始位置pos</span></span><br><span class="line">    <span class="keyword">if</span> (n &gt; <span class="number">0</span>)</span><br><span class="line">        count = n + pos;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="8-2-BufferedOutputStream"><a href="#8-2-BufferedOutputStream" class="headerlink" title="8.2 BufferedOutputStream"></a>8.2 BufferedOutputStream</h3><ul>
+<li>BufferedOutputStream 是缓冲输出流。它继承于FilterOutputStream。 </li>
+<li>BufferedOutputStream 的作用是为另一个输出流提供“缓冲功能”。 </li>
+<li>BufferedOutputStream 关闭流前会进行flush()，将数据刷到输出流；当写入数据超过缓冲区大小时，会将全部数据写入输出流，而不经过缓冲区</li>
+</ul>
+<h2 id="9-DataInputStream-DataOutputStream"><a href="#9-DataInputStream-DataOutputStream" class="headerlink" title="9. DataInputStream/DataOutputStream"></a>9. DataInputStream/DataOutputStream</h2><h3 id="9-1-DataInputStream"><a href="#9-1-DataInputStream" class="headerlink" title="9.1 DataInputStream"></a>9.1 DataInputStream</h3><ul>
+<li><p>DataInputStream 是用来装饰其它输入流，它“允许应用程序以与机器无关方式从底层输入流中读取基本 Java 数据类型”。应用程序可以使用DataOutputStream(数据输出流)写入由DataInputStream(数据输入流)读取的数据。 </p>
+</li>
+<li><p>readUTF()</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">static</span> String <span class="title">readUTF</span><span class="params">(DataInput in)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    <span class="comment">// 从“数据输入流”中读取“无符号的short类型”的值：</span></span><br><span class="line">    <span class="comment">// 注意：UTF-8输入流的前2个字节是数据的长度</span></span><br><span class="line">    <span class="keyword">int</span> utflen = in.readUnsignedShort();</span><br><span class="line">    <span class="keyword">byte</span>[] bytearr = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">char</span>[] chararr = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (in <span class="keyword">instanceof</span> DataInputStream) &#123;</span><br><span class="line">        DataInputStream dis = (DataInputStream)in;</span><br><span class="line">        <span class="keyword">if</span> (dis.bytearr.length &lt; utflen)&#123;</span><br><span class="line">            dis.bytearr = <span class="keyword">new</span> <span class="keyword">byte</span>[utflen*<span class="number">2</span>];</span><br><span class="line">            dis.chararr = <span class="keyword">new</span> <span class="keyword">char</span>[utflen*<span class="number">2</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        chararr = dis.chararr;</span><br><span class="line">        bytearr = dis.bytearr;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        bytearr = <span class="keyword">new</span> <span class="keyword">byte</span>[utflen];</span><br><span class="line">        chararr = <span class="keyword">new</span> <span class="keyword">char</span>[utflen];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> c, char2, char3;</span><br><span class="line">    <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> chararr_count=<span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 从“数据输入流”中读取数据并存储到字节数组bytearr中；从bytearr的位置0开始存储，存储长度为utflen。</span></span><br><span class="line">    <span class="comment">// 注意，这里是存储到字节数组！而且读取的是全部的数据。</span></span><br><span class="line">    in.readFully(bytearr, <span class="number">0</span>, utflen);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 将“字节数组bytearr”中的数据 拷贝到 “字符数组chararr”中</span></span><br><span class="line">    <span class="comment">// 注意：这里相当于“预处理的输入流中单字节的符号”，因为UTF-8是1-4个字节可变的。</span></span><br><span class="line">    <span class="keyword">while</span> (count &lt; utflen) &#123;</span><br><span class="line">        <span class="comment">// 将每个字节转换成int值</span></span><br><span class="line">        c = (<span class="keyword">int</span>) bytearr[count] &amp; <span class="number">0xff</span>;</span><br><span class="line">        <span class="comment">// UTF-8的每个字节的值都不会超过127；所以，超过127，则退出。</span></span><br><span class="line">        <span class="keyword">if</span> (c &gt; <span class="number">127</span>) <span class="keyword">break</span>;</span><br><span class="line">        count++;</span><br><span class="line">        <span class="comment">// 将c保存到“字符数组chararr”中</span></span><br><span class="line">        chararr[chararr_count++]=(<span class="keyword">char</span>)c;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 处理完输入流中单字节的符号之后，接下来我们继续处理。</span></span><br><span class="line">    <span class="keyword">while</span> (count &lt; utflen) &#123;</span><br><span class="line">        <span class="comment">// 下面语句执行了2步操作。</span></span><br><span class="line">        <span class="comment">// (01) 将字节由 “byte类型” 转换成 “int类型”。</span></span><br><span class="line">        <span class="comment">//      例如， “11001010” 转换成int之后，是 “00000000 00000000 00000000 11001010”</span></span><br><span class="line">        <span class="comment">// (02) 将 “int类型” 的数据左移4位</span></span><br><span class="line">        <span class="comment">//      例如， “00000000 00000000 00000000 11001010” 左移4位之后，变成 “00000000 00000000 00000000 00001100”</span></span><br><span class="line">        c = (<span class="keyword">int</span>) bytearr[count] &amp; <span class="number">0xff</span>;</span><br><span class="line">        <span class="keyword">switch</span> (c &gt;&gt; <span class="number">4</span>) &#123;</span><br><span class="line">            <span class="comment">// 若 UTF-8 是单字节，即 bytearr[count] 对应是 “0xxxxxxx” 形式；</span></span><br><span class="line">            <span class="comment">// 则 bytearr[count] 对应的int类型的c的取值范围是 0-7。</span></span><br><span class="line">            <span class="keyword">case</span> <span class="number">0</span>: <span class="keyword">case</span> <span class="number">1</span>: <span class="keyword">case</span> <span class="number">2</span>: <span class="keyword">case</span> <span class="number">3</span>: <span class="keyword">case</span> <span class="number">4</span>: <span class="keyword">case</span> <span class="number">5</span>: <span class="keyword">case</span> <span class="number">6</span>: <span class="keyword">case</span> <span class="number">7</span>:</span><br><span class="line">                <span class="comment">/* 0xxxxxxx*/</span></span><br><span class="line">                count++;</span><br><span class="line">                chararr[chararr_count++]=(<span class="keyword">char</span>)c;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 若 UTF-8 是双字节，即 bytearr[count] 对应是 “110xxxxx  10xxxxxx” 形式中的第一个，即“110xxxxx”</span></span><br><span class="line">            <span class="comment">// 则 bytearr[count] 对应的int类型的c的取值范围是 12-13。</span></span><br><span class="line">            <span class="keyword">case</span> <span class="number">12</span>: <span class="keyword">case</span> <span class="number">13</span>:</span><br><span class="line">                <span class="comment">/* 110x xxxx   10xx xxxx*/</span></span><br><span class="line">                count += <span class="number">2</span>;</span><br><span class="line">                <span class="keyword">if</span> (count &gt; utflen)</span><br><span class="line">                    <span class="keyword">throw</span> <span class="keyword">new</span> UTFDataFormatException(</span><br><span class="line">                        <span class="string">"malformed input: partial character at end"</span>);</span><br><span class="line">                char2 = (<span class="keyword">int</span>) bytearr[count-<span class="number">1</span>];</span><br><span class="line">                <span class="keyword">if</span> ((char2 &amp; <span class="number">0xC0</span>) != <span class="number">0x80</span>)	<span class="comment">//判断第二个char是否为 /* 10xx xxxx*/</span></span><br><span class="line">                    <span class="keyword">throw</span> <span class="keyword">new</span> UTFDataFormatException(</span><br><span class="line">                        <span class="string">"malformed input around byte "</span> + count);</span><br><span class="line">                chararr[chararr_count++]=(<span class="keyword">char</span>)(((c &amp; <span class="number">0x1F</span>) &lt;&lt; <span class="number">6</span>) |</span><br><span class="line">                                                (char2 &amp; <span class="number">0x3F</span>));</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 若 UTF-8 是三字节，即 bytearr[count] 对应是 “1110xxxx  10xxxxxx  10xxxxxx” 形式中的第一个，即“1110xxxx”</span></span><br><span class="line">            <span class="comment">// 则 bytearr[count] 对应的int类型的c的取值是14 。</span></span><br><span class="line">            <span class="keyword">case</span> <span class="number">14</span>:</span><br><span class="line">                <span class="comment">/* 1110 xxxx  10xx xxxx  10xx xxxx */</span></span><br><span class="line">                count += <span class="number">3</span>;</span><br><span class="line">                <span class="keyword">if</span> (count &gt; utflen)</span><br><span class="line">                    <span class="keyword">throw</span> <span class="keyword">new</span> UTFDataFormatException(</span><br><span class="line">                        <span class="string">"malformed input: partial character at end"</span>);</span><br><span class="line">                char2 = (<span class="keyword">int</span>) bytearr[count-<span class="number">2</span>];</span><br><span class="line">                char3 = (<span class="keyword">int</span>) bytearr[count-<span class="number">1</span>];</span><br><span class="line">                <span class="keyword">if</span> (((char2 &amp; <span class="number">0xC0</span>) != <span class="number">0x80</span>) || ((char3 &amp; <span class="number">0xC0</span>) != <span class="number">0x80</span>))</span><br><span class="line">                    <span class="keyword">throw</span> <span class="keyword">new</span> UTFDataFormatException(</span><br><span class="line">                        <span class="string">"malformed input around byte "</span> + (count-<span class="number">1</span>));</span><br><span class="line">                chararr[chararr_count++]=(<span class="keyword">char</span>)(((c     &amp; <span class="number">0x0F</span>) &lt;&lt; <span class="number">12</span>) |</span><br><span class="line">                                                ((char2 &amp; <span class="number">0x3F</span>) &lt;&lt; <span class="number">6</span>)  |</span><br><span class="line">                                                ((char3 &amp; <span class="number">0x3F</span>) &lt;&lt; <span class="number">0</span>));</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 若 UTF-8 是四字节，即 bytearr[count] 对应是 “11110xxx 10xxxxxx  10xxxxxx  10xxxxxx” 形式中的第一个，即“11110xxx”</span></span><br><span class="line">            <span class="comment">// 则 bytearr[count] 对应的int类型的c的取值是15 </span></span><br><span class="line">            <span class="keyword">default</span>:</span><br><span class="line">                <span class="comment">/* 10xx xxxx,  1111 xxxx */</span></span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> UTFDataFormatException(</span><br><span class="line">                    <span class="string">"malformed input around byte "</span> + count);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// The number of chars produced may be less than utflen</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> String(chararr, <span class="number">0</span>, chararr_count);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="9-2-DataOutputStream"><a href="#9-2-DataOutputStream" class="headerlink" title="9.2 DataOutputStream"></a>9.2 DataOutputStream</h3><ul>
+<li><code>DataOutputStream</code> 是用来装饰其它输出流，将<code>DataOutputStream</code>和<code>DataInputStream</code>输入流配合使用，“允许应用程序以与机器无关方式从底层输入流中读写基本 Java 数据类型”。 </li>
+<li>writeUTF()</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 将String数据以UTF-8类型的形式写入到“输出流out”中</span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">writeUTF</span><span class="params">(String str, DataOutput out)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    <span class="comment">//获取String的长度</span></span><br><span class="line">    <span class="keyword">int</span> strlen = str.length();</span><br><span class="line">    <span class="keyword">int</span> utflen = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> c, count = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 由于UTF-8是1～4个字节不等；</span></span><br><span class="line">    <span class="comment">// 这里，根据UTF-8首字节的范围，判断UTF-8是几个字节的。</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; strlen; i++) &#123;</span><br><span class="line">        c = str.charAt(i);</span><br><span class="line">        <span class="keyword">if</span> ((c &gt;= <span class="number">0x0001</span>) &amp;&amp; (c &lt;= <span class="number">0x007F</span>)) &#123;</span><br><span class="line">            utflen++;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (c &gt; <span class="number">0x07FF</span>) &#123;</span><br><span class="line">            utflen += <span class="number">3</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            utflen += <span class="number">2</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (utflen &gt; <span class="number">65535</span>)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> UTFDataFormatException(</span><br><span class="line">        <span class="string">"encoded string too long: "</span> + utflen + <span class="string">" bytes"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 新建“字节数组bytearr”</span></span><br><span class="line">    <span class="keyword">byte</span>[] bytearr = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">if</span> (out <span class="keyword">instanceof</span> DataOutputStream) &#123;</span><br><span class="line">        DataOutputStream dos = (DataOutputStream)out;</span><br><span class="line">        <span class="keyword">if</span>(dos.bytearr == <span class="keyword">null</span> || (dos.bytearr.length &lt; (utflen+<span class="number">2</span>)))</span><br><span class="line">            dos.bytearr = <span class="keyword">new</span> <span class="keyword">byte</span>[(utflen*<span class="number">2</span>) + <span class="number">2</span>];</span><br><span class="line">        bytearr = dos.bytearr;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        bytearr = <span class="keyword">new</span> <span class="keyword">byte</span>[utflen+<span class="number">2</span>];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// “字节数组”的前2个字节保存的是“UTF-8数据的长度”</span></span><br><span class="line">    bytearr[count++] = (<span class="keyword">byte</span>) ((utflen &gt;&gt;&gt; <span class="number">8</span>) &amp; <span class="number">0xFF</span>);</span><br><span class="line">    bytearr[count++] = (<span class="keyword">byte</span>) ((utflen &gt;&gt;&gt; <span class="number">0</span>) &amp; <span class="number">0xFF</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 对UTF-8中的单字节数据进行预处理</span></span><br><span class="line">    <span class="keyword">int</span> i=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (i=<span class="number">0</span>; i&lt;strlen; i++) &#123;</span><br><span class="line">        c = str.charAt(i);</span><br><span class="line">        <span class="keyword">if</span> (!((c &gt;= <span class="number">0x0001</span>) &amp;&amp; (c &lt;= <span class="number">0x007F</span>))) <span class="keyword">break</span>;</span><br><span class="line">        bytearr[count++] = (<span class="keyword">byte</span>) c;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 对预处理后的数据，接着进行处理</span></span><br><span class="line">    <span class="keyword">for</span> (;i &lt; strlen; i++)&#123;</span><br><span class="line">        c = str.charAt(i);</span><br><span class="line">        <span class="comment">// UTF-8数据是1个字节的情况</span></span><br><span class="line">        <span class="keyword">if</span> ((c &gt;= <span class="number">0x0001</span>) &amp;&amp; (c &lt;= <span class="number">0x007F</span>)) &#123;</span><br><span class="line">            bytearr[count++] = (<span class="keyword">byte</span>) c;</span><br><span class="line"></span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (c &gt; <span class="number">0x07FF</span>) &#123;</span><br><span class="line">            <span class="comment">// UTF-8数据是3个字节的情况</span></span><br><span class="line">            bytearr[count++] = (<span class="keyword">byte</span>) (<span class="number">0xE0</span> | ((c &gt;&gt; <span class="number">12</span>) &amp; <span class="number">0x0F</span>));</span><br><span class="line">            bytearr[count++] = (<span class="keyword">byte</span>) (<span class="number">0x80</span> | ((c &gt;&gt;  <span class="number">6</span>) &amp; <span class="number">0x3F</span>));</span><br><span class="line">            bytearr[count++] = (<span class="keyword">byte</span>) (<span class="number">0x80</span> | ((c &gt;&gt;  <span class="number">0</span>) &amp; <span class="number">0x3F</span>));</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// UTF-8数据是2个字节的情况</span></span><br><span class="line">            bytearr[count++] = (<span class="keyword">byte</span>) (<span class="number">0xC0</span> | ((c &gt;&gt;  <span class="number">6</span>) &amp; <span class="number">0x1F</span>));</span><br><span class="line">            bytearr[count++] = (<span class="keyword">byte</span>) (<span class="number">0x80</span> | ((c &gt;&gt;  <span class="number">0</span>) &amp; <span class="number">0x3F</span>));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 将字节数组写入到“数据输出流”中</span></span><br><span class="line">    out.write(bytearr, <span class="number">0</span>, utflen+<span class="number">2</span>);</span><br><span class="line">    <span class="keyword">return</span> utflen + <span class="number">2</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="10-PrintStream"><a href="#10-PrintStream" class="headerlink" title="10. PrintStream"></a>10. PrintStream</h2><ul>
+<li><code>PrintStream</code> 是打印输出流，它继承于<code>FilterOutputStream</code>。 </li>
+<li><code>PrintStream</code> 是用来装饰其它输出流。它能为其他输出流添加了功能，使它们能够方便地打印各种数据值表示形式。 </li>
+<li>与其他输出流不同，<code>PrintStream</code> 永远不会抛出 <code>IOException</code>；它产生的<code>IOException</code>会被自身的函数所捕获并设置错误标记， 用户可以通过 <code>checkError()</code> 返回错误标记，从而查看<code>PrintStream</code>内部是否产生了<code>IOException</code>。 </li>
+<li><code>PrintStream</code> 提供了自动flush 和 字符集设置功能。自动flush，就是往<code>PrintStream</code>写入的数据会立刻调用flush()函数。 </li>
+<li>print()方法实际上调用的是write()方法</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">(<span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">    write(String.valueOf(i));	<span class="comment">//转为string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">write</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">synchronized</span> (<span class="keyword">this</span>) &#123;</span><br><span class="line">            ensureOpen();</span><br><span class="line">            textOut.write(s);</span><br><span class="line">            textOut.flushBuffer();</span><br><span class="line">            charOut.flushBuffer();</span><br><span class="line">            <span class="keyword">if</span> (autoFlush &amp;&amp; (s.indexOf(<span class="string">'\n'</span>) &gt;= <span class="number">0</span>))</span><br><span class="line">                out.flush();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">catch</span> (InterruptedIOException x) &#123;</span><br><span class="line">        Thread.currentThread().interrupt();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">catch</span> (IOException x) &#123;</span><br><span class="line">        trouble = <span class="keyword">true</span>;	<span class="comment">//不会抛出IOException, checkError()可查看是否发生异常</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>System中的in，out，err</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">static</span> InputStream in = <span class="keyword">null</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">static</span> PrintStream out = <span class="keyword">null</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">static</span> PrintStream err = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">native</span> <span class="keyword">void</span> <span class="title">setIn0</span><span class="params">(InputStream in)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">native</span> <span class="keyword">void</span> <span class="title">setOut0</span><span class="params">(PrintStream out)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">native</span> <span class="keyword">void</span> <span class="title">setErr0</span><span class="params">(PrintStream err)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">initializeSystemClass</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    FileInputStream fdIn = <span class="keyword">new</span> FileInputStream(FileDescriptor.in);</span><br><span class="line">    FileOutputStream fdOut = <span class="keyword">new</span> FileOutputStream(FileDescriptor.out);</span><br><span class="line">    FileOutputStream fdErr = <span class="keyword">new</span> FileOutputStream(FileDescriptor.err);</span><br><span class="line">    setIn0(<span class="keyword">new</span> BufferedInputStream(fdIn));</span><br><span class="line">    setOut0(newPrintStream(fdOut, props.getProperty(<span class="string">"sun.stdout.encoding"</span>)));</span><br><span class="line">    setErr0(newPrintStream(fdErr, props.getProperty(<span class="string">"sun.stderr.encoding"</span>)));</span><br><span class="line">    </span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> PrintStream <span class="title">newPrintStream</span><span class="params">(FileOutputStream fos, String enc)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (enc != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> PrintStream(<span class="keyword">new</span> BufferedOutputStream(fos, <span class="number">128</span>), <span class="keyword">true</span>, enc);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (UnsupportedEncodingException uee) &#123;&#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> PrintStream(<span class="keyword">new</span> BufferedOutputStream(fos, <span class="number">128</span>), <span class="keyword">true</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以out为例，获取过程：</p>
+<ol>
+<li>首先获取标准输出（屏幕）的标识符out（FileDescriptor对象）</li>
+<li>创建“标准输出(屏幕)”对应的“文件输出流”</li>
+<li>创建“文件输出流”对应的“缓冲输出流”。目的是为“文件输出流”添加“缓冲”功能。 </li>
+<li>创建“缓冲输出流”对应的“打印输出流”。目的是为“缓冲输出流”提供方便的打印接口，如print(), println(), printf()；使其能方便快捷的进行打印输出 </li>
+<li>执行setOut0(ps) ，将ps设置为out静态成员变量</li>
+</ol>
+<h2 id="11-参考"><a href="#11-参考" class="headerlink" title="11 参考"></a>11 参考</h2><p><a href="http://www.cnblogs.com/skywang12345/p/io_01.html" target="_blank" rel="noopener">http://www.cnblogs.com/skywang12345/p/io_01.html</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/IO/" rel="tag"># IO</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/04/【Java多线程】JUC锁 10. Semaphore/" rel="next" title="【Java多线程】JUC锁 10. Semaphore">
+                <i class="fa fa-chevron-left"></i> 【Java多线程】JUC锁 10. Semaphore
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/07/【IO】IO字符流/" rel="prev" title="【IO】IO字符流">
+                【IO】IO字符流 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/timg.jpg"
+                alt="JumpsZ" />
+            
+              <p class="site-author-name" itemprop="name">JumpsZ</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#IO-字节流"><span class="nav-number">1.</span> <span class="nav-text">IO 字节流</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-框架"><span class="nav-number">1.1.</span> <span class="nav-text">1. 框架</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-ByteArrayInputStream-ByteArrayOutputStream"><span class="nav-number">1.2.</span> <span class="nav-text">2. ByteArrayInputStream/ByteArrayOutputStream</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-ByteArrayInputStream"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 ByteArrayInputStream</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-ByteArrayOutputStream"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 ByteArrayOutputStream</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-PipedInputStream-PipedOutputStream"><span class="nav-number">1.3.</span> <span class="nav-text">3. PipedInputStream/PipedOutputStream</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-ObjectInputStream-ObjectOutputStream"><span class="nav-number">1.4.</span> <span class="nav-text">4. ObjectInputStream/ObjectOutputStream</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-FileInputStream-FileOutputStream"><span class="nav-number">1.5.</span> <span class="nav-text">5. FileInputStream/FileOutputStream</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-FileDescriptor"><span class="nav-number">1.6.</span> <span class="nav-text">6. FileDescriptor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-FilterInputStream-FilterOutputStream"><span class="nav-number">1.7.</span> <span class="nav-text">7. FilterInputStream/FilterOutputStream</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-BufferedInputStream-BufferedOutputStream"><span class="nav-number">1.8.</span> <span class="nav-text">8. BufferedInputStream/BufferedOutputStream</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#8-1-BufferedInputStream"><span class="nav-number">1.8.1.</span> <span class="nav-text">8.1 BufferedInputStream</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#8-1-1-原理"><span class="nav-number">1.8.1.1.</span> <span class="nav-text">8.1.1 原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-1-2-源码分析"><span class="nav-number">1.8.1.2.</span> <span class="nav-text">8.1.2 源码分析</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-2-BufferedOutputStream"><span class="nav-number">1.8.2.</span> <span class="nav-text">8.2 BufferedOutputStream</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-DataInputStream-DataOutputStream"><span class="nav-number">1.9.</span> <span class="nav-text">9. DataInputStream/DataOutputStream</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#9-1-DataInputStream"><span class="nav-number">1.9.1.</span> <span class="nav-text">9.1 DataInputStream</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-2-DataOutputStream"><span class="nav-number">1.9.2.</span> <span class="nav-text">9.2 DataOutputStream</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-PrintStream"><span class="nav-number">1.10.</span> <span class="nav-text">10. PrintStream</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-参考"><span class="nav-number">1.11.</span> <span class="nav-text">11 参考</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JumpsZ</span>
+
+  
+</div>
+
+
+
+  <div class="powered-by">All rights reserved</div>
+
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
+<script type="text/javascript" src="/js/src/love.js"></script>
