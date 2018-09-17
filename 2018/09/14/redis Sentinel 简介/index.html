@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="redis," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="[TOC] redis Sentinel1.  高可用1.1 主从模式的高可用性redis主从复制模式下主节点故障，故障转移过程：  主节点发生故障后， 客户端（client） 连接主节点失 败， 两个从节点与主节点连接失败造成复制中断     如果主节点无法正常启动， 需要选出一个从节点 （slave-1） ， 对其执行slaveof no one命令使其成为新的主节点     原来的从节点（s">
+<meta name="keywords" content="redis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【redis】redis Sentinel 简介">
+<meta property="og:url" content="http://yoursite.com/2018/09/14/redis Sentinel 简介/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="[TOC] redis Sentinel1.  高可用1.1 主从模式的高可用性redis主从复制模式下主节点故障，故障转移过程：  主节点发生故障后， 客户端（client） 连接主节点失 败， 两个从节点与主节点连接失败造成复制中断     如果主节点无法正常启动， 需要选出一个从节点 （slave-1） ， 对其执行slaveof no one命令使其成为新的主节点     原来的从节点（s">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.imgur.com/eP78WdE.png">
+<meta property="og:updated_time" content="2018-09-15T02:39:29.891Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【redis】redis Sentinel 简介">
+<meta name="twitter:description" content="[TOC] redis Sentinel1.  高可用1.1 主从模式的高可用性redis主从复制模式下主节点故障，故障转移过程：  主节点发生故障后， 客户端（client） 连接主节点失 败， 两个从节点与主节点连接失败造成复制中断     如果主节点无法正常启动， 需要选出一个从节点 （slave-1） ， 对其执行slaveof no one命令使其成为新的主节点     原来的从节点（s">
+<meta name="twitter:image" content="https://i.imgur.com/eP78WdE.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Jumping'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/09/14/redis Sentinel 简介/"/>
+
+
+
+
+
+  <title>【redis】redis Sentinel 简介 | Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+	
+	<a href="https://github.com/JumpsZ/JumpsZ.github.io"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_darkblue_121621.png" alt="Fork me on GitHub"></a>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/14/redis Sentinel 简介/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JumpsZ">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/timg.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【redis】redis Sentinel 简介</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-14T23:10:00+08:00">
+                2018-09-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/redis/" itemprop="url" rel="index">
+                    <span itemprop="name">redis</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>[TOC]</p>
+<h1 id="redis-Sentinel"><a href="#redis-Sentinel" class="headerlink" title="redis Sentinel"></a>redis Sentinel</h1><h2 id="1-高可用"><a href="#1-高可用" class="headerlink" title="1.  高可用"></a>1.  高可用</h2><h3 id="1-1-主从模式的高可用性"><a href="#1-1-主从模式的高可用性" class="headerlink" title="1.1 主从模式的高可用性"></a>1.1 主从模式的高可用性</h3><p>redis主从复制模式下主节点故障，故障转移过程：</p>
+<ul>
+<li>主节点发生故障后， 客户端（client） 连接主节点失 败， 两个从节点与主节点连接失败造成复制中断    </li>
+<li>如果主节点无法正常启动， 需要选出一个从节点 （slave-1） ， 对其执行slaveof no one命令使其成为新的主节点    </li>
+<li>原来的从节点（slave-1） 成为新的主节点后， 更新应 用方的主节点信息， 重新启动应用方    </li>
+<li>客户端命令另一个从节点（slave-2） 去复制新的主节 点（new-master）    </li>
+<li>待原来的主节点恢复后， 让它去复制新的主节点。    </li>
+</ul>
+<p>产生的问题：</p>
+<ul>
+<li>判断节点不可达的机制是否健全和标 准    </li>
+<li>如果有多个从节点， 怎样保证只有一个被晋升为主节点    </li>
+<li>通知客户端新的主节点机制是否足够健壮    </li>
+</ul>
+<h3 id="1-2-Redis-Sentinel的高可用性"><a href="#1-2-Redis-Sentinel的高可用性" class="headerlink" title="1.2 Redis Sentinel的高可用性"></a>1.2 Redis Sentinel的高可用性</h3><p>当主节点出现故障时， Redis Sentinel能自动完成故障发现和故障转移， 并通知应用方， 从而实现真正的高可用    </p>
+<p>Redis Sentinel是一个分布式架构， 其中包含若干个Sentinel节点和Redis 数据节点， 每个Sentinel节点会对数据节点和其余Sentinel节点进行监控， 当 它发现节点不可达时， 会对节点做下线标识。 如果被标识的是主节点， 它还 会和其他Sentinel节点进行“协商”， 当大多数Sentinel节点都认为主节点不可 达时， 它们会选举出一个Sentinel节点来完成自动故障转移的工作， 同时会 将这个变化实时通知给Redis应用方。</p>
+<p><img src="https://i.imgur.com/eP78WdE.png" alt=""> </p>
+<p>1个主节点、 2个从节点、 3个Sentinel节点组成的Redis Sentinel 架构故障转移机制：</p>
+<ul>
+<li>主节点出现故障， 此时两个从节点与主节点失去连 接， 主从复制失败    </li>
+<li>每个Sentinel节点通过定期监控发现主节点出现了故 障。    </li>
+<li>多个Sentinel节点对主节点的故障达成一致， 选举出 sentinel-3节点作为领导者负责故障转移。    </li>
+<li>Sentinel领导者节点执行了故障转移 ，和主从复制模式下流程相同</li>
+<li>故障转移完成</li>
+</ul>
+<h3 id="1-3-Redis-Sentinel-的功能"><a href="#1-3-Redis-Sentinel-的功能" class="headerlink" title="1.3 Redis Sentinel 的功能"></a>1.3 Redis Sentinel 的功能</h3><ul>
+<li>监控： Sentinel节点会定期检测Redis数据节点、 其余Sentinel节点是否 可达。</li>
+<li>通知： Sentinel节点会将故障转移的结果通知给应用方。</li>
+<li>主节点故障转移： 实现从节点晋升为主节点并维护后续正确的主从关 系。 </li>
+<li>配置提供者： 在Redis Sentinel结构中， 客户端在初始化的时候连接的 是Sentinel节点集合， 从中获取主节点信息。  </li>
+</ul>
+<h2 id="2-redis-Sentinel-部署"><a href="#2-redis-Sentinel-部署" class="headerlink" title="2.   redis Sentinel 部署"></a>2.   redis Sentinel 部署</h2><h3 id="2-1-配置"><a href="#2-1-配置" class="headerlink" title="2.1 配置"></a>2.1 配置</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">port 26379</span><br><span class="line">dir /opt/soft/redis/data</span><br><span class="line">sentinel monitor mymaster 127.0.0.1 6379 2</span><br><span class="line">sentinel down-after-milliseconds mymaster 30000</span><br><span class="line">sentinel parallel-syncs mymaster 1</span><br><span class="line">sentinel failover-timeout mymaster 180000</span><br><span class="line"><span class="meta">#</span>主节点设置了密码</span><br><span class="line"><span class="meta">#</span>sentinel auth-pass &lt;master-name&gt; &lt;password&gt;	</span><br><span class="line"><span class="meta">#</span>sentinel notification-script &lt;master-name&gt; &lt;script-path&gt;</span><br><span class="line"><span class="meta">#</span>sentinel client-reconfig-script &lt;master-name&gt; &lt;script-path&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>sentinel monitor    </li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sentinel monitor &lt;master-name&gt; &lt;ip&gt; &lt;port&gt; &lt;quorum&gt;</span><br></pre></td></tr></table></figure>
+<p><quorum>代表要判定主节点最终不可达所需要的票数    </quorum></p>
+<p>启动后配置文件变化，会自动发现了从节点、 其余Sentinel节点 ；去掉了默认配置， 例如parallel-syncs、 failover-timeout参数；添加了配置纪元相关参数。       </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sentinel leader-epoch mymaster 0</span><br><span class="line">sentinel known-slave mymaster 127.0.0.1 6380</span><br><span class="line">sentinel known-slave mymaster 127.0.0.1 6381</span><br><span class="line">sentinel known-sentinel mymaster 127.0.0.1 26381 6201f902c6d584980bb9e6eb05dc26947ae346e0</span><br><span class="line">sentinel known-sentinel mymaster 127.0.0.1 26380 a9c803c3d4f07b0389163d837de2262559ed0321</span><br><span class="line">sentinel current-epoch 0</span><br></pre></td></tr></table></figure>
+<ul>
+<li>sentinel down-after-milliseconds    </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sentinel down-after-milliseconds &lt;master-name&gt; &lt;times&gt;</span><br></pre></td></tr></table></figure>
+<p><times>（单位为毫秒） 就是超时时间    </times></p>
+<p>每个Sentinel节点都要通过定期发送ping命令来判断Redis数据节点和其余Sentinel节点是否可达， 如果超过了down-after-milliseconds配置的时间且没 有有效的回复， 则判定节点不可达    </p>
+<ul>
+<li>sentinel parallel-syncs    </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sentinel parallel-syncs &lt;master-name&gt; &lt;nums&gt;</span><br></pre></td></tr></table></figure>
+<p>parallel-syncs 用来限制在一次故障转移之后， 每次向新的主节点发起复制操作的从节点个数    </p>
+<ul>
+<li>sentinel failover-timeout    </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sentinel failover-timeout &lt;master-name&gt; &lt;times&gt;</span><br></pre></td></tr></table></figure>
+<p>failover-timeout故障转移超时时间，作用于故障各个阶段：</p>
+<ol>
+<li>选出合适从节点。</li>
+<li>晋升选出的从节点为主节点。</li>
+<li>命令其余从节点复制新的主节点。</li>
+<li>等待原主节点恢复后命令它去复制新的主节点。    </li>
+</ol>
+<ul>
+<li>sentinel notification-script    </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sentinel notification-script &lt;master-name&gt; &lt;script-path&gt;</span><br></pre></td></tr></table></figure>
+<p>sentinel notification-script的作用是在故障转移期间， 当一些警告级别的 Sentinel事件发生（指重要事件， 例如-sdown： 客观下线、 -odown： 主观下 线） 时， 会触发对应路径的脚本， 并向脚本发送相应的事件参数    </p>
+<ul>
+<li>sentinel client-reconfig-script   </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sentinel client-reconfig-script &lt;master-name&gt; &lt;script-path&gt;</span><br></pre></td></tr></table></figure>
+<p> sentinel client-reconfig-script的作用是在故障转移结束后， 会触发对应路 径的脚本， 并向脚本发送故障转移结果的相关参数    </p>
+<h3 id="2-2-监控多-个节点"><a href="#2-2-监控多-个节点" class="headerlink" title="2.2 监控多 个节点"></a>2.2 监控多 个节点</h3><p>指定多个masterName来区分不同的主节点 即可    </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">sentinel monitor master-business-1 10.10.xx.1 6379 2</span><br><span class="line">sentinel down-after-milliseconds master-business-1 60000</span><br><span class="line">sentinel failover-timeout master-business-1 180000</span><br><span class="line">sentinel parallel-syncs master-business-1 1</span><br><span class="line">sentinel monitor master-business-2 10.16.xx.2 6380 2</span><br><span class="line">sentinel down-after-milliseconds master-business-2 10000</span><br><span class="line">sentinel failover-timeout master-business-2 180000</span><br><span class="line">sentinel parallel-syncs master-business-2 1</span><br></pre></td></tr></table></figure>
+<h3 id="2-3-部署优化"><a href="#2-3-部署优化" class="headerlink" title="2.3 部署优化"></a>2.3 部署优化</h3><ul>
+<li>Sentinel节点不应该部署在一台物理“机器”上    </li>
+<li>部署至少三个且奇数个的Sentinel节点。    </li>
+<li>如果Sentinel节点集合监控的是同一个业务的多个主节点集合， 那么使用一套Sentinel、 否则一般建议采用多套Sentinel</li>
+</ul>
+<h2 id="3-Redis-Sentinel-客户端"><a href="#3-Redis-Sentinel-客户端" class="headerlink" title="3. Redis Sentinel 客户端"></a>3. Redis Sentinel 客户端</h2><h3 id="3-1-客户端实现流程"><a href="#3-1-客户端实现流程" class="headerlink" title="3.1 客户端实现流程"></a>3.1 客户端实现流程</h3><ol>
+<li>遍历Sentinel节点集合获取一个可用的Sentinel节点，Sentinel节点之间可以共享数据， 所以从任意一个Sentinel节点获取主节点信 息都是可以的    </li>
+<li>通过sentinel get-master-addr-by-name master-name这个API来获取对应 主节点的相关信息    </li>
+<li>验证当前获取的“主节点”是真正的主节点， 这样做的目的是为了防 止故障转移期间主节点的变化    </li>
+<li>保持和Sentinel节点集合的“联系”， 时刻获取关于主节点的相关“信 息” </li>
+</ol>
+<h3 id="3-2-Jedis-Sentinel操作"><a href="#3-2-Jedis-Sentinel操作" class="headerlink" title="3.2 Jedis Sentinel操作"></a>3.2 Jedis Sentinel操作</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">JedisSentinelPool</span><span class="params">(String masterName, Set&lt;String&gt; sentinels,</span></span></span><br><span class="line"><span class="function"><span class="params">    <span class="keyword">final</span> GenericObjectPoolConfig poolConfig, <span class="keyword">final</span> <span class="keyword">int</span> connectionTimeout,</span></span></span><br><span class="line"><span class="function"><span class="params">    <span class="keyword">final</span> <span class="keyword">int</span> soTimeout,</span></span></span><br><span class="line"><span class="function"><span class="params">    <span class="keyword">final</span> String password, <span class="keyword">final</span> <span class="keyword">int</span> database,</span></span></span><br><span class="line"><span class="function"><span class="params">    <span class="keyword">final</span> String clientName)</span></span></span><br></pre></td></tr></table></figure>
+<p>Options:</p>
+<ul>
+<li>masterName——主节点名。</li>
+<li>sentinels——Sentinel节点集合。</li>
+<li>poolConfig——common-pool连接池配置。</li>
+<li>connectTimeout——连接超时。</li>
+<li>soTimeout——读写超时。</li>
+<li>password——主节点密码。</li>
+<li>database——当前数据库索引。</li>
+<li>clientName——客户端名    </li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//获取jedis</span></span><br><span class="line">Jedis jedis = <span class="keyword">null</span>;</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    jedis = jedisSentinelPool.getResource();</span><br><span class="line">    <span class="comment">// jedis command</span></span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">    	logger.error(e.getMessage(), e);</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (jedis != <span class="keyword">null</span>)</span><br><span class="line">        	jedis.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/redis/" rel="tag"># redis</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/13/redis 复制/" rel="next" title="【redis】redis 复制">
+                <i class="fa fa-chevron-left"></i> 【redis】redis 复制
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/09/15/redis Sentinel 原理/" rel="prev" title="【redis】redis Sentinel 原理">
+                【redis】redis Sentinel 原理 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/timg.jpg"
+                alt="JumpsZ" />
+            
+              <p class="site-author-name" itemprop="name">JumpsZ</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#redis-Sentinel"><span class="nav-number">1.</span> <span class="nav-text">redis Sentinel</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-高可用"><span class="nav-number">1.1.</span> <span class="nav-text">1.  高可用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-主从模式的高可用性"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1 主从模式的高可用性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-Redis-Sentinel的高可用性"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2 Redis Sentinel的高可用性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-Redis-Sentinel-的功能"><span class="nav-number">1.1.3.</span> <span class="nav-text">1.3 Redis Sentinel 的功能</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-redis-Sentinel-部署"><span class="nav-number">1.2.</span> <span class="nav-text">2.   redis Sentinel 部署</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-配置"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-监控多-个节点"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 监控多 个节点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-部署优化"><span class="nav-number">1.2.3.</span> <span class="nav-text">2.3 部署优化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Redis-Sentinel-客户端"><span class="nav-number">1.3.</span> <span class="nav-text">3. Redis Sentinel 客户端</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-客户端实现流程"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1 客户端实现流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-Jedis-Sentinel操作"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.2 Jedis Sentinel操作</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JumpsZ</span>
+
+  
+</div>
+
+
+
+  <div class="powered-by">All rights reserved</div>
+
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
+<script type="text/javascript" src="/js/src/love.js"></script>

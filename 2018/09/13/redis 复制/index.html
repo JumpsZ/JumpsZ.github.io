@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="redis," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="[TOC] redis 复制1. 配置参与复制的Redis实例划分为主节点（master） 和从节点（slave），复制的数据流是单向的， 只能由主节点复制到从节 点     1.1 建立复制配置复制的方式有以下三种：   在配置文件中加入slaveof{masterHost}{masterPort}随Redis启动生 效。  在redis-server启动命令后加入–slaveof{master">
+<meta name="keywords" content="redis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【redis】redis 复制">
+<meta property="og:url" content="http://yoursite.com/2018/09/13/redis 复制/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="[TOC] redis 复制1. 配置参与复制的Redis实例划分为主节点（master） 和从节点（slave），复制的数据流是单向的， 只能由主节点复制到从节 点     1.1 建立复制配置复制的方式有以下三种：   在配置文件中加入slaveof{masterHost}{masterPort}随Redis启动生 效。  在redis-server启动命令后加入–slaveof{master">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-09-13T15:34:17.594Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【redis】redis 复制">
+<meta name="twitter:description" content="[TOC] redis 复制1. 配置参与复制的Redis实例划分为主节点（master） 和从节点（slave），复制的数据流是单向的， 只能由主节点复制到从节 点     1.1 建立复制配置复制的方式有以下三种：   在配置文件中加入slaveof{masterHost}{masterPort}随Redis启动生 效。  在redis-server启动命令后加入–slaveof{master">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Jumping'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/09/13/redis 复制/"/>
+
+
+
+
+
+  <title>【redis】redis 复制 | Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+	
+	<a href="https://github.com/JumpsZ/JumpsZ.github.io"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_darkblue_121621.png" alt="Fork me on GitHub"></a>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/13/redis 复制/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JumpsZ">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/timg.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【redis】redis 复制</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-13T15:14:00+08:00">
+                2018-09-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/redis/" itemprop="url" rel="index">
+                    <span itemprop="name">redis</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>[TOC]</p>
+<h1 id="redis-复制"><a href="#redis-复制" class="headerlink" title="redis 复制"></a>redis 复制</h1><h2 id="1-配置"><a href="#1-配置" class="headerlink" title="1. 配置"></a>1. 配置</h2><p>参与复制的Redis实例划分为主节点（master） 和从节点（slave），复制的数据流是单向的， 只能由主节点复制到从节 点    </p>
+<h3 id="1-1-建立复制"><a href="#1-1-建立复制" class="headerlink" title="1.1 建立复制"></a>1.1 建立复制</h3><p>配置复制的方式有以下三种： </p>
+<ul>
+<li>在配置文件中加入slaveof{masterHost}{masterPort}随Redis启动生 效。 </li>
+<li>在redis-server启动命令后加入–slaveof{masterHost}{masterPort}生 效。 </li>
+<li>直接使用命令： slaveof{masterHost}{masterPort}生效。    </li>
+</ul>
+<h3 id="1-2-断开复制"><a href="#1-2-断开复制" class="headerlink" title="1.2 断开复制"></a>1.2 断开复制</h3><p>在从节点执行<code>slaveof no one</code>来断 开与主节点复制关系    </p>
+<h3 id="1-3-只读"><a href="#1-3-只读" class="headerlink" title="1.3 只读"></a>1.3 只读</h3><p>从节点使用slave-read-only=yes配置为只读模式，防止数据不一致</p>
+<h3 id="1-4-传输延迟"><a href="#1-4-传输延迟" class="headerlink" title="1.4 传输延迟"></a>1.4 传输延迟</h3><p>Redis为我们提供了repl-disable-tcp-nodelay参数用于控制是否关闭 TCP_NODELAY， 默认关闭    </p>
+<ul>
+<li>当关闭时， 主节点产生的命令数据无论大小都会及时地发送给从节 点， 这样主从之间延迟会变小， 但增加了网络带宽的消耗。 适用于主从之间 的网络环境良好的场景， 如同机架或同机房部署。 </li>
+<li>当开启时， 主节点会合并较小的TCP数据包从而节省带宽。 默认发送 时间间隔取决于Linux的内核， 一般默认为40毫秒。 这种配置节省了带宽但 增大主从之间的延迟。 适用于主从网络环境复杂或带宽紧张的场景， 如跨机 房部署。    </li>
+</ul>
+<h2 id="2-复制原理"><a href="#2-复制原理" class="headerlink" title="2. 复制原理"></a>2. 复制原理</h2><h3 id="2-1-复制过程"><a href="#2-1-复制过程" class="headerlink" title="2.1 复制过程"></a>2.1 复制过程</h3><p>在从节点执行slaveof命令后， 复制过程便开始运作，复制过程大致分为6个过程  </p>
+<ol>
+<li>保存主节点（master） 信息。执行slaveof后从节点只保存主节点的地址信息便直接返回， 这时建立复 制流程还没有开始    </li>
+<li>从节点（slave） 内部通过每秒运行的定时任务维护复制相关逻辑， 当定时任务发现存在新的主节点后， 会尝试与该节点建立网络连接（socket套接字）</li>
+<li>发送ping命令。连接建立成功后从节点发送ping请求进行首次通信，用于检测主从之间网络套接字是否可用，检测主节点当前是否可接受处理命令    </li>
+<li>权限验证。从节点必须配置<code>masterauth</code>参数保证与主节点<code>requirepass</code>相同的密码才能通过验证    </li>
+<li>同步数据集。主从复制连接正常通信后， 对于首次建立复制的场景，主节点会把持有的数据全部发送给从节点， 这部分操作是耗时最长的步骤</li>
+<li>命令持续复制。主节点会持续地把写命令发送给从节点， 保证主从 数据一致性    </li>
+</ol>
+<h3 id="2-2-数据同步"><a href="#2-2-数据同步" class="headerlink" title="2.2 数据同步"></a>2.2 数据同步</h3><ul>
+<li>全量复制： 一般用于初次复制场景， Redis早期支持的复制功能只有全 量复制， 它会把主节点全部数据一次性发送给从节点， 当数据量较大时， 会对主从节点和网络造成很大的开销。</li>
+<li>部分复制： 用于处理在主从复制中因网络闪断等原因造成的数据丢失 场景， 当从节点再次连上主节点后， 如果条件允许， 主节点会补发丢失数据给从节点。 因为补发的数据远远小于全量数据， 可以有效避免全量复制的过高开销    </li>
+</ul>
+<p>从节点使用psync命令完成部分复制和全量复制功能， 命令格式： </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">psync &#123;runId&#125; &#123;offset&#125;</span><br></pre></td></tr></table></figure>
+<p>Options:</p>
+<p>runId： 从节点所复制主节点的运行id;  offset： 当前从节点已复制的数据偏移量    </p>
+<p>流程说明： </p>
+<ol>
+<li>从节点（slave） 发送psync命令给主节点， 参数runId是当前从节点保 存的主节点运行ID， 如果没有则默认值为， 参数offset是当前从节点保存的 复制偏移量， 如果是第一次参与复制则默认值为-1。 </li>
+<li>主节点（master） 根据psync参数和自身数据情况决定响应结果： ·<ul>
+<li>如果回复+FULLRESYNC{runId}{offset}， 那么从节点将触发全量复制流程。</li>
+<li>如果回复+CONTINUE， 从节点将触发部分复制流程。</li>
+<li>如果回复+ERR， 说明主节点版本低于Redis2.8， 无法识别psync命令， 从节点将发送旧版的sync命令触发全量复制流程。    </li>
+</ul>
+</li>
+</ol>
+<h3 id="2-3-全量复制"><a href="#2-3-全量复制" class="headerlink" title="2.3 全量复制"></a>2.3 全量复制</h3><p>触发全量复制的命令是sync（版本&lt;2.8）和psync（版本&gt;=2.8）</p>
+<p>psync流程如下：</p>
+<ol>
+<li>发送psync命令进行数据同步， 由于是第一次进行复制， 从节点没有 复制偏移量和主节点的运行ID， 所以发送psync-1。</li>
+<li>主节点根据psync-1解析出当前为全量复制， 回复+FULLRESYNC响 应。</li>
+<li>从节点接收主节点的响应数据保存运行ID和偏移量offset</li>
+<li>主节点执行bgsave保存RDB文件到本地</li>
+<li>主节点发送RDB文件给从节点， 从节点把接收的RDB文件保存在本 地并直接作为从节点的数据文件    </li>
+<li>对于从节点开始接收RDB快照到接收完成期间， 主节点仍然响应读 写命令， 因此主节点会把这期间写命令数据保存在复制客户端缓冲区内， 当 从节点加载完RDB文件后， 主节点再把缓冲区内的数据发送给从节点， 保证 主从之间数据一致性    </li>
+<li>从节点接收完主节点传送来的全部数据后会清空自身旧数据    </li>
+<li>从节点清空数据后开始加载RDB文件， 对于较大的RDB文件， 这一 步操作依然比较耗时    </li>
+<li>从节点成功加载完RDB后， 如果当前节点开启了AOF持久化功能， 它会立刻做bgrewriteaof操作， 为了保证全量复制后AOF持久化文件立刻可 用    </li>
+</ol>
+<h3 id="2-4-部分复制"><a href="#2-4-部分复制" class="headerlink" title="2.4 部分复制"></a>2.4 部分复制</h3><p>流程如下：</p>
+<ol>
+<li>当主从节点之间网络出现中断时， 如果超过repl-timeout时间， 主节点会认为从节点故障并中断复制连接    </li>
+<li>主从连接中断期间主节点依然响应命令， 但因复制连接中断命令无 法发送给从节点， 不过主节点内部存在的复制积压缓冲区， 依然可以保存最 近一段时间的写命令数据， 默认最大缓存1MB    </li>
+<li>当主从节点网络恢复后， 从节点会再次连上主节点    </li>
+<li>当主从连接恢复后， 由于从节点之前保存了自身已复制的偏移量和 主节点的运行ID。 因此会把它们当作psync参数发送给主节点， 要求进行部 分复制操作。    </li>
+<li>主节点接到psync命令后首先核对参数runId是否与自身一致， 如果一 致， 说明之前复制的是当前主节点； 之后根据参数offset在自身复制积压缓 冲区查找， 如果偏移量之后的数据存在缓冲区中， 则对从节点发送 +CONTINUE响应， 表示可以进行部分复制    </li>
+<li>主节点根据偏移量把复制积压缓冲区里的数据发送给从节点， 保证 主从复制进入正常状态   </li>
+</ol>
+<h3 id="2-5-心跳机制"><a href="#2-5-心跳机制" class="headerlink" title="2.5 心跳机制"></a>2.5 心跳机制</h3><p>主从心跳判断机制： </p>
+<ol>
+<li>主从节点彼此都有心跳检测机制， 各自模拟成对方的客户端进行通 信， 通过client list命令查看复制相关客户端信息， 主节点的连接状态为 flags=M， 从节点连接状态为flags=S。 </li>
+<li>主节点默认每隔10秒对从节点发送ping命令， 判断从节点的存活性 和连接状态。 可通过参数repl-ping-slave-period控制发送频率。 </li>
+<li>从节点在主线程中每隔1秒发送replconf ack{offset}命令， 给主节点 上报自身当前的复制偏移量    </li>
+</ol>
+<p>主节点根据replconf命令判断从节点超时时间， 体现在info replication统 计中的lag信息中， lag表示与从节点最后一次通信延迟的秒数， 正常延迟应 该在0和1之间。 如果超过repl-timeout配置的值（默认60秒） ， 则判定从节点 下线并断开复制客户端连接    </p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/redis/" rel="tag"># redis</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/13/redis 持久化/" rel="next" title="【redis】redis 持久化">
+                <i class="fa fa-chevron-left"></i> 【redis】redis 持久化
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/09/14/redis Sentinel 简介/" rel="prev" title="【redis】redis Sentinel 简介">
+                【redis】redis Sentinel 简介 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/timg.jpg"
+                alt="JumpsZ" />
+            
+              <p class="site-author-name" itemprop="name">JumpsZ</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#redis-复制"><span class="nav-number">1.</span> <span class="nav-text">redis 复制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-配置"><span class="nav-number">1.1.</span> <span class="nav-text">1. 配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-建立复制"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1 建立复制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-断开复制"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2 断开复制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-只读"><span class="nav-number">1.1.3.</span> <span class="nav-text">1.3 只读</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-传输延迟"><span class="nav-number">1.1.4.</span> <span class="nav-text">1.4 传输延迟</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-复制原理"><span class="nav-number">1.2.</span> <span class="nav-text">2. 复制原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-复制过程"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 复制过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-数据同步"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 数据同步</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-全量复制"><span class="nav-number">1.2.3.</span> <span class="nav-text">2.3 全量复制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-部分复制"><span class="nav-number">1.2.4.</span> <span class="nav-text">2.4 部分复制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-心跳机制"><span class="nav-number">1.2.5.</span> <span class="nav-text">2.5 心跳机制</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JumpsZ</span>
+
+  
+</div>
+
+
+
+  <div class="powered-by">All rights reserved</div>
+
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
+<script type="text/javascript" src="/js/src/love.js"></script>
